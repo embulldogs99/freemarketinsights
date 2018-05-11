@@ -112,3 +112,4 @@ def portfoliohistoryreturnscalc():
 portfoliohistoryduplicatedelete()
 portfoliohistoryreturnscalc()
 portfoliovalue()
+portfoliohistoryduplicatedelete()
