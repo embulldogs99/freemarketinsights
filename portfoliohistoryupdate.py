@@ -108,6 +108,8 @@ def portfoliohistoryreturnscalc():
     conn.close()
 
 
-portfoliovalue()
-portfoliohistoryreturnscalc()
+
+
 portfoliohistoryduplicatedelete()
+portfoliohistoryreturnscalc()
+portfoliovalue()
