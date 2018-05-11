@@ -21,7 +21,7 @@ def portfoliohistoryduplicatedelete():
 
     cur.execute("CREATE TABLE fmi.portfoliohistory_temp (LIKE fmi.portfoliohistory);")
     conn.commit()
-    cur.execute("INSERT into fmi.portfoliohistory_temp(date,portfolio,snp,nasdaq) SELECT DISTINCT ON (date) date,portfolio,snp,nasdaq FROM fmi.portfoliohistory;")
+    cur.execute("INSERT into fmi.portfoliohistory_temp(date,portfolio,snp,nasdaq,portfolioreturn,snpreturn,nasdaqreturn) SELECT DISTINCT ON (date) date,portfolio,snp,nasdaq,portfolioreturn,snpreturn,nasdaqreturn FROM fmi.portfoliohistory;")
     conn.commit()
     cur.execute("DROP TABLE fmi.portfoliohistory;")
     conn.commit()
@@ -108,8 +108,6 @@ def portfoliohistoryreturnscalc():
     conn.close()
 
 
-
-portfoliohistoryduplicatedelete()
-portfoliohistoryreturnscalc()
 portfoliovalue()
+portfoliohistoryreturnscalc()
 portfoliohistoryduplicatedelete()
