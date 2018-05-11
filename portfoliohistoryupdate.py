@@ -109,7 +109,6 @@ def portfoliohistoryreturnscalc():
 
 
 
-
-portfoliohistoryduplicatedelete()
-portfoliohistoryreturnscalc()
 portfoliovalue()
+portfoliohistoryreturnscalc()
+portfoliohistoryduplicatedelete()
