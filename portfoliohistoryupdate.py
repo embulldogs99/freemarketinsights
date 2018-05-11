@@ -45,28 +45,23 @@ def barchart_nasdaq():
 
 #############################################################################
 ############## Pull Current Portfolio and Obtain Tickers  ###################
-conn = psycopg2.connect("dbname='postgres' user='postgres' password='postgres' host='localhost' port='5432'")
-cur = conn.cursor()
-cur.execute("""SELECT SUM(value) as total FROM fmi.portfolio;""")
-portfoliovalues=cur.fetchall()
-for row in portfoliovalues:
-    portfoliovalue=row
-snpvalue=barchart_snp500()
-nasdaqvalue=barchart_nasdaq()
-now=datetime.datetime.now()
-currentdate=now.strftime("%Y-%m-%d")
+def portfoliovalue():
+    conn = psycopg2.connect("dbname='postgres' user='postgres' password='postgres' host='localhost' port='5432'")
+    cur = conn.cursor()
+    cur.execute("""SELECT SUM(value) as total FROM fmi.portfolio;""")
+    portfoliovalues=cur.fetchall()
+    for row in portfoliovalues:
+        portfoliovalue=row
+    snpvalue=barchart_snp500()
+    nasdaqvalue=barchart_nasdaq()
+    now=datetime.datetime.now()
+    currentdate=now.strftime("%Y-%m-%d")
 
-cur.execute("""INSERT INTO fmi.portfoliohistory (date,portfolio,snp,nasdaq) VALUES (%s,%s,%s,%s);""", (currentdate,portfoliovalue,snpvalue,nasdaqvalue))
-cur.execute("""UPDATE fmi.portfoliohistory set portfolio=%s, snp=%s, nasdaq=%s where date=%s;""", (portfoliovalue,snpvalue,nasdaqvalue,currentdate))
-conn.commit()
-
-
-
-
-cur.close()
-conn.close()
-
-portfoliohistoryduplicatedelete()
+    cur.execute("""INSERT INTO fmi.portfoliohistory (date,portfolio,snp,nasdaq) VALUES (%s,%s,%s,%s);""", (currentdate,portfoliovalue,snpvalue,nasdaqvalue))
+    cur.execute("""UPDATE fmi.portfoliohistory set portfolio=%s, snp=%s, nasdaq=%s where date=%s;""", (portfoliovalue,snpvalue,nasdaqvalue,currentdate))
+    conn.commit()
+    cur.close()
+    conn.close()
 
 def portfoliohistoryreturnscalc():
     conn = psycopg2.connect("dbname='postgres' user='postgres' password='postgres' host='localhost' port='5432'")
@@ -95,4 +90,10 @@ def portfoliohistoryreturnscalc():
     cur.close()
     conn.close()
 
+portfoliovalue()
 portfoliohistoryreturnscalc()
+portfoliohistoryduplicatedelete()
+portfoliovalue()
+portfoliohistoryreturnscalc()
+portfoliohistoryduplicatedelete()
+portfoliohistoryduplicatedelete()
