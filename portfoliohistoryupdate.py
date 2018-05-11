@@ -90,10 +90,8 @@ def portfoliohistoryreturnscalc():
     cur.close()
     conn.close()
 
-portfoliovalue()
+
+
+portfoliohistoryduplicatedelete()
 portfoliohistoryreturnscalc()
-portfoliohistoryduplicatedelete()
 portfoliovalue()
-portfoliohistoryreturnscalc()
-portfoliohistoryduplicatedelete()
-portfoliohistoryduplicatedelete()
