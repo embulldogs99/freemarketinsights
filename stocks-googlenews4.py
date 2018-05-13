@@ -107,9 +107,9 @@ def yahooepspuller(ticker):
 		titles=str(titles)
 		s=titles.find("EPS_RATIO-value")
 		pe=titles[s:s+1000]
-		sn=pe.find("react-text")
-		pe=pe[sn+17:sn+24]
-		pe=pe.replace(">","").replace("!","").replace("<","")
+		sn=pe.find("reactid")
+		pe=pe[sn+13:sn+18]
+		pe=pe.replace(">","").replace("!","").replace("<","").replace("/","").replace('"',"")
 		try:
 			pe=float(pe)
 		except:
