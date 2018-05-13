@@ -83,9 +83,9 @@ type Newspoint struct {
   Date sql.NullString
   Q_eps sql.NullFloat64
   A_eps sql.NullFloat64
+  Report sql.NullString
   Q_pe sql.NullFloat64
   A_pe sql.NullFloat64
-  Report sql.NullString
 }
 
 
@@ -263,13 +263,6 @@ func profile(w http.ResponseWriter, r *http.Request){
 
 
 
-
-
-
-
-
-
-
 func dbpull1() []Newspoint {
   db, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
   if err != nil {log.Fatalf("Unable to connect to the database")}
@@ -280,7 +273,7 @@ func dbpull1() []Newspoint {
   bks := []Newspoint{}
   for rows.Next() {
     bk := Newspoint{}
-    err := rows.Scan(&bk.Target, &bk.Price, &bk.Returns, &bk.Ticker, &bk.Note, &bk.Date, &bk.Q_eps, &bk.A_eps,&bk.Q_pe,&bk.A_pe, &bk.Report)
+    err := rows.Scan(&bk.Target, &bk.Price, &bk.Returns, &bk.Ticker, &bk.Note, &bk.Date, &bk.Q_eps, &bk.A_eps,&bk.Report,&bk.Q_pe,&bk.A_pe)
     if err != nil {log.Fatal(err)}
   	// appends the rows
     bks = append(bks, bk)
@@ -292,7 +285,7 @@ func dbpull1() []Newspoint {
 func dbpull365() []Newspoint {
   db, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
   if err != nil {log.Fatalf("Unable to connect to the database")}
-  sqlstatmt:="SELECT target,price,returns,ticker,note,to_char(date,'DD/MM/YYYY'),q_eps,a_eps,q_pe,a_pe,report FROM fmi.marketmentions WHERE report='analyst' AND date > current_timestamp - INTERVAL '365 days';"
+  sqlstatmt:="SELECT target,price,returns,ticker,note,to_char(date,'DD/MM/YYYY'),q_eps,a_eps,report,q_pe,a_pe FROM fmi.marketmentions WHERE report='analyst' AND date > current_timestamp - INTERVAL '365 days';"
   // fmt.Println(sqlstatmt)
   rows, err := db.Query(sqlstatmt)
   if err != nil{
@@ -301,7 +294,7 @@ func dbpull365() []Newspoint {
   bks := []Newspoint{}
   for rows.Next() {
     bk := Newspoint{}
-    err := rows.Scan(&bk.Target, &bk.Price, &bk.Returns, &bk.Ticker, &bk.Note, &bk.Date, &bk.Q_eps, &bk.A_eps,&bk.Q_pe,&bk.A_pe, &bk.Report)
+    err := rows.Scan(&bk.Target, &bk.Price, &bk.Returns, &bk.Ticker, &bk.Note, &bk.Date, &bk.Q_eps, &bk.A_eps,&bk.Report,&bk.Q_pe,&bk.A_pe)
     if err != nil {log.Fatal(err)}
   	// appends the rows
     bks = append(bks, bk)
@@ -313,7 +306,7 @@ func dbpull365() []Newspoint {
 func earningspull() []Newspoint {
   db, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
   if err != nil {log.Fatalf("Unable to connect to the database")}
-  sqlstatmt:="SELECT target,price,returns,ticker,note,to_char(date,'DD/MM/YYYY'),q_eps,a_eps,q_pe,a_pe,report FROM fmi.marketmentions WHERE report='earnings' AND date > current_timestamp - INTERVAL '2 days';"
+  sqlstatmt:="SELECT target,price,returns,ticker,note,to_char(date,'DD/MM/YYYY'),q_eps,a_eps,report,q_pe,a_pe FROM fmi.marketmentions WHERE report='earnings' AND date > current_timestamp - INTERVAL '2 days';"
   // fmt.Println(sqlstatmt)
   rows, err := db.Query(sqlstatmt)
   if err != nil{
@@ -322,7 +315,7 @@ func earningspull() []Newspoint {
   bks := []Newspoint{}
   for rows.Next() {
     bk := Newspoint{}
-    err := rows.Scan(&bk.Target, &bk.Price, &bk.Returns, &bk.Ticker, &bk.Note, &bk.Date, &bk.Q_eps, &bk.A_eps,&bk.Q_pe,&bk.A_pe, &bk.Report)
+    err := rows.Scan(&bk.Target, &bk.Price, &bk.Returns, &bk.Ticker, &bk.Note, &bk.Date, &bk.Q_eps, &bk.A_eps,&bk.Report,&bk.Q_pe,&bk.A_pe)
     if err != nil {log.Fatal(err)}
   	// appends the rows
     bks = append(bks, bk)
@@ -334,7 +327,7 @@ func earningspull() []Newspoint {
 func fullearningspull() []Newspoint {
   db, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
   if err != nil {log.Fatalf("Unable to connect to the database")}
-  sqlstatmt:="SELECT target,price,returns,ticker,note,to_char(date,'DD/MM/YYYY'),q_eps,a_eps,q_pe,a_pe,report FROM fmi.marketmentions WHERE report='earnings' AND date > current_timestamp - INTERVAL '365 days';"
+  sqlstatmt:="SELECT target,price,returns,ticker,note,to_char(date,'DD/MM/YYYY'),q_eps,a_eps,report,q_pe,a_pe FROM fmi.marketmentions WHERE report='earnings' AND date > current_timestamp - INTERVAL '365 days';"
   // fmt.Println(sqlstatmt)
   rows, err := db.Query(sqlstatmt)
   if err != nil{
@@ -343,7 +336,7 @@ func fullearningspull() []Newspoint {
   bks := []Newspoint{}
   for rows.Next() {
     bk := Newspoint{}
-    err := rows.Scan(&bk.Target, &bk.Price, &bk.Returns, &bk.Ticker, &bk.Note, &bk.Date, &bk.Q_eps, &bk.A_eps,&bk.Q_pe,&bk.A_pe, &bk.Report)
+    err := rows.Scan(&bk.Target, &bk.Price, &bk.Returns, &bk.Ticker, &bk.Note, &bk.Date, &bk.Q_eps, &bk.A_eps,&bk.Report,&bk.Q_pe,&bk.A_pe)
     if err != nil {log.Fatal(err)}
   	// appends the rows
     bks = append(bks, bk)
