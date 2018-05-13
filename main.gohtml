@@ -151,6 +151,34 @@
 
 
 
+<div class="title">
+
+  Earnings Announcements
+</div><br>
+<table id="sortable">
+  <thead>
+    <tr>
+      <th>Today's Price</th>
+      <th>Anul_EPS</th>
+      <th>Ticker</th>
+      <th>Earnings Announcement</th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    {{range .Earnings}}
+    <tr>
+      <td>{{.Price.Value}}</td>
+      <td>{{.A_eps.Value}}</td>
+      <td>{{.Ticker.Value}}</td>
+      <td>{{.Note.Value}}</td>
+    </tr>
+    {{end}}
+  </tbody>
+</table>
+
+
 
 
 
