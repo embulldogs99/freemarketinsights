@@ -328,6 +328,26 @@ func earningspull() []Newspoint {
   return bks
 }
 
+func fullearningspull() []Newspoint {
+  db, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
+  if err != nil {log.Fatalf("Unable to connect to the database")}
+  sqlstatmt:="SELECT target,price,returns,ticker,note,to_char(date,'DD/MM/YYYY'),q_eps,a_eps,report FROM fmi.marketmentions WHERE report='earnings' AND date > current_timestamp - INTERVAL '365 days';"
+  // fmt.Println(sqlstatmt)
+  rows, err := db.Query(sqlstatmt)
+  if err != nil{
+    log.Fatalf("failed to select marketmentions data")
+  }
+  bks := []Newspoint{}
+  for rows.Next() {
+    bk := Newspoint{}
+    err := rows.Scan(&bk.Target, &bk.Price, &bk.Returns, &bk.Ticker, &bk.Note, &bk.Date, &bk.Q_eps, &bk.A_eps, &bk.Report)
+    if err != nil {log.Fatal(err)}
+  	// appends the rows
+    bks = append(bks, bk)
+  }
+  db.Close()
+  return bks
+}
 
 type Portfolio struct{
   Ticker string
@@ -407,6 +427,15 @@ func servemarketmentions(w http.ResponseWriter, r *http.Request){
   tpl.Execute(w, dbpull365())
   }else{http.Redirect(w, r, "/", http.StatusSeeOther)}
 }
+
+func serveearnings(w http.ResponseWriter, r *http.Request){
+  z:=getUser(w,r)
+  if membercheck(z.Email,z.Pass) == true{
+  tpl := template.Must(template.ParseFiles("earnings.gohtml","css/main.css","css/mcleod-reset.css"))
+  tpl.Execute(w, fullearningspull())
+  }else{http.Redirect(w, r, "/", http.StatusSeeOther)}
+}
+
 func serveabout(w http.ResponseWriter, r *http.Request){
   tpl := template.Must(template.ParseFiles("about.gohtml","css/main.css","css/mcleod-reset.css" ))
   tpl.Execute(w, nil)
