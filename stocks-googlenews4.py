@@ -849,7 +849,10 @@ def contentfilter():
                             epsreference=yahooepspuller(stock)
 
                             if grab.find('EPS') >0 or grab.find('eps') > 0:
-                                targetprice=round(value*4*25,0) #using marget P/E here insteead of individual stock's p/e to avoid -p/e erro
+
+                                qpe=round(price/float(value),2)
+                                ape=round(price/float(epsreference),2)
+                                targetprice=price*((value*4-epsreference)/epsreference) #using marget P/E here insteead of individual stock's p/e to avoid -p/e erro
                                 epsexpreturn=(targetprice-price)/price
 
     							#########################################################
@@ -857,7 +860,7 @@ def contentfilter():
                                 conn = psycopg2.connect("dbname='postgres' user='postgres' password='postgres' host='localhost' port='5432'")
                                 cur = conn.cursor()
     							# execute a statement
-                                cur.execute("INSERT INTO fmi.marketmentions (target, price, returns, ticker, note, date, q_eps, a_eps, report) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (targetprice,price,epsexpreturn,stock,grab,pub,value,epsreference,'earnings'))
+                                cur.execute("INSERT INTO fmi.marketmentions (target, price, returns, ticker, note, date, q_eps, a_eps, q_pe,a_pe report) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s,%s,%s)", (targetprice,price,epsexpreturn,stock,grab,pub,value,qpe,ape,epsreference,'earnings'))
                                 print("inserted value")
                                 conn.commit()
     							# close the communication with the PostgreSQL
