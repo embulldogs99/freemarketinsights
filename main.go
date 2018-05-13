@@ -59,6 +59,7 @@ func main() {
 
   http.HandleFunc("/", serve)
   http.HandleFunc("/marketmentions", servemarketmentions)
+  http.HandleFunc("/earnings", serveearnings)
   http.HandleFunc("/about", serveabout)
   http.HandleFunc("/contact", servecontact)
   http.HandleFunc("/researchlinks", researchlinks)
