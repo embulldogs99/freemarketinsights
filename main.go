@@ -396,7 +396,7 @@ type Homepage struct {
 }
 
 func serve(w http.ResponseWriter, r *http.Request){
-  homepagedata:=Homepage{dbpull1(),portfoliopull(),portfolioperformancepull()}
+  homepagedata:=Homepage{dbpull1(),portfoliopull(),portfolioperformancepull(),earningspull()}
   tpl := template.Must(template.ParseFiles("main.gohtml","css/main.css","css/mcleod-reset.css"))
   tpl.Execute(w, homepagedata)
 }
