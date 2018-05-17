@@ -306,7 +306,7 @@ func dbpull365() []Newspoint {
 func earningspull() []Newspoint {
   db, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
   if err != nil {log.Fatalf("Unable to connect to the database")}
-  sqlstatmt:="SELECT target,price,returns,ticker,note,to_char(date,'DD/MM/YYYY'),q_eps,a_eps,report,q_pe,a_pe FROM fmi.marketmentions WHERE report='earnings' AND date > current_timestamp - INTERVAL '2 days';"
+  sqlstatmt:="SELECT target,price,returns,ticker,note,to_char(date,'DD/MM/YYYY'),q_eps,a_eps,report,q_pe,a_pe FROM fmi.marketmentions WHERE report='earnings' AND date > current_timestamp - INTERVAL '5 days';"
   // fmt.Println(sqlstatmt)
   rows, err := db.Query(sqlstatmt)
   if err != nil{
