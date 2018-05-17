@@ -83,7 +83,7 @@ def portfoliovalue():
 def portfoliohistoryreturnscalc():
     conn = psycopg2.connect("dbname='postgres' user='postgres' password='postgres' host='localhost' port='5432'")
     cur = conn.cursor()
-    cur.execute("""SELECT * FROM fmi.portfoliohistory;""")
+    cur.execute("""SELECT DISTINCT on (date) date,portfolio,snp,nasdaq,portfolioreturn,snpreturn,nasdaqreturn FROM fmi.portfoliohistory;""")
     portfolio=cur.fetchall()
     row=0
     for d,p,s,n,pr,sr,nr in portfolio:
@@ -110,5 +110,5 @@ def portfoliohistoryreturnscalc():
 
 
 portfoliovalue()
-portfoliohistoryduplicatedelete()
 portfoliohistoryreturnscalc()
+portfoliohistoryduplicatedelete()
