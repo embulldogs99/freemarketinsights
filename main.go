@@ -31,7 +31,7 @@ func main() {
   //pulls users from database
   dbusers, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
   if err != nil {log.Fatalf("Unable to connect to the database")}
-  rowz, err := dbusers.Query("SELECT * FROM fmi.members")
+  rowz, err := dbusers.Query("SELECT DISTINCT email, pass,balance,memberflag FROM fmi.members")
   if err != nil {log.Fatalf("Could not Scan User Data")}
   //userslists:=user{}
   for rowz.Next(){
@@ -70,12 +70,13 @@ func main() {
   http.HandleFunc("/logout", logout)
   http.HandleFunc("/profile", profile)
   http.HandleFunc("/investors", investors)
+  http.HandleFunc("/bestbets", bestbets)
   log.Fatal(s.ListenAndServe())
 }
 
 
 type Newspoint struct {
-	Target int
+	Target sql.NullFloat64
 	Price  sql.NullFloat64
 	Returns sql.NullFloat64
 	Ticker sql.NullString
@@ -102,7 +103,7 @@ func membercheck(e string, p string) bool{
   if err != nil {
     log.Fatalf("Unable to connect to the database")
   }
-  u, err := dbusers.Exec(`SELECT * FROM fmi.members WHERE email=$1 AND pass=$2;`, e,p)
+  u, err := dbusers.Exec(`SELECT DISTINCT email,pass FROM fmi.members WHERE email=$1 AND pass=$2;`, e,p)
   if u == nil {
     dbusers.Close()
     return false
@@ -260,6 +261,24 @@ func profile(w http.ResponseWriter, r *http.Request){
     tpl.Execute(w,data)
 }
 
+
+
+func bestbets(w http.ResponseWriter, r *http.Request) {
+  db, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
+  if err != nil {log.Fatalf("Unable to connect to the database")}
+  sqlstatmt:="SELECT target,price,returns,ticker,note,to_char(date,'DD/MM/YYYY'),q_eps,a_eps,report,q_pe,a_pe FROM fmi.marketmentions WHERE returns>.2 AND date > current_timestamp - INTERVAL '20 days' ORDER BY returns DESC;"
+  rows, err := db.Query(sqlstatmt)
+  if err != nil{log.Fatalf("failed to select marketmentions data")}
+  bks := []Newspoint{}
+  for rows.Next() {
+    bk := Newspoint{}
+    err := rows.Scan(&bk.Target, &bk.Price, &bk.Returns, &bk.Ticker, &bk.Note, &bk.Date, &bk.Q_eps, &bk.A_eps,&bk.Report,&bk.Q_pe,&bk.A_pe)
+    if err != nil {log.Fatal(err)}
+    bks = append(bks, bk)}
+  db.Close()
+  tpl := template.Must(template.ParseFiles("bestbets.gohtml","css/main.css","css/mcleod-reset.css"))
+  tpl.Execute(w, bks)
+}
 
 
 

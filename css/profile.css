@@ -16,3 +16,10 @@
   border: solid 3px white;
   font-family: 'Calibri', Fallback, sans-serif;
 }
+.column{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
