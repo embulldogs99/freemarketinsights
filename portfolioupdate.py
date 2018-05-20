@@ -10,6 +10,7 @@ import io
 import re
 import psycopg2
 from mmduprem import mmduprem
+import portfoliohistoryupdate
 
 
 ###########################################################
@@ -52,3 +53,8 @@ for ticker,shares,target_price in portfolio:
 
 cur.close()
 conn.close()
+
+
+
+portfoliovalue()
+portfoliohistoryreturnscalc()
