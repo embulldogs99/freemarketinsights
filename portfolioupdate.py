@@ -10,8 +10,7 @@ import io
 import re
 import psycopg2
 from mmduprem import mmduprem
-from portfoliohistoryupdate import portfoliovalue
-from portfoliohistoryupdate import portfoliohistoryreturnscalc
+
 
 
 ###########################################################
@@ -56,6 +55,4 @@ cur.close()
 conn.close()
 
 
-
-portfoliovalue()
-portfoliohistoryreturnscalc()
+import portfoliohistoryupdate 
