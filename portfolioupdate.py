@@ -10,7 +10,8 @@ import io
 import re
 import psycopg2
 from mmduprem import mmduprem
-import portfoliohistoryupdate
+from portfoliohistoryupdate import portfoliovalue
+from portfoliohistoryupdate import portfoliohistoryreturnscalc
 
 
 ###########################################################
