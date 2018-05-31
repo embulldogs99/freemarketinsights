@@ -162,6 +162,7 @@ stocklist=[
 now=datetime.datetime.now()
 
 def contentfilter():
+    timer=datetime.datetime.now()
     with requests.Session() as c:
         map=['']
         stocks=stocklist
@@ -248,6 +249,8 @@ def contentfilter():
                                 conn.close()
             except:
                 pass
+    currenttime=datetime.datetime.now()-timer
+    print("Stock Pull Took "+currenttime+" seconds")
 
 
 #run for 100 cycles of 6 hours each
