@@ -240,7 +240,7 @@ def contentfilter():
                                 cur.close()
                                 conn.close()
                                 currenttime=datetime.datetime.now()-timer
-                                print("Stock"+str(stock)+" Occurred After "+str(currenttime)+" seconds")
+                                print("Stock "+str(stock)+" Occurred After "+str(currenttime)+" seconds")
 
 
                             if grab.find('arget') > 0:
