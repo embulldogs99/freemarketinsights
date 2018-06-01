@@ -254,10 +254,12 @@ def contentfilter():
                                 # close the communication with the PostgreSQL
                                 cur.close()
                                 conn.close()
+
+                        currenttime=datetime.datetime.now()-timer
+                        print("Stock"+str(stock)+" Occurred After "+str(currenttime)+" seconds")
             except:
                 pass
-    currenttime=datetime.datetime.now()-timer
-    print("Stock Pull Took "+str(currenttime)+" seconds")
+
 
 
 #run for 100 cycles of 6 hours each
