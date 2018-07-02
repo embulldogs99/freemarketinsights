@@ -24,10 +24,10 @@ var dbs = map[string]string{} //session id, stores userids
 func main() {
 
   //create 1 time use user variables
-  var email string
-  var pass string
-  var balance float64
-  var memberflag string
+  var email sql.NullString
+  var pass sql.NullString
+  var balance sql.NullFloat64
+  var memberflag sql.NullString
   //pulls users from database
   dbusers, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
   if err != nil {log.Fatalf("Unable to connect to the database")}
@@ -38,7 +38,7 @@ func main() {
     //userslist:=user{}
     err:=rowz.Scan(&email, &pass,&balance,&memberflag)
     if err != nil {log.Fatal(err)}
-    dbu[email]=user{email,pass}
+    dbu[email.String]=user{email.String,pass.String}
 
   }
 
