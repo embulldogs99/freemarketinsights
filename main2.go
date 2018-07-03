@@ -430,7 +430,7 @@ func portfolioperformancepull() []PortfolioPerformance{
 type Homepage struct {
   Marketmentions []Newspoint
   Portfoliolist []Portfolio
-  Pperformance Error
+  Pperformance json
   Earnings []Newspoint
 }
 
