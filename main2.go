@@ -422,22 +422,22 @@ func portfolioperformancepull() []PortfolioPerformance{
   	// appends the rows
     bks = append(bks, bk)
   }
-  enc:=json.NewEncoder(w)
-  err=enc.Encode(bks)
   db.Close()
-  return err
+  return bks
 }
 
 
 type Homepage struct {
   Marketmentions []Newspoint
   Portfoliolist []Portfolio
-  Pperformance []PortfolioPerformance
+  Pperformance Error
   Earnings []Newspoint
 }
 
 func serve(w http.ResponseWriter, r *http.Request){
-  homepagedata:=Homepage{dbpull1(),portfoliopull(),portfolioperformancepull(),earningspull()}
+  enc:=json.NewEncoder(w)
+  err=enc.Encode(portfolioperformancepull())
+  homepagedata:=Homepage{dbpull1(),portfoliopull(),err,earningspull()}
   tpl := template.Must(template.ParseFiles("main.gohtml","css/main.css","css/mcleod-reset.css"))
   tpl.Execute(w, homepagedata)
 }
