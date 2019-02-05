@@ -99,7 +99,7 @@ type Member struct{
 }
 
 func membercheck(e string, p string) bool{
-  dbusers, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
+  dbusers, err := sql.Open("postgres", "postgres://postgres:postgres@192.168.0.136:5432/postgres?sslmode=disable")
   if err != nil {
     log.Fatalf("Unable to connect to the database")
   }
@@ -125,7 +125,7 @@ func signup(w http.ResponseWriter, r *http.Request){
       if membercheck(email,pass) == true{
         profile(w,r)
       }else{
-        dbusers, _ := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
+        dbusers, _ := sql.Open("postgres", "postgres://postgres:postgres@192.168.0.136:5432/postgres?sslmode=disable")
         _, err := dbusers.Exec(`INSERT INTO fmi.members (email, pass, balance, memberflag ) VALUES ($1, $2, $3, $4);`, email, pass, 0, 'p')
         dbusers.Close()
         if err != nil {
@@ -250,7 +250,7 @@ func profile(w http.ResponseWriter, r *http.Request){
     var memberflag sql.NullString
 
     currentuser:=getUser(w,r)
-    dbusers, _ := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
+    dbusers, _ := sql.Open("postgres", "postgres://postgres:postgres@192.168.0.136:5432/postgres?sslmode=disable")
     _ = dbusers.QueryRow("SELECT * FROM fmi.members WHERE email=$1",currentuser.Email).Scan(&email, &pass, &balance, &memberflag)
     data:=Member{email, pass, balance, memberflag}
 
@@ -264,7 +264,7 @@ func profile(w http.ResponseWriter, r *http.Request){
 
 
 func bestbets(w http.ResponseWriter, r *http.Request) {
-  db, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
+  db, err := sql.Open("postgres", "postgres://postgres:postgres@192.168.0.136:5432/postgres?sslmode=disable")
   if err != nil {log.Fatalf("Unable to connect to the database")}
   sqlstatmt:="SELECT target,price,returns,ticker,note,to_char(date,'DD/MM/YYYY'),q_eps,a_eps,report,q_pe,a_pe FROM fmi.marketmentions WHERE returns>.2 AND date > current_timestamp - INTERVAL '20 days' ORDER BY returns DESC;"
   rows, err := db.Query(sqlstatmt)
@@ -283,7 +283,7 @@ func bestbets(w http.ResponseWriter, r *http.Request) {
 
 
 func dbpull1() []Newspoint {
-  db, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
+  db, err := sql.Open("postgres", "postgres://postgres:postgres@192.168.0.136:5432/postgres?sslmode=disable")
   if err != nil {log.Fatalf("Unable to connect to the database")}
   sqlstatmt:="SELECT target,price,returns,ticker,note,to_char(date,'DD/MM/YYYY'),q_eps,a_eps,report,q_pe,a_pe FROM fmi.marketmentions WHERE report='analyst' AND date > current_timestamp - INTERVAL '2 days';"
   // fmt.Println(sqlstatmt)
@@ -302,7 +302,7 @@ func dbpull1() []Newspoint {
 }
 
 func dbpull365() []Newspoint {
-  db, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
+  db, err := sql.Open("postgres", "postgres://postgres:postgres@192.168.0.136:5432/postgres?sslmode=disable")
   if err != nil {log.Fatalf("Unable to connect to the database")}
   sqlstatmt:="SELECT target,price,returns,ticker,note,to_char(date,'DD/MM/YYYY'),q_eps,a_eps,report,q_pe,a_pe FROM fmi.marketmentions WHERE report='analyst' AND date > current_timestamp - INTERVAL '365 days';"
   // fmt.Println(sqlstatmt)
@@ -323,7 +323,7 @@ func dbpull365() []Newspoint {
 }
 
 func earningspull() []Newspoint {
-  db, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
+  db, err := sql.Open("postgres", "postgres://postgres:postgres@192.168.0.136:5432/postgres?sslmode=disable")
   if err != nil {log.Fatalf("Unable to connect to the database")}
   sqlstatmt:="SELECT target,price,returns,ticker,note,to_char(date,'DD/MM/YYYY'),q_eps,a_eps,report,q_pe,a_pe FROM fmi.marketmentions WHERE report='earnings' AND date > current_timestamp - INTERVAL '5 days';"
   // fmt.Println(sqlstatmt)
@@ -344,7 +344,7 @@ func earningspull() []Newspoint {
 }
 
 func fullearningspull() []Newspoint {
-  db, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
+  db, err := sql.Open("postgres", "postgres://postgres:postgres@192.168.0.136:5432/postgres?sslmode=disable")
   if err != nil {log.Fatalf("Unable to connect to the database")}
   sqlstatmt:="SELECT target,price,returns,ticker,note,to_char(date,'DD/MM/YYYY'),q_eps,a_eps,report,q_pe,a_pe FROM fmi.marketmentions WHERE report='earnings' AND date > current_timestamp - INTERVAL '365 days';"
   // fmt.Println(sqlstatmt)
@@ -377,7 +377,7 @@ type Portfolio struct{
 
 
 func portfoliopull() []Portfolio{
-  db, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
+  db, err := sql.Open("postgres", "postgres://postgres:postgres@192.168.0.136:5432/postgres?sslmode=disable")
   if err != nil {log.Fatalf("Unable to connect to the database")}
   sqlstatmt:="SELECT * FROM fmi.portfolio where ticker<>'CASH' ORDER BY exp_return desc;"
   rows, err := db.Query(sqlstatmt)
@@ -406,7 +406,7 @@ type PortfolioPerformance struct{
 }
 
 func portfolioperformancepull() []PortfolioPerformance{
-  db, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
+  db, err := sql.Open("postgres", "postgres://postgres:postgres@192.168.0.136:5432/postgres?sslmode=disable")
   if err != nil {log.Fatalf("Unable to connect to the database")}
   sqlstatmt:="SELECT to_char(date, 'DD/MM/YYYY'),portfolio,snp,nasdaq,portfolioreturn,snpreturn,nasdaqreturn FROM fmi.portfoliohistory;"
   rows, err := db.Query(sqlstatmt)
