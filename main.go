@@ -27,7 +27,7 @@ func main() {
   var balance sql.NullFloat64
   var memberflag sql.NullString
   //pulls users from database
-  dbusers, err := sql.Open("postgres", "postgres://postgres:postgres@192.168.0.136:5432/postgres?sslmode=disable")
+  dbusers, err := sql.Open("postgres", "postgres://postgres:postgres@174.127.212.37:5432/postgres?sslmode=disable")
   if err != nil {log.Fatalf("Unable to connect to the database")}
   rowz, err := dbusers.Query("SELECT DISTINCT email, pass,balance,memberflag FROM fmi.members")
   if err != nil {log.Fatalf("Could not Scan User Data")}
@@ -77,7 +77,7 @@ type Newspoint struct {
 
 
 func dbpull1() []Newspoint {
-  db, err := sql.Open("postgres", "postgres://postgres:postgres@192.168.0.136:5432/postgres?sslmode=disable")
+  db, err := sql.Open("postgres", "postgres://postgres:postgres@174.127.212.37:5432/postgres?sslmode=disable")
   if err != nil {log.Fatalf("Unable to connect to the database")}
   sqlstatmt:="SELECT target,price,returns,ticker,note,to_char(date,'DD/MM/YYYY'),q_eps,a_eps,report,q_pe,a_pe FROM fmi.marketmentions WHERE report='analyst' AND date > current_timestamp - INTERVAL '2 days';"
   // fmt.Println(sqlstatmt)
