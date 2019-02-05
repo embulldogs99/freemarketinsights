@@ -96,7 +96,7 @@ func dbpull1() []Newspoint {
 }
 
 func serve(w http.ResponseWriter, r *http.Request){
-  homepagedata:=dbpull1()
+
   tpl := template.Must(template.ParseFiles("main.gohtml","css/main.css","css/mcleod-reset.css"))
-  tpl.Execute(w, homepagedata)
+  tpl.Execute(w, nil)
 }
