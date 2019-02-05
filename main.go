@@ -5,7 +5,7 @@ import(
     "log"
    "database/sql"
 _ "github.com/lib/pq"
-
+	"fmt"
     _ "strconv"
 
 )
