@@ -27,7 +27,7 @@ func main() {
   var balance sql.NullFloat64
   var memberflag sql.NullString
   //pulls users from database
-  dbusers, err := sql.Open("postgres", "postgres://postgres:postgres@embulldogs99.hopto.org:5432/postgres?sslmode=disable")
+  dbusers, err := sql.Open("postgres", "postgres://postgres:postgres@http://174.127.212.37:5432/postgres?sslmode=disable")
   if err != nil {log.Fatalf("Unable to connect to the database")}
   rowz, err := dbusers.Query("SELECT DISTINCT email, pass,balance,memberflag FROM fmi.members")
   if err != nil {log.Fatalf("Could not Scan User Data")}
