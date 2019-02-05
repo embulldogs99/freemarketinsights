@@ -5,9 +5,7 @@ import(
     "log"
     "database/sql"
 _ "github.com/lib/pq"
-  "time"
-  "fmt"
-    	"github.com/satori/go.uuid"
+
     _ "strconv"
 
 )
@@ -58,19 +56,6 @@ func main() {
   http.Handle("/research/", http.StripPrefix("/research/", http.FileServer(http.Dir("./research"))))
 
   http.HandleFunc("/", serve)
-  http.HandleFunc("/marketmentions", servemarketmentions)
-  http.HandleFunc("/earnings", serveearnings)
-  http.HandleFunc("/about", serveabout)
-  http.HandleFunc("/contact", servecontact)
-  http.HandleFunc("/researchlinks", researchlinks)
-  http.HandleFunc("/research/roa", researchroa)
-  http.HandleFunc("/research/eps", researcheps)
-  http.HandleFunc("/signup", signup)
-  http.HandleFunc("/login", login)
-  http.HandleFunc("/logout", logout)
-  http.HandleFunc("/profile", profile)
-  http.HandleFunc("/investors", investors)
-  http.HandleFunc("/bestbets", bestbets)
   log.Fatal(s.ListenAndServe())
 }
 
