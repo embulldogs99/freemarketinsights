@@ -3,15 +3,47 @@ import(
   "net/http"
   	"html/template"
     "log"
-  _  "database/sql"
+   "database/sql"
 _ "github.com/lib/pq"
 
     _ "strconv"
 
 )
 
+type user struct {
+  Email string
+  Pass string
+}
+var dbu = map[string]user{} //user id, stores users
+var dbs = map[string]string{} //session id, stores userids
+
 func main() {
 
+	
+	
+  //create 1 time use user variables
+  var email sql.NullString
+  var pass sql.NullString
+  var balance sql.NullFloat64
+  var memberflag sql.NullString
+  //pulls users from database
+  dbusers, err := sql.Open("postgres", "postgres://postgres:postgres@192.168.0.136:5432/postgres?sslmode=disable")
+  if err != nil {log.Fatalf("Unable to connect to the database")}
+  rowz, err := dbusers.Query("SELECT DISTINCT email, pass,balance,memberflag FROM fmi.members")
+  if err != nil {log.Fatalf("Could not Scan User Data")}
+  //userslists:=user{}
+  for rowz.Next(){
+    //userslist:=user{}
+    err:=rowz.Scan(&email, &pass,&balance,&memberflag)
+    fmt.Println(email.String)
+    if err != nil {log.Fatal(err)}
+    dbu[email.String]=user{email.String,pass.String}
+
+  }
+
+  dbusers.Close()
+	
+	
 //Begin Serving the FIles
 
   s := &http.Server{
