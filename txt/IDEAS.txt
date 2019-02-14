@@ -1,0 +1,13 @@
+marketcap vs stock price analysis article
+Randomly select stocks in stockpull.py to not bias vs AA/BB stocks
+Debt vs Equity - the effects of High Debt and how Debt/Equiy are paid out
+
+
+historical analysis of FMI data and see how analysts do
+
+beginner vs advanced investor buttons - leading to a beginner and advanced pages
+
+javascript or some kind of charting on front package
+
+
+using a google stock API to obtain stock Prices

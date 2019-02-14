@@ -10,13 +10,91 @@
 }
 
 body{
-  background-color: rgba(0,0,0,.25);
+  background-color: rgba(0,0,0,.05);
+  font-family: 'arial', sans-serif;
+}
+footer{
+  color:rgba(0, 0, 0, 0.15);
+    font-family: 'arial', sans-serif;
+    font-size: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40px;
+    letter-spacing: 5px;
+
+}
+.landingsvg{
+  color:black;
+  height:120px;
+  width: 120px;
+}
+.landingimage{
+   background-color:rgba(0,0,0,.4);
+   padding:200px 0px 200px 0px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   border-bottom: 5px solid rgba(0,0,0,.1);
+}
+.landingbox{
+   background-color:rgba(0,0,0,0);
+   padding:0px 0px 200px 0px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   border-bottom: 5px solid rgba(0,0,0,.1);
+}
+.landingbuttons{
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+}
+.landingbutton{
+  padding: 10px 30px 10px 30px;
+  background-color: white;
+  border:2px solid white;
+  border-radius: 3rem;
+  margin: 0px 10px 0px 10px;
+  color: rgba(0, 0, 0, 0.8);
+  font-size: 20px;
+}
+.annotationspace{
+  display: flex;
+  flex-direction: column;
+  padding: 0px 200px 0px 200px;
+    margin: 10px 20px 10px 20px;
+}
+.annotation{
+    margin: 10px 20px 10px 20px;
+  display: flex;
+  flex-direction: row;
+    justify-content: flex-start;
+  align-items: center;
+
+}
+.annotationheader{
+  margin:10px 40px 10px 40px;
+  font-size:30px;
+  color:rgba(0,0,0,.8);
+  weight:200;
+
+}
+.annotationinfo{
+  font-size: 14px;
+  color:rgba(0,0,0,.5)
 }
 .page{
   display: flex;
   flex-direction: row;
   /*border: 2px solid black;*/
 }
+
 .posts{
   display: flex;
   flex-direction: column;
@@ -24,15 +102,15 @@ body{
   align-items: center;
   width: 100%;
   /*border: solid 2px orange;*/
-  margin-right: 0px;
-  padding-right: 0px;
-  background-color: rgba(0,0,0,.3);
+  line-height:25px;
+  padding:2px;
+  font-family: 'arial', sans-serif;
 }
 header{
   /*border-bottom: 2px solid rgba(60,60,255,1);*/
   font-weight: 900;
   background-image: url(fmi.jpg);
-  background-size: 70px;
+  background-size: 50px;
   display: flex;
   text-align: left;
   font-family: 'raitons', sans-serif;
@@ -48,24 +126,154 @@ header{
     width: 90%;
     text-align: center;
 }
+#sortable a{
+  background: lightblue;
+}
+#sortable a:hover{
+  background: orange;
+}
 
+.hometable{
+  margin-bottom: 50px;
+}
+.hometable th,td{
+  padding: 5px;
+}
+.hometable td{
+  font-size: 15px;
+ text-align:center;
+ vertical-align: middle;
+}
+.hometable tr{
+margin-bottom: 5px;
+border-bottom: 1px solid lightgrey;
+
+}
+.hometable th{
+  font-size: 13px;
+  font-weight: 700;
+    overflow:none;
+    white-space: nowrap;
+}
+.hometable a{
+  color: red;
+  font-size: 10px;
+}
+.hometable a:hover{
+  color: blue;
+}
+.horizontal{
+  display: flex;
+  flex-direction: row;
+}
+.vertical{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  border-right: 1px solid grey;
+}
+.ads{
+  margin: 100px 200px 100px 200px;
+}
+.searchbar{
+  width: 400px;
+  height: 50px;
+}
+
+
+.dropbtn {
+    background-color: black;
+    color: white;
+    padding: 10px 20px 10px 20px;
+    font-size: 16px;
+    border: none;
+
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+        z-index:2;
+        overflow: visible;
+}
+.dropcontent {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+
+
+/* Links inside the dropdown */
+.dropcontent a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+
+
+}
+
+/* Change color of dropdown links on hover */
+.dropcontent a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropcontent {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: grey;}
+
+
+
+.form-control-search{
+border: 1px solid black;
+}
+.googlesearchbutton:hover{
+  background-color: orange;
+}
 .portfolio{
     background-color:#eee;
     color:#666666;
-    font-weight: 600;
-    border-color: #666666;
-    border-width: 20px 50px 20px 50px ;
-    border-style: solid;
+    font-weight: 300;
+    border:2px solid #666666;
     padding: 1px;
-    width: 500px;
     text-align: center;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
 }
-.portfolio thead{
-  border: 2px solid black;
+
+.portfolio th{
+  font-weight: 900;
+  font-size: 18px;
+  white-space: nowrap;
+  padding: 10px;
+  border-bottom: solid 2px lightgrey;
 }
 .portfolio td{
-  padding:5px;
-  margin: 5px;
+  border-bottom: solid 2px lightgrey;
+}
+.portfolio tr:hover{
+  padding: 10px;
+  margin: 10px;
+}
+  .portfolio td{
+  padding:1px;
+  margin: 1px;
+  text-align: center;
+  vertical-align: middle;
+}
+.portfolio td a{
+   background-color:#b3e0ff;
+   border-radius:2rem;
+}
+.portfolio td a:hover{
+   background-color:orange;
+   border-radius:2rem;
+   transform: scale(1.5);
 }
 .porthistory {
   padding: 10px;
@@ -80,17 +288,22 @@ th{
 }
 
 .title{
-  font-size: 90px;
-  margin: 50px 0% 0% 3%;
+  font-size: 40px;
+  margin: 0% 10% 0% 13%;
+  font-family: 'raitons', sans-serif;
+  white-space: nowrap;
+  /*border: 2px solid green;*/
+}
+.landingtitle{
+  font-size: 60px;
+  margin: 0% 10% 0% 13%;
   font-family: 'raitons', sans-serif;
   white-space: nowrap;
   /*border: 2px solid green;*/
 }
 .posttitle{
-  font-size: 70px;
-  padding: 3%;
-  margin-left: 3%;
-  font-family: 'raitons', sans-serif;
+  font-size: 30px;
+  font-family: 'arial', sans-serif;
   white-space: nowrap;
   text-decoration: underline;
   /*border: 2px solid green;*/
@@ -102,14 +315,18 @@ th{
   align-items: center;
   text-align: left;
   justify-content: space-between;
+
+
 }
 .slogan{
-  font-size: 30px;
+  font-size: 25px;
   font-family: 'Calibri', sans-serif;
-  padding: 1% 0% 1.5% 20%;
+  padding: 1% 0% 1.5% 10%;
   font-weight: 400;
     /*border-bottom: 2px solid rgba(60,60,255,1);*/
-    width: 100%;
+
+    overflow: hidden;
+white-space: nowrap;
 }
 
 .banner{
@@ -122,13 +339,16 @@ th{
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 40px;
+  height: 50px;
   background-color: rgba(255,255,255,.5);
 
   position: fixed;
    top: 0;
    left: 0;
    bottom: 0;
+   z-index:1;
+     overflow: visible;
+white-space: nowrap;
 }
 .buttons{
   padding: 0px 10px 0px 10px;
@@ -164,6 +384,7 @@ color: orange;
   align-items: center;
   padding: 10px;
 }
+
 .link2{
   color: darkorange;
   font-weight: 600;
@@ -172,6 +393,22 @@ color: orange;
   color:rgba(0,150,255,1);
   font-size: 110%;
 }
+.link3 {
+  background-color: darkorange;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+.link3:hover {
+  background-color: darkgrey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  font-size:110%;
+}
+
 .images{
   display: flex;
   flex-direction: column;
@@ -204,6 +441,7 @@ svg:hover{
   height:40px;
   width: 40px;
 }
+
 .link:hover{
   color:rgba(255,255,255,1);
   cursor: crosshair;

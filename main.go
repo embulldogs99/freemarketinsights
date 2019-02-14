@@ -5,10 +5,16 @@ import(
     "log"
     "database/sql"
 _ "github.com/lib/pq"
+ "github.com/wcharczuk/go-chart"
+ // util "github.com/wcharczuk/go-chart/util"
+_ "bytes"
   "time"
   "fmt"
     	"github.com/satori/go.uuid"
     _ "strconv"
+    _ "image"
+    _ "image/png"
+    "os"
 
 )
 
@@ -48,7 +54,7 @@ func main() {
 //Begin Serving the FIles
 
   s := &http.Server{
-    Addr:    ":80",
+    Addr:    ":8080",
     Handler: nil,
   }
 
@@ -56,8 +62,12 @@ func main() {
   http.Handle("/pics/", http.StripPrefix("/pics/", http.FileServer(http.Dir("./pics"))))
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("./css"))))
   http.Handle("/research/", http.StripPrefix("/research/", http.FileServer(http.Dir("./research"))))
+  http.Handle("/portfolioimages/", http.StripPrefix("/portfolioimages/", http.FileServer(http.Dir("./portfolioimages"))))
+  http.Handle("/json/", http.StripPrefix("/json/", http.FileServer(http.Dir("./json"))))
 
-  http.HandleFunc("/", serve)
+  http.HandleFunc("/", servelanding)
+  http.HandleFunc("/newinvestors", servenewinvestors)
+  http.HandleFunc("/home", serve)
   http.HandleFunc("/marketmentions", servemarketmentions)
   http.HandleFunc("/earnings", serveearnings)
   http.HandleFunc("/about", serveabout)
@@ -65,10 +75,13 @@ func main() {
   http.HandleFunc("/researchlinks", researchlinks)
   http.HandleFunc("/research/roa", researchroa)
   http.HandleFunc("/research/eps", researcheps)
+  http.HandleFunc("/research/gold", researchgold)
   http.HandleFunc("/signup", signup)
   http.HandleFunc("/login", login)
+  http.HandleFunc("/failedlogin", failedlogin)
   http.HandleFunc("/logout", logout)
   http.HandleFunc("/profile", profile)
+  http.HandleFunc("/portfolio", portfolio)
   http.HandleFunc("/investors", investors)
   http.HandleFunc("/bestbets", bestbets)
   log.Fatal(s.ListenAndServe())
@@ -87,6 +100,7 @@ type Newspoint struct {
   Report sql.NullString
   Q_pe sql.NullFloat64
   A_pe sql.NullFloat64
+  Divyield sql.NullFloat64
 }
 
 
@@ -117,7 +131,7 @@ func membercheck(e string, p string) bool{
 func signup(w http.ResponseWriter, r *http.Request){
   if alreadyLoggedIn(r)==false{
     var tpl *template.Template
-    tpl = template.Must(template.ParseFiles("signup.gohtml","css/main.css","css/mcleod-reset.css",))
+    tpl = template.Must(template.ParseFiles("gohtml/signup.gohtml","css/main.css","css/mcleod-reset.css",))
     tpl.Execute(w, nil)
     if r.Method == http.MethodPost {
       email := r.FormValue("email")
@@ -168,16 +182,16 @@ func login(w http.ResponseWriter, r *http.Request) {
 		u, ok := dbu[email]
 
 		if !ok {
-			http.Error(w, "Username and/or password not found", http.StatusForbidden)
+      http.Redirect(w, r, "/failedlogin", http.StatusSeeOther)
 			return
 		}
 		//pulls password from u and checks it with stored password
 		if pass != u.Pass {
-			http.Error(w, "Username and/or password not found", http.StatusForbidden)
+      http.Redirect(w, r, "/failedlogin", http.StatusSeeOther)
 			return
 		}
 		//create new session (cookie) to identify user
-		sID, _ := uuid.NewV4()
+		sID:= uuid.NewV4()
 		c := &http.Cookie{
 			Name:  "session",
 			Value: sID.String(),
@@ -190,7 +204,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 	}
   //html template
     var tpl *template.Template
-    tpl = template.Must(template.ParseFiles("login.gohtml","css/main.css","css/mcleod-reset.css",))
+    tpl = template.Must(template.ParseFiles("gohtml/login.gohtml","css/main.css","css/mcleod-reset.css",))
     tpl.Execute(w, nil)
   }
 
@@ -217,7 +231,7 @@ func getUser(w http.ResponseWriter, r *http.Request) user {
 	//gets cookie
 	c, err := r.Cookie("session")
 	if err != nil {
-		sID, _ := uuid.NewV4()
+		sID:= uuid.NewV4()
 		c = &http.Cookie{
 			Name:  "session",
 			Value: sID.String(),
@@ -256,7 +270,7 @@ func profile(w http.ResponseWriter, r *http.Request){
 
     dbusers.Close()
     var tpl *template.Template
-    tpl = template.Must(template.ParseFiles("profile.gohtml","css/main.css","css/mcleod-reset.css","css/profile.css"))
+    tpl = template.Must(template.ParseFiles("gohtml/profile.gohtml","css/main.css","css/mcleod-reset.css","css/profile.css"))
 
     tpl.Execute(w,data)
 }
@@ -266,33 +280,53 @@ func profile(w http.ResponseWriter, r *http.Request){
 func bestbets(w http.ResponseWriter, r *http.Request) {
   db, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
   if err != nil {log.Fatalf("Unable to connect to the database")}
-  sqlstatmt:="SELECT target,price,returns,ticker,note,to_char(date,'DD/MM/YYYY'),q_eps,a_eps,report,q_pe,a_pe FROM fmi.marketmentions WHERE returns>.2 AND date > current_timestamp - INTERVAL '20 days' ORDER BY returns DESC;"
+  sqlstatmt:="SELECT target,price,returns,ticker,note,to_char(date,'MM/DD/YYYY'),q_eps,a_eps,report,q_pe,a_pe,divyield*100 FROM fmi.marketmentions WHERE returns>.2 AND a_eps>0 AND date > current_timestamp - INTERVAL '20 days' ORDER BY returns DESC;"
   rows, err := db.Query(sqlstatmt)
   if err != nil{log.Fatalf("failed to select marketmentions data")}
   bks := []Newspoint{}
   for rows.Next() {
     bk := Newspoint{}
-    err := rows.Scan(&bk.Target, &bk.Price, &bk.Returns, &bk.Ticker, &bk.Note, &bk.Date, &bk.Q_eps, &bk.A_eps,&bk.Report,&bk.Q_pe,&bk.A_pe)
+    err := rows.Scan(&bk.Target, &bk.Price, &bk.Returns, &bk.Ticker, &bk.Note, &bk.Date, &bk.Q_eps, &bk.A_eps,&bk.Report,&bk.Q_pe,&bk.A_pe,&bk.Divyield)
     if err != nil {log.Fatal(err)}
     bks = append(bks, bk)}
   db.Close()
-  tpl := template.Must(template.ParseFiles("bestbets.gohtml","css/main.css","css/mcleod-reset.css"))
+  tpl := template.Must(template.ParseFiles("gohtml/bestbets.gohtml","css/main.css","css/mcleod-reset.css"))
   tpl.Execute(w, bks)
 }
 
 
 
-func dbpull1() []Newspoint {
+func marketbullspull() []Newspoint {
   db, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
   if err != nil {log.Fatalf("Unable to connect to the database")}
-  sqlstatmt:="SELECT target,price,returns,ticker,note,to_char(date,'DD/MM/YYYY'),q_eps,a_eps,report,q_pe,a_pe FROM fmi.marketmentions WHERE report='analyst' AND date > current_timestamp - INTERVAL '2 days';"
+  sqlstatmt:="SELECT * FROM(SELECT DISTINCT on (ticker) target,price,round(returns*100) as returns,ticker,note,to_char(date,'MM/DD/YYYY'),q_eps,a_eps,report,q_pe,a_pe,divyield*100 FROM fmi.marketmentions WHERE report='analyst' AND date > current_timestamp - INTERVAL '2 days' ORDER BY ticker,returns DESC) t ORDER BY returns DESC LIMIT 5;"
   // fmt.Println(sqlstatmt)
   rows, err := db.Query(sqlstatmt)
   if err != nil{log.Fatalf("failed to select marketmentions data")}
   bks := []Newspoint{}
   for rows.Next() {
     bk := Newspoint{}
-    err := rows.Scan(&bk.Target, &bk.Price, &bk.Returns, &bk.Ticker, &bk.Note, &bk.Date, &bk.Q_eps, &bk.A_eps,&bk.Report,&bk.Q_pe,&bk.A_pe)
+    err := rows.Scan(&bk.Target, &bk.Price, &bk.Returns, &bk.Ticker, &bk.Note, &bk.Date, &bk.Q_eps, &bk.A_eps,&bk.Report,&bk.Q_pe,&bk.A_pe,&bk.Divyield)
+    if err != nil {log.Fatal(err)}
+  	// appends the rows
+    bks = append(bks, bk)
+  }
+  db.Close()
+  return bks
+}
+
+
+func marketbearspull() []Newspoint {
+  db, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
+  if err != nil {log.Fatalf("Unable to connect to the database")}
+  sqlstatmt:="SELECT * FROM(SELECT DISTINCT on (ticker) target,price,round(returns*100) as returns,ticker,note,to_char(date,'MM/DD/YYYY'),q_eps,a_eps,report,q_pe,a_pe,divyield FROM fmi.marketmentions WHERE report='analyst' AND date > current_timestamp - INTERVAL '2 days' ORDER BY ticker,returns ASC) t ORDER BY returns ASC limit 5;"
+  // fmt.Println(sqlstatmt)
+  rows, err := db.Query(sqlstatmt)
+  if err != nil{log.Fatalf("failed to select marketmentions data")}
+  bks := []Newspoint{}
+  for rows.Next() {
+    bk := Newspoint{}
+    err := rows.Scan(&bk.Target, &bk.Price, &bk.Returns, &bk.Ticker, &bk.Note, &bk.Date, &bk.Q_eps, &bk.A_eps,&bk.Report,&bk.Q_pe,&bk.A_pe,&bk.Divyield)
     if err != nil {log.Fatal(err)}
   	// appends the rows
     bks = append(bks, bk)
@@ -304,7 +338,7 @@ func dbpull1() []Newspoint {
 func dbpull365() []Newspoint {
   db, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
   if err != nil {log.Fatalf("Unable to connect to the database")}
-  sqlstatmt:="SELECT target,price,returns,ticker,note,to_char(date,'DD/MM/YYYY'),q_eps,a_eps,report,q_pe,a_pe FROM fmi.marketmentions WHERE report='analyst' AND date > current_timestamp - INTERVAL '365 days';"
+  sqlstatmt:="SELECT target,price,returns,ticker,note,to_char(date,'MM/DD/YYYY'),q_eps,a_eps,report,q_pe,a_pe,divyield FROM fmi.marketmentions WHERE report='analyst' AND date > current_timestamp - INTERVAL '365 days';"
   // fmt.Println(sqlstatmt)
   rows, err := db.Query(sqlstatmt)
   if err != nil{
@@ -313,7 +347,7 @@ func dbpull365() []Newspoint {
   bks := []Newspoint{}
   for rows.Next() {
     bk := Newspoint{}
-    err := rows.Scan(&bk.Target, &bk.Price, &bk.Returns, &bk.Ticker, &bk.Note, &bk.Date, &bk.Q_eps, &bk.A_eps,&bk.Report,&bk.Q_pe,&bk.A_pe)
+    err := rows.Scan(&bk.Target, &bk.Price, &bk.Returns, &bk.Ticker, &bk.Note, &bk.Date, &bk.Q_eps, &bk.A_eps,&bk.Report,&bk.Q_pe,&bk.A_pe,&bk.Divyield)
     if err != nil {log.Fatal(err)}
   	// appends the rows
     bks = append(bks, bk)
@@ -325,7 +359,7 @@ func dbpull365() []Newspoint {
 func earningspull() []Newspoint {
   db, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
   if err != nil {log.Fatalf("Unable to connect to the database")}
-  sqlstatmt:="SELECT target,price,returns,ticker,note,to_char(date,'DD/MM/YYYY'),q_eps,a_eps,report,q_pe,a_pe FROM fmi.marketmentions WHERE report='earnings' AND date > current_timestamp - INTERVAL '5 days';"
+  sqlstatmt:="SELECT target,price,returns,ticker,note,to_char(date,'MM/DD/YYYY'),q_eps,a_eps,report,q_pe,a_pe,divyield FROM fmi.marketmentions WHERE report='earnings' AND date > current_timestamp - INTERVAL '5 days';"
   // fmt.Println(sqlstatmt)
   rows, err := db.Query(sqlstatmt)
   if err != nil{
@@ -334,7 +368,7 @@ func earningspull() []Newspoint {
   bks := []Newspoint{}
   for rows.Next() {
     bk := Newspoint{}
-    err := rows.Scan(&bk.Target, &bk.Price, &bk.Returns, &bk.Ticker, &bk.Note, &bk.Date, &bk.Q_eps, &bk.A_eps,&bk.Report,&bk.Q_pe,&bk.A_pe)
+    err := rows.Scan(&bk.Target, &bk.Price, &bk.Returns, &bk.Ticker, &bk.Note, &bk.Date, &bk.Q_eps, &bk.A_eps,&bk.Report,&bk.Q_pe,&bk.A_pe,&bk.Divyield)
     if err != nil {log.Fatal(err)}
   	// appends the rows
     bks = append(bks, bk)
@@ -346,7 +380,7 @@ func earningspull() []Newspoint {
 func fullearningspull() []Newspoint {
   db, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
   if err != nil {log.Fatalf("Unable to connect to the database")}
-  sqlstatmt:="SELECT target,price,returns,ticker,note,to_char(date,'DD/MM/YYYY'),q_eps,a_eps,report,q_pe,a_pe FROM fmi.marketmentions WHERE report='earnings' AND date > current_timestamp - INTERVAL '365 days';"
+  sqlstatmt:="SELECT target,price,returns,ticker,note,to_char(date,'MM/DD/YYYY'),q_eps,a_eps,report,q_pe,a_pe,divyield FROM fmi.marketmentions WHERE report='earnings' AND date > current_timestamp - INTERVAL '365 days';"
   // fmt.Println(sqlstatmt)
   rows, err := db.Query(sqlstatmt)
   if err != nil{
@@ -355,7 +389,7 @@ func fullearningspull() []Newspoint {
   bks := []Newspoint{}
   for rows.Next() {
     bk := Newspoint{}
-    err := rows.Scan(&bk.Target, &bk.Price, &bk.Returns, &bk.Ticker, &bk.Note, &bk.Date, &bk.Q_eps, &bk.A_eps,&bk.Report,&bk.Q_pe,&bk.A_pe)
+    err := rows.Scan(&bk.Target, &bk.Price, &bk.Returns, &bk.Ticker, &bk.Note, &bk.Date, &bk.Q_eps, &bk.A_eps,&bk.Report,&bk.Q_pe,&bk.A_pe,&bk.Divyield)
     if err != nil {log.Fatal(err)}
   	// appends the rows
     bks = append(bks, bk)
@@ -369,9 +403,11 @@ type Portfolio struct{
   Shares int
   Price sql.NullFloat64
   PortValue sql.NullFloat64
-  Target_price int
+  Target_price sql.NullFloat64
   Exp_return sql.NullFloat64
   Exp_value sql.NullFloat64
+  Target sql.NullFloat64
+  Target_date sql.NullString
 }
 
 
@@ -379,13 +415,13 @@ type Portfolio struct{
 func portfoliopull() []Portfolio{
   db, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
   if err != nil {log.Fatalf("Unable to connect to the database")}
-  sqlstatmt:="SELECT * FROM fmi.portfolio where ticker<>'CASH' ORDER BY exp_return desc;"
+  sqlstatmt:="SELECT ticker,shares,price,value,target_price,exp_return*100,exp_value,target,to_char(target_date,'MM/DD/YYYY') FROM fmi.portfolio where ticker<>'CASH' ORDER BY exp_return desc;"
   rows, err := db.Query(sqlstatmt)
   if err != nil{log.Fatalf("failed to select portfolio")}
   bks := []Portfolio{}
   for rows.Next() {
     bk := Portfolio{}
-    err := rows.Scan(&bk.Ticker, &bk.Shares, &bk.Price, &bk.PortValue, &bk.Target_price, &bk.Exp_return, &bk.Exp_value)
+    err := rows.Scan(&bk.Ticker, &bk.Shares, &bk.Price, &bk.PortValue, &bk.Target_price, &bk.Exp_return, &bk.Exp_value, &bk.Target,&bk.Target_date)
     if err != nil {log.Fatal(err)}
   	// appends the rows
     bks = append(bks, bk)
@@ -408,7 +444,7 @@ type PortfolioPerformance struct{
 func portfolioperformancepull() []PortfolioPerformance{
   db, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
   if err != nil {log.Fatalf("Unable to connect to the database")}
-  sqlstatmt:="SELECT to_char(date, 'DD/MM/YYYY'),portfolio,snp,nasdaq,portfolioreturn,snpreturn,nasdaqreturn FROM fmi.portfoliohistory;"
+  sqlstatmt:="SELECT to_char(date,'MM/DD/YYYY'),portfolio,snp,nasdaq,portfolioreturn,snpreturn,nasdaqreturn FROM fmi.portfoliohistory;"
   rows, err := db.Query(sqlstatmt)
   if err != nil{log.Fatalf("failed to select portfolio")}
   bks := []PortfolioPerformance{}
@@ -423,45 +459,358 @@ func portfolioperformancepull() []PortfolioPerformance{
   return bks
 }
 
+
+func todayportfolioperformancepull() []PortfolioPerformance{
+  db, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
+  if err != nil {log.Fatalf("Unable to connect to the database")}
+  sqlstatmt:="SELECT to_char(date,'MM/DD/YYYY'),portfolio,snp,nasdaq,portfolioreturn,snpreturn,nasdaqreturn FROM fmi.portfoliohistory ORDER BY date DESC LIMIT 1;"
+  rows, err := db.Query(sqlstatmt)
+  if err != nil{log.Fatalf("failed to select portfolio")}
+  bks := []PortfolioPerformance{}
+  for rows.Next() {
+    bk := PortfolioPerformance{}
+    err := rows.Scan(&bk.Date, &bk.P1, &bk.SnP, &bk.Nasdaq, &bk.Portfolioreturn,&bk.Snpreturn,&bk.Nasdaqreturn)
+    if err != nil {log.Fatal(err)}
+  	// appends the rows
+    bks = append(bks, bk)
+
+  }
+  db.Close()
+  return bks
+}
+
 type Homepage struct {
-  Marketmentions []Newspoint
+  Marketbulls []Newspoint
+  Marketbears []Newspoint
   Portfoliolist []Portfolio
   Pperformance []PortfolioPerformance
   Earnings []Newspoint
 }
 
+
+func Cumreturnchart() {
+	/*
+	   This is a`TimeSeries` using go-chart
+     Time values must be used for XAxis
+     Float64 must be used for YAxis
+	*/
+
+// Lets pulls some data from the database
+  db, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
+  if err != nil {log.Fatalf("Unable to connect to the database")}
+  sqlstatmt:="select date,cumport,cumsnp,cumnasdaq from fmi.portfoliohistory order by date desc;"
+  rows, err := db.Query(sqlstatmt)
+  if err != nil{log.Fatalf("failed to grab portfolio history data for chart")}
+
+// define variables that will be used in the chart
+  dates := []time.Time{}
+  snps := []float64{}
+  ports := []float64{}
+  nasdaqs := []float64{}
+
+// range through the data and append them to the created "books" variables
+  for rows.Next() {
+
+    // define temporary variables to store the single data points in then append to the "books"
+    var date time.Time
+    var snp float64
+    var port float64
+    var nasdaq float64
+
+    // reading data into temp variables
+    err := rows.Scan(&date,&port,&snp,&nasdaq)
+    if err != nil {log.Fatal(err)}
+
+  	// appends the data into "books" variables
+    dates = append(dates, date)
+    snps = append(snps, snp)
+    ports = append(ports, port)
+    nasdaqs = append(nasdaqs, nasdaq)
+  }
+  // close the db connection
+  db.Close()
+
+// define series using data pulled from above
+// remember time series must have type []time.Time for XValues and float64's for y values
+snpSeries:=	chart.TimeSeries{
+        Style: chart.Style{
+					Show:        true,
+					// StrokeColor: chart.GetDefaultColor(0).WithAlpha(64),
+					// FillColor:   chart.GetDefaultColor(0).WithAlpha(64),
+          StrokeWidth: 5.0,
+				},
+
+        Name: "SnP500",
+        // YAxis: chart.YAxisSecondary,
+				XValues: dates,
+				YValues: snps,
+			}
+
+
+// define series using data pulled from above
+// remember time series must have type []time.Time for XValues and float64's for y values
+portSeries:= chart.TimeSeries{
+        Style: chart.Style{
+          Show:        true,
+          // StrokeColor: chart.GetDefaultColor(4).WithAlpha(64),
+          // FillColor:   chart.GetDefaultColor(4).WithAlpha(64),
+          StrokeWidth: 5.0,
+        },
+        Name: "FMI Portfolio",
+        XValues: dates,
+        YValues: ports,
+      }
+
+
+// define series using data pulled from above
+// remember time series must have type []time.Time for XValues and float64's for y values
+nasdaqSeries:=chart.TimeSeries{
+  Style: chart.Style{
+    Show:        true,
+    // StrokeColor: chart.GetDefaultColor(2).WithAlpha(64),
+    // FillColor:   chart.GetDefaultColor(2).WithAlpha(64),
+    StrokeWidth: 5.0,
+  },
+  Name: "Nasdaq",
+  XValues: dates,
+  YValues: nasdaqs,
+}
+
+
+// create the graph
+
+  graph := chart.Chart{
+    Width:1280,
+    Height: 720,
+
+// define axises
+		XAxis: chart.XAxis{
+      Name: "Date",
+			Style: chart.StyleShow(),
+      TickPosition: chart.TickPositionBetweenTicks,
+		},
+
+    YAxis: chart.YAxis{
+      Name: "Cumulative Earnings From $1",
+			Style: chart.StyleShow(),
+		},
+
+// define background
+    Background: chart.Style{
+			Padding: chart.Box{
+				Top:  10,
+				Left: 10,
+        Bottom: 10,
+        Right: 10,
+			},
+    },
+
+// graph your serieses
+		Series: []chart.Series{
+      snpSeries,
+      portSeries,
+      nasdaqSeries,
+      chart.FirstValueAnnotation(snpSeries),
+      chart.FirstValueAnnotation(portSeries),
+      chart.FirstValueAnnotation(nasdaqSeries),
+    },
+
+	}
+
+// create chart legend
+  graph.Elements = []chart.Renderable{
+		chart.Legend(&graph),
+	}
+
+// define output file for chart
+  outputFile, err := os.Create("pics/cumreturn.png")
+      if err != nil {
+      	fmt.Println("Error Creating cumreturn.png")
+        fmt.Println()
+        return
+      }
+
+      // render to output file
+	graph.Render(chart.PNG, outputFile)
+
+      // Don't forget to close files
+      outputFile.Close()
+
+}
+
+
+
+func PortfolioImages() {
+// pull data from the database
+  db, err := sql.Open("postgres", "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
+  if err != nil {log.Fatalf("Unable to connect to the database")}
+  sqlstatmt:="select ticker from fmi.portfolio;"
+  rows, err := db.Query(sqlstatmt)
+  if err != nil{log.Fatalf("failed to grab portfolio tickers for images")}
+
+// range through the data and append them to the created "books" variables
+  for rows.Next() {
+
+    // define variables that will be used in the chart
+
+
+    targets := []float64{}
+    dates := []time.Time{}
+    // define temporary variables to store the single data points in then append to the "books"
+    var stock string
+
+    // reading data into temp variables
+    err := rows.Scan(&stock)
+    if err != nil {log.Fatal(err)}
+
+    sqlstatmt2:="select DISTINCT ON (date) target,date from fmi.marketmentions where ticker='"+stock+"' and report='analyst' order by date desc limit 10;"
+    fmt.Println(sqlstatmt2)
+    rows2, err := db.Query(sqlstatmt2)
+    if err != nil{log.Fatalf("failed to grab portfolio targets and dates for images")}
+  // range through the rows
+    for rows2.Next(){
+      var target float64
+      target=0
+      var date time.Time
+      err := rows2.Scan(&target,&date)
+      if err != nil {log.Fatal(err)}
+  	// appends the data into "books" variables
+      dates = append(dates, date)
+      targets = append(targets, target)
+
+    }
+    // Create series from data
+      stockSeries:=	chart.TimeSeries{
+              Style: chart.Style{
+      					Show:        true,
+      					// StrokeColor: chart.GetDefaultColor(0).WithAlpha(64),
+      					// FillColor:   chart.GetDefaultColor(0).WithAlpha(64),
+                StrokeWidth: 5.0,
+      				},
+
+              Name: stock,
+              // YAxis: chart.YAxisSecondary,
+      				XValues: dates,
+      				YValues: targets,
+      			}
+
+      // create the graph
+      graph := chart.Chart{
+          Width:800,
+          Height: 300,
+      // define axises
+      		XAxis: chart.XAxis{
+          Name: "Date",
+      		Style: chart.StyleShow(),
+          TickPosition: chart.TickPositionBetweenTicks,
+          },
+
+          YAxis: chart.YAxis{
+            Name: "Target Price",
+      			Style: chart.StyleShow(),
+      		},
+      // define background
+          Background: chart.Style{
+      			Padding: chart.Box{
+      				Top:  10,
+      				Left: 10,
+              Bottom: 10,
+              Right: 10,
+      			},
+          },
+
+      // graph your serieses
+      		Series: []chart.Series{
+            stockSeries,
+
+          },
+      }
+
+    // create chart legend
+      graph.Elements = []chart.Renderable{
+    		chart.Legend(&graph),
+    	}
+
+    // define output file for chart
+      outputFile, err := os.Create("portfolioimages/"+stock+".png")
+          if err != nil {
+          	fmt.Println("Error Creating "+stock+".png")
+            fmt.Println()
+            return
+          }
+
+      // render to output file
+    	graph.Render(chart.PNG, outputFile)
+
+      // Don't forget to close files
+      outputFile.Close()
+
+      }
+
+
+  // close the db connection
+  db.Close()
+
+  }
+
+
+
+
+
+
+
+
 func serve(w http.ResponseWriter, r *http.Request){
-  homepagedata:=Homepage{dbpull1(),portfoliopull(),portfolioperformancepull(),earningspull()}
-  tpl := template.Must(template.ParseFiles("main.gohtml","css/main.css","css/mcleod-reset.css"))
+  Cumreturnchart()
+  homepagedata:=Homepage{marketbullspull(),marketbearspull(),portfoliopull(),todayportfolioperformancepull(),earningspull()}
+  tpl := template.Must(template.ParseFiles("gohtml/main.gohtml","css/main.css","css/mcleod-reset.css"))
   tpl.Execute(w, homepagedata)
 }
+
+func servelanding(w http.ResponseWriter, r *http.Request){
+	if alreadyLoggedIn(r) {http.Redirect(w, r, "/home", http.StatusSeeOther)}else{
+    tpl := template.Must(template.ParseFiles("gohtml/landing.gohtml","css/main.css","css/mcleod-reset.css"))
+    tpl.Execute(w, nil)
+  }
+}
+
+func servenewinvestors(w http.ResponseWriter, r *http.Request){
+  tpl := template.Must(template.ParseFiles("gohtml/newinvestors.gohtml","css/main.css","css/mcleod-reset.css"))
+    tpl.Execute(w, nil)
+  }
+
+func failedlogin(w http.ResponseWriter, r *http.Request){
+  tpl := template.Must(template.ParseFiles("gohtml/failedlogin.gohtml","css/main.css","css/mcleod-reset.css"))
+    tpl.Execute(w, nil)
+  }
+
 func servemarketmentions(w http.ResponseWriter, r *http.Request){
   z:=getUser(w,r)
   if membercheck(z.Email,z.Pass) == true{
-  tpl := template.Must(template.ParseFiles("marketmentions.gohtml","css/main.css","css/mcleod-reset.css"))
+  tpl := template.Must(template.ParseFiles("gohtml/marketmentions.gohtml","css/main.css","css/mcleod-reset.css"))
   tpl.Execute(w, dbpull365())
-  }else{http.Redirect(w, r, "/", http.StatusSeeOther)}
+  }else{http.Redirect(w, r, "/home", http.StatusSeeOther)}
 }
 
 func serveearnings(w http.ResponseWriter, r *http.Request){
   z:=getUser(w,r)
   if membercheck(z.Email,z.Pass) == true{
-  tpl := template.Must(template.ParseFiles("earnings.gohtml","css/main.css","css/mcleod-reset.css"))
+  tpl := template.Must(template.ParseFiles("gohtml/earnings.gohtml","css/main.css","css/mcleod-reset.css"))
   tpl.Execute(w, fullearningspull())
-  }else{http.Redirect(w, r, "/", http.StatusSeeOther)}
+  }else{http.Redirect(w, r, "/home", http.StatusSeeOther)}
 }
 
 func serveabout(w http.ResponseWriter, r *http.Request){
-  tpl := template.Must(template.ParseFiles("about.gohtml","css/main.css","css/mcleod-reset.css" ))
+  tpl := template.Must(template.ParseFiles("gohtml/about.gohtml","css/main.css","css/mcleod-reset.css" ))
   tpl.Execute(w, nil)
 }
 func servecontact(w http.ResponseWriter, r *http.Request){
-  tpl := template.Must(template.ParseFiles("contact.gohtml","css/main.css","css/mcleod-reset.css" ))
+  tpl := template.Must(template.ParseFiles("gohtml/contact.gohtml","css/main.css","css/mcleod-reset.css" ))
   tpl.Execute(w, nil)
 }
 func researchlinks(w http.ResponseWriter, r *http.Request){
   if !alreadyLoggedIn(r){http.Redirect(w, r, "/login", http.StatusSeeOther)}
-  tpl := template.Must(template.ParseFiles("researchlinks.gohtml","css/main.css","css/mcleod-reset.css"))
+  tpl := template.Must(template.ParseFiles("gohtml/researchlinks.gohtml","css/main.css","css/mcleod-reset.css"))
   tpl.Execute(w, nil)
 }
 func researchroa(w http.ResponseWriter, r *http.Request){
@@ -470,10 +819,19 @@ func researchroa(w http.ResponseWriter, r *http.Request){
 }
 func investors(w http.ResponseWriter, r *http.Request){
   if !alreadyLoggedIn(r){http.Redirect(w, r, "/login", http.StatusSeeOther)}
-  tpl := template.Must(template.ParseFiles("investors.gohtml","css/main.css","css/mcleod-reset.css"))
+  tpl := template.Must(template.ParseFiles("gohtml/investors.gohtml","css/main.css","css/mcleod-reset.css"))
   tpl.Execute(w, nil)
 }
 func researcheps(w http.ResponseWriter, r *http.Request){
   tpl := template.Must(template.ParseFiles("research/eps.gohtml","css/main.css","css/mcleod-reset.css"))
   tpl.Execute(w, nil)
+}
+func researchgold(w http.ResponseWriter, r *http.Request){
+  tpl := template.Must(template.ParseFiles("research/gold.gohtml","css/main.css","css/mcleod-reset.css"))
+  tpl.Execute(w, nil)
+}
+func portfolio(w http.ResponseWriter, r *http.Request){
+  PortfolioImages()
+  tpl := template.Must(template.ParseFiles("gohtml/portfolio.gohtml","css/main.css","css/mcleod-reset.css"))
+  tpl.Execute(w, portfoliopull())
 }

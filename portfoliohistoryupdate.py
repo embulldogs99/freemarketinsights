@@ -10,7 +10,6 @@ import io
 import re
 import psycopg2
 import quandl
-from mmduprem import mmduprem
 from decimal import *
 
 
@@ -83,7 +82,7 @@ def portfoliovalue():
 def portfoliohistoryreturnscalc():
     conn = psycopg2.connect("dbname='postgres' user='postgres' password='postgres' host='localhost' port='5432'")
     cur = conn.cursor()
-    cur.execute("""SELECT DISTINCT on (date) date,portfolio,snp,nasdaq,portfolioreturn,snpreturn,nasdaqreturn FROM fmi.portfoliohistory;""")
+    cur.execute("""SELECT DISTINCT on (date) date,portfolio,snp,nasdaq,portfolioreturn,snpreturn,nasdaqreturn FROM fmi.portfoliohistory ORDER BY date asc;""")
     portfolio=cur.fetchall()
     row=0
     for d,p,s,n,pr,sr,nr in portfolio:
@@ -108,8 +107,36 @@ def portfoliohistoryreturnscalc():
     conn.close()
 
 
+def portfoliohistorycumcalc():
+    conn = psycopg2.connect("dbname='postgres' user='postgres' password='postgres' host='localhost' port='5432'")
+    cur = conn.cursor()
+    cur.execute("""SELECT DISTINCT on (date) date,portfolioreturn,snpreturn,nasdaqreturn,cumport,cumsnp,cumnasdaq FROM fmi.portfoliohistory ORDER BY date asc;""")
+    portfolio=cur.fetchall()
+    row=0
+    for d,pr,sr,nr,cp,cs,cr in portfolio:
+        if row==0:
+            pastcumport=1
+            pastcumsnp=1
+            pastcumnasdaq=1
+            cur.execute("""UPDATE fmi.portfoliohistory set cumport=%s, cumsnp=%s, cumnasdaq=%s WHERE date=%s;""", (1,1,1,d))
+            conn.commit()
+            row+=1
+        else:
+            cumport=round(pastcumport+(pastcumport*pr),6)
+            cumsnp=round(pastcumsnp+(pastcumsnp*sr),6)
+            cumnasdaq=round(pastcumnasdaq+(pastcumnasdaq*nr),6)
+
+            pastcumport=cumport
+            pastcumsnp=cumsnp
+            pastcumnasdaq=cumnasdaq
+
+            row+=1
+            cur.execute("""UPDATE fmi.portfoliohistory set cumport=%s, cumsnp=%s, cumnasdaq=%s WHERE date=%s;""", (cumport,cumsnp,cumnasdaq,d))
+            conn.commit()
+    cur.close()
+    conn.close()
 
 portfoliovalue()
-portfoliohistoryreturnscalc()
 portfoliohistoryduplicatedelete()
 portfoliohistoryreturnscalc()
+portfoliohistorycumcalc()

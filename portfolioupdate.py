@@ -9,7 +9,6 @@ import pandas as pd
 import io
 import re
 import psycopg2
-from mmduprem import mmduprem
 
 
 
@@ -30,6 +29,14 @@ def barchart(ticker):
             s=float(s[0])
         return s
 
+def robinhoodprice(ticker):
+    url = "https://api.robinhood.com/quotes/"+ticker+"/"
+    headers = {"Accept": "application/json"}
+    binary = requests.get(url=url, headers=headers).content
+    data=json.loads(binary)
+    return float(data['ask_price'])
+
+
 #############################################################################
 ############## Pull Current Portfolio and Obtain Tickers  ###################
 conn = psycopg2.connect("dbname='postgres' user='postgres' password='postgres' host='localhost' port='5432'")
@@ -37,22 +44,49 @@ cur = conn.cursor()
 cur.execute("""SELECT ticker,shares,target_price FROM fmi.portfolio where ticker<>'CASH';""")
 portfolio=cur.fetchall()
 
+
 ####################################################
 ###Pull Quandl Price information for each ticker and send it to database#########
 ###################################################
 for ticker,shares,target_price in portfolio:
-    price=barchart(ticker)
+
+    try:
+        bcprice=barchart(ticker)
+        rhprice=robinhoodprice(ticker)
+        if bcprice*.9 <= rhprice <= bcprice*1.1:
+            price=rhprice
+        else:
+            price=bcprice
+        if bcprice == None:
+            price=rhprice
+        if rhprice == None:
+            price=bcprice
+    except:
+        price=barchart(ticker)
+
+
     value=round(shares*float(price),2)
     cur.execute("""UPDATE fmi.portfolio set price=%s,value=%s where ticker=%s;""", (price, value, ticker))
     conn.commit()
-    #Insert calculated expected return
-    exp_return=round((target_price-price)/float(price),2)
-    exp_value=(target_price*shares)
-    cur.execute("""UPDATE fmi.portfolio set exp_return=%s,exp_value=%s where ticker=%s;""", (exp_return,exp_value,ticker))
+
+###################################################
+####Obtain Recent Market Mentions Analyst projection
+###################################################
+    cur.execute("""SELECT "target","date" from fmi.marketmentions where ticker='{0}' and report='analyst' order by "date" desc limit 1;""".format(ticker))
     conn.commit()
+    marketmentions=cur.fetchall()
+
+    for target,date in marketmentions:
+            cur.execute("""UPDATE fmi.portfolio set target=%s,target_date=%s where ticker=%s;""", (target,date,ticker))
+            conn.commit()
+
+###########################################
+####Insert calculated expected return
+##################################################
+            exp_return=round((target-price)/float(price),2)
+            exp_value=(target*shares)
+            cur.execute("""UPDATE fmi.portfolio set exp_return=%s,exp_value=%s where ticker=%s;""", (exp_return,exp_value,ticker))
+            conn.commit()
 
 cur.close()
 conn.close()
-
-
-import portfoliohistoryupdate 
