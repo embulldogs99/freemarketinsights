@@ -17,6 +17,13 @@ def mmduprem():
     conn.commit()
     cur.execute("ALTER TABLE fmi.marketmentions_temp RENAME TO marketmentions;")
     conn.commit()
+    cur.execute("""update fmi.marketmentions set note=replace(note,'"','')""")
+    conn.commit()
+    print("----------------------------")
+    print("cleaned marketmentions data for quotations")
+    print("----------------------------")
+
+
     # close the communication with the PostgreSQL
     cur.close()
     conn.close()

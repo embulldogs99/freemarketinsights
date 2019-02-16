@@ -1,5 +1,5 @@
 {
-  "name": "fmi",
+  "name": "freemarketinsights",
   "version": "1.0.0",
   "description": "",
   "main": "sorttable.js",
@@ -16,12 +16,13 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "homepage":"https://embulldogs99.github.io/fmi",
+  "homepage": "https://github.com/embulldogs99/freemarketinsights#readme",
   "bugs": {
     "url": "https://github.com/embulldogs99/freemarketinsights/issues"
   },
-  "homepage": "https://github.com/embulldogs99/freemarketinsights#readme",
   "dependencies": {
-    "gh-pages": "^2.0.1"
-  }
+    "gh-pages": "^2.0.1",
+    "requests": "^0.2.2"
+  },
+  "devDependencies": {}
 }

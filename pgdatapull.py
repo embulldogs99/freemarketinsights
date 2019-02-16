@@ -1,5 +1,3 @@
-
-
 import requests
 import bs4
 from bs4 import BeautifulSoup
@@ -27,14 +25,6 @@ import shutil
 
 conn = psycopg2.connect("dbname='postgres' user='postgres' password='postgres' host='localhost' port='5432'")
 cur = conn.cursor()
-# execute a statement
-
-
-cur.execute("""update fmi.marketmentions set note=replace(note,'"','')""")
-conn.commit()
-print("----------------------------")
-print("cleaned marketmentions data for quotations")
-print("----------------------------")
 
 # marketbulls
 cur.execute("COPY (SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(m))) FROM (SELECT * FROM(SELECT DISTINCT on (ticker) target,price,round(returns*100) as returns,ticker,note,to_char(date,'MM/DD/YYYY'),q_eps,a_eps,report,q_pe,a_pe,divyield FROM fmi.marketmentions WHERE report='analyst' AND date > current_timestamp - INTERVAL '20 days' ORDER BY ticker,returns DESC) t ORDER BY returns DESC LIMIT 5 ) m)  to 'F:/json/marketbulls.json'")
@@ -44,7 +34,7 @@ print("----------------------------")
 print("pulled market bulls")
 print("----------------------------")
 
-shutil.move("F:\json\marketbulls.json","json/marketbulls.json")
+shutil.move("F:\json\marketbulls.json","dist/json/marketbulls.json")
 
 #MarketBears
 
@@ -54,16 +44,16 @@ print("----------------------------")
 print("pulled market bears")
 print("----------------------------")
 
-shutil.move("F:\json\marketbears.json","json/marketbears.json")
+shutil.move("F:\json\marketbears.json","dist/json/marketbears.json")
 
 
-
-cur.execute("COOY (SELECT to_char(date,'MM/DD/YYYY'),portfolio,snp,nasdaq,portfolioreturn,snpreturn,nasdaqreturn FROM fmi.portfoliohistory) to 'F:/json/portfoliohistory.json'")
+#PortfolioHistory
+cur.execute("COPY (SELECT to_char(date,'MM/DD/YYYY'),portfolio,snp,nasdaq,portfolioreturn,snpreturn,nasdaqreturn FROM fmi.portfoliohistory) to 'F:/json/portfoliohistory.json'")
 conn.commit()
 print("----------------------------")
 print("pulled portfoliohistory")
 print("----------------------------")
-shutil.move("F:\json\portfoliohistory.json","json/portfoliohistory.json")
+shutil.move("F:\json\portfoliohistory.json","dist/json/portfoliohistory.json")
 
 
 cur.close()

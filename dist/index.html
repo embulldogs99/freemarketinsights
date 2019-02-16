@@ -26,13 +26,6 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
 
-<!--- javascript -->
-<script type="text/javascript">
-  $(document).ready(function(){
-    $('#sortable').dataTable({
-        'iDisplayLength': 100
-    })})
-</script>
 
 
 
@@ -44,8 +37,8 @@
     <button class="dropbtn"> X </button>
       <div class="dropcontent">
         <a href="/" class="dropdown"> Home </a>
-        <a href="/about" class="dropdown"> About </a>
-        <a href="/contact" class="dropdown"> Contact </a>
+        <a href="/about.html" class="dropdown"> About </a>
+        <a href="/contact.gohtml" class="dropdown"> Contact </a>
         <a href="/investors" class="dropdown"> Invest </a>
         <a href="/researchlinks" class="dropdown">Research</a>
         <a href="/portfolio" class="dropdown">Portfolio</a>
@@ -89,10 +82,31 @@
 
 
   <div class="title"> Cumulative Return Index Tracking </div><br>
-      <img src="/pics/cumreturn.PNG" width="800px;" height="300px;" style="border:10px solid lightgrey;"/>
-      {{range .Pperformance}}
-<font size="2px">Last Updated: {{.Date.Value}} </font>
-      {{end}}
+<canvas id="myChart"></canvas>
+<script src="/js/Chart.js"></script>
+<script>
+
+var xhttp3=new XMLHttpRequest();
+xhttp3.onreadystatechange=function(){
+  if (this.readyState ==4 && this.status ==200){
+    var response3=JSON.parse(xhttp3.responseText);
+
+    }
+    }
+  };
+  xhttp3.open("Get", "json/portfoliohistory.json",true);
+  xhttp3.send();
+
+
+
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var myLineChart = new Chart(ctx, {
+    type: 'line',
+    data: response3,
+    options: options
+});
+</script>
 
 
 
@@ -116,7 +130,7 @@ xhttp.onreadystatechange=function(){
         '<td>$'+response[i].price+'</td>'+
         '<td>'+response[i].returns/100+'%'+'</td>'+
         '<td>'+response[i].divyield+'</td>'+
-        '<td><a href="http://www.google.com/search?q='+response[i].ticker+'stock+price"  target="_blank" >'+response[i].ticker+'</a></td>'+
+        '<td><a href="http://www.google.com/search?q='+response[i].ticker+'+stock+price"  target="_blank" >'+response[i].ticker+'</a></td>'+
         '<td><a href="http://www.google.com/search?q='+response[i].note+'"  target="_blank" >'+response[i].note+'</a></td>'+
         '</tr>';
     }
@@ -165,7 +179,7 @@ xhttp2.onreadystatechange=function(){
         '<td>$'+response2[i].price+'</td>'+
         '<td>'+response2[i].returns/100+'%'+'</td>'+
         '<td>'+response2[i].divyield+'</td>'+
-        '<td><a href="http://www.google.com/search?q='+response2[i].ticker+'stock+price"  target="_blank" >'+response2[i].ticker+'</a></td>'+
+        '<td><a href="http://www.google.com/search?q='+response2[i].ticker+'+stock+price"  target="_blank" >'+response2[i].ticker+'</a></td>'+
         '<td><a href="http://www.google.com/search?q='+response2[i].note+'"  target="_blank" >'+response2[i].note+'</a></td>'+
         '</tr>';
     }
