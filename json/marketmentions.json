@@ -1,0 +1,13 @@
+
+
+{
+  "fmi":[
+
+{"target":41,"price":20.710,"returns":1.000,"ticker":"A","note":"Analysts See $0.73 EPS for Agilent Technologies, Inc. (A)","date":"2019-01-14","q_eps":0.730,"a_eps":0.970,"report":"earnings","q_pe":28.370,"a_pe":21.350,"divyield":null,"bank":"Analysts","yrlow":null,"yrhigh":null,"fiveyrlow":32.70},
+{"target":58,"price":41.240,"returns":0.406,"ticker":"AA","note":"Alcoa Corp (NYSE:AA) price target lowered to $58.00 by Credit Suisse Group","date":"2018-09-25","q_eps":null,"a_eps":0.750,"report":"analyst","q_pe":null,"a_pe":null,"divyield":null,"bank":"Credit Suisse","yrlow":null,"yrhigh":null,"fiveyrlow":null},
+{"target":57,"price":28.820,"returns":0.967,"ticker":"AA","note":"Avg. Price Target Opinion: Alcoa Corporation (AA) likely to achieve $56.71 in 52-week period - Voice Of Analysts","date":"2018-12-07","q_eps":null,"a_eps":-0.070,"report":"analyst","q_pe":null,"a_pe":null,"divyield":null,"bank":"Avg. Price Target Opinion:","yrlow":null,"yrhigh":null,"fiveyrlow":null},
+{"target":68,"price":26.600,"returns":1.538,"ticker":"AA","note":"Brokerages Set AA PLC (AA) Price Target at $67.50 - PressOracle","date":"2018-12-30","q_eps":null,"a_eps":-0.070,"report":"analyst","q_pe":null,"a_pe":null,"divyield":null,"bank":"Brokerages","yrlow":null,"yrhigh":null,"fiveyrlow":null},
+{"target":68,"price":28.340,"returns":1.382,"ticker":"AA","note":"Brokerages Set AA PLC (AA) Price Target at $67.50 - PressOracle","date":"2019-01-06","q_eps":null,"a_eps":-0.070,"report":"analyst","q_pe":null,"a_pe":null,"divyield":null,"bank":"Brokerages","yrlow":null,"yrhigh":null,"fiveyrlow":null},
+{"target":68,"price":27.960,"returns":1.414,"ticker":"AA","note":"Analysts Set AA PLC (AA) Price Target at $67.50 - Fairfield Current","date":"2019-01-24","q_eps":null,"a_eps":1.200,"report":"analyst","q_pe":null,"a_pe":null,"divyield":null,"bank":"Analysts","yrlow":null,"yrhigh":null,"fiveyrlow":22.91}
+]
+}
