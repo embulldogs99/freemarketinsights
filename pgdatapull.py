@@ -48,7 +48,7 @@ shutil.move("F:\json\marketbears.json","dist/json/marketbears.json")
 
 
 #PortfolioHistory
-cur.execute("COPY (SELECT to_char(date,'MM/DD/YYYY'),portfolio,snp,nasdaq,portfolioreturn,snpreturn,nasdaqreturn FROM fmi.portfoliohistory) to 'F:/json/portfoliohistory.json'")
+cur.execute("COPY (SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(t))) FROM( SELECT to_char(date,'MM/DD/YYYY'),portfolio,snp,nasdaq,portfolioreturn,snpreturn,nasdaqreturn FROM fmi.portfoliohistory) t) to 'F:/json/portfoliohistory.json'")
 conn.commit()
 print("----------------------------")
 print("pulled portfoliohistory")
