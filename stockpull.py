@@ -195,6 +195,7 @@ def googlefinancepricepull(ticker):
     url="https://finance.google.com/finance?q="+ticker+"&output=json"
     with requests.Session() as c:
         x=c.get(url)
+        time.sleep(120)
         x=BeautifulSoup(x.content)
         d=x.find_all()
         d=str(d)
@@ -229,15 +230,6 @@ def googlefinancepricepull(ticker):
             except:
                 price=0
             return (price)
-
-
-#########################################################################
-########### Future Functions  ############################
-######### https://www.worldtradingdata.com/    #############
-#       url="https://www.worldtradingdata.com/api/v1/stock?symbol=AAPL.L&api_token=FHbAURAx8iHCG2256KOu9ZJVxDxUWOriXwPszK7NOEYAB1wfLFaTZ9QjrOMU"
-#
-#
-################################################################
 
 
 
@@ -638,37 +630,6 @@ def contentfilter():
                         value=value.replace(' ','')
                         value=value.replace('in','')
                         value=value.replace('i','')
-
-                        ######Calling prices to ensure they are available upon fail
-                        price1=googlefinancepricepull(u)
-                        if price1==0:
-                            price1=googlefinancepricepull(u)
-
-
-                        price2=barchart(u)
-                        if price2==None:
-                            price2=0
-
-                        price3=quandl_adj_close(u)
-                        if price3==None:
-                            price3=0
-
-                        price=price1
-
-                        if price1*1.1>price2 and price1*.9<price2 and price1!=0:
-                            price=price1
-
-                        if price1*1.1>price3 and price1*.9<price3 and price1!=0:
-                            price=price1
-
-                        if price2*1.1>price3 and price2*.9<price3 and price2!=0:
-                            price=price2
-
-
-
-
-
-
                         # rhprice=float(robinhoodprice(u))
                         # if bcprice == None:
                         #     bcprice=0
@@ -702,7 +663,7 @@ def contentfilter():
                             value=0
 
                         # Only selecting stocks we have a very specific and defined price for
-                        if price>0 and value>0 and len(stock)<6:
+                        if value>0 and len(stock)<6:
 
                             try:
                                 epsreference=yahooepspuller(stock)
@@ -734,6 +695,9 @@ def contentfilter():
                                 qpe=round(price/float(value),2)
                                 ape=round(price/float(epsreference),2)
 
+                                ######Calling prices to ensure they are available upon fail
+                                price=barchart(u)
+
                                 #determine EPS growth rate
                                 epsgrowth=(qpe*4-ape)/abs(ape)
                                 targetprice=price+price*epsgrowth/8
@@ -751,6 +715,8 @@ def contentfilter():
                                     targetprice=price/2
 
                                 epsexpreturn=(targetprice-price)/price
+
+
 
                                 if price*.1 < targetprice and price*10>targetprice:
         							#########################################################
@@ -771,7 +737,14 @@ def contentfilter():
 
                             # Find price target callouts
                             if grab.find('arget') > 0:
+                                price=barchart(u)
                                 predreturn=(value-price)/price
+                                if predreturn>1 or predreturn<-.8:
+                                    price=quandl_adj_close(u)
+                                    predreturn=(value-price)/price
+                                    if predreturn>1 or predreturn<-.8:
+                                        price=googlefinancepricepull(u)
+                                        predreturn=(value-price)/price
 
                                 if price*.1 < value and price*10>value:
                                     #########################################################
