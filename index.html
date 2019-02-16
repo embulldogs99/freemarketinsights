@@ -3,13 +3,13 @@
 
 <head>
 
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({
       google_ad_client: "ca-pub-4458360192360211",
       enable_page_level_ads: true
     });
-  </script>
+  </script> -->
 
 
 <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
@@ -21,13 +21,6 @@
 <link href="css/mcleod-reset.css" rel="stylesheet">
 <link href="css/main.css" rel="stylesheet">
 <link href="css/main_iphone.css" media="(max-width: 600px)" rel="stylesheet">
-
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
-<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
-
-
-
 
 </head>
 
@@ -96,12 +89,12 @@ var myLineChart = new Chart(ctx, {
     type: 'line',
         label:'SnP',
         data:snp,
-        console.log(snp);
+
 
     options: {}
 
-
     });
+            console.log(snp);
 var xhttp3=new XMLHttpRequest();
 xhttp3.onreadystatechange=function(){
   if (this.readyState ==4 && this.status ==200){
@@ -117,6 +110,7 @@ xhttp3.onreadystatechange=function(){
         port += 1+response3[i].portfolioreturn;
         nas += 1+response3[i].nasdaqreturn;
       } else{
+        console.log(snp);
         snp += snp+snp*response3[i].snp;
         labels += response3[i].to_char;
         port += port+port*response3[i].portfolioreturn;
