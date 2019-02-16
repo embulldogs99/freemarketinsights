@@ -1,0 +1,27 @@
+{
+  "name": "fmi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sorttable.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "deploy": "gh-pages -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/embulldogs99/freemarketinsights.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "homepage":"https://embulldogs99.github.io/fmi",
+  "bugs": {
+    "url": "https://github.com/embulldogs99/freemarketinsights/issues"
+  },
+  "homepage": "https://github.com/embulldogs99/freemarketinsights#readme",
+  "dependencies": {
+    "gh-pages": "^2.0.1"
+  }
+}
