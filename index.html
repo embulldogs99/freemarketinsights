@@ -91,6 +91,13 @@ xhttp3.onreadystatechange=function(){
   if (this.readyState ==4 && this.status ==200){
     var response3=JSON.parse(xhttp3.responseText);
 
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myLineChart = new Chart(ctx, {
+        type: 'line',
+        data: response3,
+        options: options
+    });
+
     }
     }
   };
@@ -99,13 +106,6 @@ xhttp3.onreadystatechange=function(){
 
 
 
-
-var ctx = document.getElementById('myChart').getContext('2d');
-var myLineChart = new Chart(ctx, {
-    type: 'line',
-    data: response3,
-    options: options
-});
 </script>
 
 
