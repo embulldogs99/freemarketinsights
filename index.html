@@ -90,19 +90,46 @@ var xhttp3=new XMLHttpRequest();
 xhttp3.onreadystatechange=function(){
   if (this.readyState ==4 && this.status ==200){
     var response3=JSON.parse(xhttp3.responseText);
-
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myLineChart = new Chart(ctx, {
-        type: 'line',
-        data: response3,
-        options: options
-    });
-
+    var snp='';
+    var port='';
+    var nas='';
+    var labels='';
+    for (var i=0;i<response3.length;i++){
+      if (i=0){
+        snp += 1+response3[i].snp;
+        labels += response3[i].to_char;
+        port += 1+response3[i].portfolioreturn;
+        nas += 1+response3[i].nasdaqreturn;
+      } else{
+        snp += snp+snp*response3[i].snp;
+        labels += response3[i].to_char;
+        port += port+port*response3[i].portfolioreturn;
+        nas += nas+nas*response3[i].nasdaqreturn;
+      }
     }
-    }
-  };
-  xhttp3.open("Get", "json/portfoliohistory.json",true);
-  xhttp3.send();
+  }
+};
+xhttp3.open("Get", "json/portfoliohistory.json",true);
+xhttp3.send();
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var myLineChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      datasets:[{
+        label:'SnP',
+        data:snp
+      }],{
+        label:"Nasdaq",
+        data:nas
+      }],{
+        label:"Portfolio",
+        data:port
+      }
+      labels:labels
+    },
+    options: options
+});
 
 
 
