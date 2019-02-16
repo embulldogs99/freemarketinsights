@@ -27,7 +27,7 @@ conn = psycopg2.connect("dbname='postgres' user='postgres' password='postgres' h
 cur = conn.cursor()
 
 # marketbulls
-cur.execute("COPY (SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(m))) FROM (SELECT * FROM(SELECT DISTINCT on (ticker) target,price,round(returns*100) as returns,ticker,note,to_char(date,'MM/DD/YYYY'),q_eps,a_eps,report,q_pe,a_pe,divyield FROM fmi.marketmentions WHERE report='analyst' AND date > current_timestamp - INTERVAL '20 days' ORDER BY ticker,returns DESC) t ORDER BY returns DESC LIMIT 5 ) m)  to 'F:/json/marketbulls.json'")
+cur.execute("COPY (SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(m))) FROM (SELECT * FROM(SELECT DISTINCT on (ticker) target,price,round(returns*100) as returns,ticker,note,to_char(date,'MM/DD/YYYY'),q_eps,a_eps,report,q_pe,a_pe,divyield FROM fmi.marketmentions WHERE report='analyst' AND bank<>'Other' AND date > current_timestamp - INTERVAL '20 days' ORDER BY ticker,returns DESC) t ORDER BY returns DESC LIMIT 5 ) m)  to 'F:/json/marketbulls.json'")
 
 conn.commit()
 print("----------------------------")
@@ -38,7 +38,7 @@ shutil.move("F:\json\marketbulls.json","dist/json/marketbulls.json")
 
 #MarketBears
 
-cur.execute("COPY (SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(m))) FROM (SELECT * FROM(SELECT DISTINCT on (ticker) target,price,round(returns*100) as returns,ticker,note,to_char(date,'MM/DD/YYYY'),q_eps,a_eps,report,q_pe,a_pe,divyield FROM fmi.marketmentions WHERE report='analyst' AND date > current_timestamp - INTERVAL '20 days' ORDER BY ticker,returns ASC) t ORDER BY returns ASC LIMIT 5 ) m)  to 'F:/json/marketbears.json'")
+cur.execute("COPY (SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(m))) FROM (SELECT * FROM(SELECT DISTINCT on (ticker) target,price,round(returns*100) as returns,ticker,note,to_char(date,'MM/DD/YYYY'),q_eps,a_eps,report,q_pe,a_pe,divyield FROM fmi.marketmentions WHERE report='analyst' AND bank<>'Other' AND date > current_timestamp - INTERVAL '20 days' ORDER BY ticker,returns ASC) t ORDER BY returns ASC LIMIT 5 ) m)  to 'F:/json/marketbears.json'")
 conn.commit()
 print("----------------------------")
 print("pulled market bears")

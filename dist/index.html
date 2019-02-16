@@ -15,7 +15,6 @@
 <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
-<link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#ffffff">
 
 <link href="css/mcleod-reset.css" rel="stylesheet">
@@ -78,45 +77,67 @@
 
 
   <div class="title"> Cumulative Return Index Tracking </div><br>
+
 <canvas id="myChart"></canvas>
 
 
 <script>
-
-
-var ctx = document.getElementById('myChart').getContext('2d');
-var myLineChart = new Chart(ctx, {
-    type: 'line',
-        label:'SnP',
-        data:snp,
-
-
-    options: {}
-
-    });
-            console.log(snp);
 var xhttp3=new XMLHttpRequest();
 xhttp3.onreadystatechange=function(){
   if (this.readyState ==4 && this.status ==200){
     var response3=JSON.parse(xhttp3.responseText);
-    var snp='';
-    var port='';
-    var nas='';
-    var labels='';
+    var snp=[];
+    var port=[];
+    var nas=[];
+    var oldsnp=0;
+    var labels=[];
     for (var i=0;i<response3.length;i++){
-      if (i=0){
-        snp += 1+response3[i].snp;
-        labels += response3[i].to_char;
-        port += 1+response3[i].portfolioreturn;
-        nas += 1+response3[i].nasdaqreturn;
-      } else{
-        console.log(snp);
-        snp += snp+snp*response3[i].snp;
-        labels += response3[i].to_char;
-        port += port+port*response3[i].portfolioreturn;
-        nas += nas+nas*response3[i].nasdaqreturn;
+      if(i==0){
+        oldsnp=1+response3[i].snpreturn;
+        oldnas=1+response3[i].nasdaqreturn;
+        oldport=1+response3[i].portfolioreturn;
+        snp.push((1+Number(response3[i].snpreturn)).toFixed(3));
+        nas.push((1+Number(response3[i].nasdaqreturn)).toFixed(3));
+        port.push((1+Number(response3[i].portfolioreturn)).toFixed(3));
+        labels.push(response3[i].to_char);
+      }else{
+        snp.push((oldsnp+Number(oldsnp)*response3[i].snpreturn).toFixed(3));
+        nas.push((oldnas+Number(oldnas)*response3[i].nasdaqreturn).toFixed(3));
+        port.push((oldport+Number(oldport)*response3[i].portfolioreturn).toFixed(3));
+        labels.push(response3[i].to_char);
+        oldsnp=Number(oldsnp)+Number(oldsnp)*response3[i].snpreturn;
+        oldnas=Number(oldnas)+Number(oldnas)*response3[i].nasdaqreturn;
+        oldport=Number(oldport)+Number(oldport)*response3[i].portfolioreturn;
       }
+
     }
+var ctx = document.getElementById('myChart').getContext('2d');
+    var myLineChart = new Chart(ctx, {
+    type: 'line',
+    data:{
+      labels:labels,
+      datasets:[{
+        label:"SnP 500",
+        backgroundColor: 'rgba(0,0,0,0)',
+        borderColor: 'rgb(255, 99, 132)',
+        data:snp,
+      },{
+        label:"Nasdaq",
+        backgroundColor: 'rgba(0,0,0,0)',
+        borderColor: 'rgb(0, 99, 0)',
+        data:nas,
+      },{
+        label:"FMI Portfolio",
+        backgroundColor: 'rgba(0,0,0,0)',
+        borderColor: 'rgb(0, 128, 128)',
+        data:port,
+      }]
+
+    },
+
+    options:{}
+});
+    console.log(snp);
   }
 };
 xhttp3.open("Get", "json/portfoliohistory.json",true);
@@ -127,31 +148,6 @@ xhttp3.send();
 </script>
 
 
-
-
-
-<canvas id="chartish"></canvas>
-<script>
-var ctx = document.getElementById('chartish').getContext('2d');
-var chart = new Chart(ctx, {
-    // The type of chart we want to create
-    type: 'line',
-
-    // The data for our dataset
-    data: {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
-        datasets: [{
-            label: "My First dataset",
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
-            data: [0, 10, 5, 2, 20, 30, 45],
-        }]
-    },
-
-    // Configuration options go here
-    options: {}
-});
-</script>
 
 
 <br><br>
@@ -168,12 +164,13 @@ xhttp.onreadystatechange=function(){
     var response=JSON.parse(xhttp.responseText);
     var output='';
     for (var i=0;i<5;i++){
+      if (response[i].divyield==null){divyield="-";}else{divyield=response[i].divyield;}
       output +=
         '<tr>'+
         '<td>$'+response[i].target+'</td>'+
         '<td>$'+response[i].price+'</td>'+
-        '<td>'+response[i].returns/100+'%'+'</td>'+
-        '<td>'+response[i].divyield+'</td>'+
+        '<td>'+response[i].returns+'%'+'</td>'+
+        '<td>'+divyield+'</td>'+
         '<td><a href="http://www.google.com/search?q='+response[i].ticker+'+stock+price"  target="_blank" >'+response[i].ticker+'</a></td>'+
         '<td><a href="http://www.google.com/search?q='+response[i].note+'"  target="_blank" >'+response[i].note+'</a></td>'+
         '</tr>';
@@ -217,12 +214,13 @@ xhttp2.onreadystatechange=function(){
     var response2=JSON.parse(xhttp2.responseText);
     var output2='';
     for (var i=0;i<5;i++){
+      if (response2[i].divyield==null){divyield="-";}else{divyield=response[i].divyield;}
       output2 +=
         '<tr>'+
         '<td>$'+response2[i].target+'</td>'+
         '<td>$'+response2[i].price+'</td>'+
-        '<td>'+response2[i].returns/100+'%'+'</td>'+
-        '<td>'+response2[i].divyield+'</td>'+
+        '<td>'+response2[i].returns+'%'+'</td>'+
+        '<td>'+divyield+'</td>'+
         '<td><a href="http://www.google.com/search?q='+response2[i].ticker+'+stock+price"  target="_blank" >'+response2[i].ticker+'</a></td>'+
         '<td><a href="http://www.google.com/search?q='+response2[i].note+'"  target="_blank" >'+response2[i].note+'</a></td>'+
         '</tr>';
