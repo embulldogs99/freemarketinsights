@@ -1,3 +1,16 @@
 articleideas.txt
 node_modules
 schedulerun.bat
+test.py
+stockrank.py
+stockpull.py
+SPY.csv
+portfolioupdate.py
+portfoliohistoryupdate.py
+portfoliovsbenchmark.py
+pgdatapull.py
+pepuller.py
+mmduprem.py
+main.go
+invest.py
+historicalanalysis.py
