@@ -1,0 +1,509 @@
+@font-face {
+  font-family: 'raitons';
+  src:url('raitons.ttf')  format('truetype');
+}
+#container {
+  min-width: 310px;
+  max-width: 800px;
+  height: 400px;
+  margin: 0 auto
+}
+
+body{
+  background-color: rgba(0,0,0,.05);
+  font-family: 'arial', sans-serif;
+}
+footer{
+  color:rgba(0, 0, 0, 0.15);
+    font-family: 'arial', sans-serif;
+    font-size: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40px;
+    letter-spacing: 5px;
+
+}
+.landingsvg{
+  color:black;
+  height:120px;
+  width: 120px;
+}
+.landingimage{
+   background-color:rgba(0,0,0,.4);
+   padding:200px 0px 200px 0px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   border-bottom: 5px solid rgba(0,0,0,.1);
+}
+.landingbox{
+   background-color:rgba(0,0,0,0);
+   padding:0px 0px 200px 0px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   border-bottom: 5px solid rgba(0,0,0,.1);
+}
+.landingbuttons{
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+}
+.landingbutton{
+  padding: 10px 30px 10px 30px;
+  background-color: white;
+  border:2px solid white;
+  border-radius: 3rem;
+  margin: 0px 10px 0px 10px;
+  color: rgba(0, 0, 0, 0.8);
+  font-size: 20px;
+}
+.annotationspace{
+  display: flex;
+  flex-direction: column;
+  padding: 0px 200px 0px 200px;
+    margin: 10px 20px 10px 20px;
+}
+.annotation{
+    margin: 10px 20px 10px 20px;
+  display: flex;
+  flex-direction: row;
+    justify-content: flex-start;
+  align-items: center;
+
+}
+.annotationheader{
+  margin:10px 40px 10px 40px;
+  font-size:30px;
+  color:rgba(0,0,0,.8);
+  weight:200;
+
+}
+.annotationinfo{
+  font-size: 14px;
+  color:rgba(0,0,0,.5)
+}
+.page{
+  display: flex;
+  flex-direction: row;
+  /*border: 2px solid black;*/
+}
+
+.posts{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  /*border: solid 2px orange;*/
+  line-height:25px;
+  padding:2px;
+  font-family: 'arial', sans-serif;
+}
+header{
+  /*border-bottom: 2px solid rgba(60,60,255,1);*/
+  font-weight: 900;
+  background-image: url(fmi.jpg);
+  background-size: 50px;
+  display: flex;
+  text-align: left;
+  font-family: 'raitons', sans-serif;
+}
+
+#sortable{
+    background-color:#eee;
+    color:#666666;
+    font-weight: 600;
+    cursor: crosshair;
+    padding: 3px;
+    border: .5px solid black;
+    width: 90%;
+    text-align: center;
+}
+#sortable a{
+  background: lightblue;
+}
+#sortable a:hover{
+  background: orange;
+}
+
+.hometable{
+  margin-bottom: 50px;
+}
+.hometable th,td{
+  padding: 5px;
+}
+.hometable td{
+  font-size: 15px;
+ text-align:center;
+ vertical-align: middle;
+}
+.hometable tr{
+margin-bottom: 5px;
+border-bottom: 1px solid lightgrey;
+
+}
+.hometable th{
+  font-size: 13px;
+  font-weight: 700;
+    overflow:none;
+    white-space: nowrap;
+}
+.hometable a{
+  color: red;
+  font-size: 10px;
+}
+.hometable a:hover{
+  color: blue;
+}
+.horizontal{
+  display: flex;
+  flex-direction: row;
+}
+.vertical{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  border-right: 1px solid grey;
+}
+.ads{
+  margin: 100px 200px 100px 200px;
+}
+.searchbar{
+  width: 400px;
+  height: 50px;
+}
+
+
+.dropbtn {
+    background-color: black;
+    color: white;
+    padding: 10px 20px 10px 20px;
+    font-size: 16px;
+    border: none;
+
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+        z-index:2;
+        overflow: visible;
+}
+.dropcontent {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+
+
+/* Links inside the dropdown */
+.dropcontent a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+
+
+}
+
+/* Change color of dropdown links on hover */
+.dropcontent a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropcontent {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: grey;}
+
+
+
+.form-control-search{
+border: 1px solid black;
+}
+.googlesearchbutton:hover{
+  background-color: orange;
+}
+.portfolio{
+    background-color:#eee;
+    color:#666666;
+    font-weight: 300;
+    border:2px solid #666666;
+    padding: 1px;
+    text-align: center;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+}
+
+.portfolio th{
+  font-weight: 900;
+  font-size: 18px;
+  white-space: nowrap;
+  padding: 10px;
+  border-bottom: solid 2px lightgrey;
+}
+.portfolio td{
+  border-bottom: solid 2px lightgrey;
+}
+.portfolio tr:hover{
+  padding: 10px;
+  margin: 10px;
+}
+  .portfolio td{
+  padding:1px;
+  margin: 1px;
+  text-align: center;
+  vertical-align: middle;
+}
+.portfolio td a{
+   background-color:#b3e0ff;
+   border-radius:2rem;
+}
+.portfolio td a:hover{
+   background-color:orange;
+   border-radius:2rem;
+   transform: scale(1.5);
+}
+.porthistory {
+  padding: 10px;
+}
+.porthistory td{
+  padding: 10px;
+}
+
+th{
+  font-weight: 900;
+  font-size: 120%;
+}
+
+.title{
+  font-size: 40px;
+  margin: 0% 10% 0% 13%;
+  font-family: 'raitons', sans-serif;
+  white-space: nowrap;
+  /*border: 2px solid green;*/
+}
+.landingtitle{
+  font-size: 60px;
+  margin: 0% 10% 0% 13%;
+  font-family: 'raitons', sans-serif;
+  white-space: nowrap;
+  /*border: 2px solid green;*/
+}
+.posttitle{
+  font-size: 30px;
+  font-family: 'arial', sans-serif;
+  white-space: nowrap;
+  text-decoration: underline;
+  /*border: 2px solid green;*/
+
+}
+.spacer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: left;
+  justify-content: space-between;
+
+
+}
+.slogan{
+  font-size: 25px;
+  font-family: 'Calibri', sans-serif;
+  padding: 1% 0% 1.5% 10%;
+  font-weight: 400;
+    /*border-bottom: 2px solid rgba(60,60,255,1);*/
+
+    overflow: hidden;
+white-space: nowrap;
+}
+
+.banner{
+  font-weight: 900;
+  font-size: 15px;
+  background-size: 100%;
+  font-family: 'Calibri', Fallback, sans-serif;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  background-color: rgba(255,255,255,.5);
+
+  position: fixed;
+   top: 0;
+   left: 0;
+   bottom: 0;
+   z-index:1;
+     overflow: visible;
+white-space: nowrap;
+}
+.buttons{
+  padding: 0px 10px 0px 10px;
+  margin: 1% 3%;
+  border: solid 2px black;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  border-radius: 20rem;
+  height: 80%;
+}
+.buttons:hover{
+  background-color: rgba(255,255,255,1);
+}
+.sidebar{
+display: flex;
+flex-direction: column;
+text-align: center;
+align-items: center;
+justify-content: center;
+padding: 2rem .5rem 10rem .5rem;
+font-weight: 600;
+/*border: solid red 5px;*/
+font-family: 'Calibri', sans-serif;
+}
+.sidebar:link{
+color: orange;
+}
+.link {
+  color: darkorange;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+.link2{
+  color: darkorange;
+  font-weight: 600;
+}
+.link2:hover{
+  color:rgba(0,150,255,1);
+  font-size: 110%;
+}
+.link3 {
+  background-color: darkorange;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+.link3:hover {
+  background-color: darkgrey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  font-size:110%;
+}
+
+.images{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+img{
+  padding: 20px 0px;
+}
+d{
+  font-weight: 900;
+}
+b{
+  font-weight: 900;
+}
+i{
+  font-style: italic;
+}
+h{
+  margin: 50px 0px 0px 50px;
+}
+svg{
+  color:rgba(255,106,0,1);
+  height:30px;
+  width: 30px;
+}
+svg:hover{
+  color:rgba(255,255,255,1);
+  cursor: crosshair;
+  height:40px;
+  width: 40px;
+}
+
+.link:hover{
+  color:rgba(255,255,255,1);
+  cursor: crosshair;
+  font-size: 110%;
+}
+article{
+  padding: 2rem 2rem;
+  margin: 0rem 0rem 0rem 2rem;
+  background-color: rgba(255,255,255,.8);
+  width: 80%;
+  line-height: 20px;
+      text-align: center;
+  text-align: left;
+}
+h {
+  font-size: 20px;
+  font-weight: 900;
+  text-align: left;
+  margin-left: 0px;
+}
+
+#spec{
+  background-color: yellow;
+}
+.researchlinks{
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.researchlink{
+  font-size: 18px;
+  padding:5px;
+  border: 2px solid black;
+  border-radius: 2rem;
+}
+.researchlink:hover{
+  background-color: rgba(50,50,50,1);
+  color:rgba(0,255,255,1);
+  font-weight: 900;
+}
+.sidebyside{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+}
+form{
+  padding: 60px;
+  background-color: rgba(255,255,255,.4);
+}
+.investorform{
+  font-family: Calibri;
+  font-size: 18px;
+  padding: 50px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 200px;
+
+}
