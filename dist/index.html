@@ -80,10 +80,28 @@
 <div class="vertical">
 
 
-<script src="js/Chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+
+
+  <div class="title"> Cumulative Return Index Tracking </div><br>
+<canvas id="myChart"></canvas>
+
 
 <script>
 
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var myLineChart = new Chart(ctx, {
+    type: 'line',
+        label:'SnP',
+        data:snp,
+        console.log(snp);
+
+    options: {}
+
+
+    });
 var xhttp3=new XMLHttpRequest();
 xhttp3.onreadystatechange=function(){
   if (this.readyState ==4 && this.status ==200){
@@ -110,32 +128,37 @@ xhttp3.onreadystatechange=function(){
 xhttp3.open("Get", "json/portfoliohistory.json",true);
 xhttp3.send();
 
-var ctx = document.getElementById('myChart').getContext('2d');
-var myLineChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      datasets:[{
-        label:'SnP',
-        data:snp
-      }],{
-        label:"Nasdaq",
-        data:nas
-      }],{
-        label:"Portfolio",
-        data:port
-      }
-      labels:labels
-    },
-    options: options
-});
-
 
 
 </script>
 
 
-  <div class="title"> Cumulative Return Index Tracking </div><br>
-<canvas id="myChart"></canvas>
+
+
+
+<canvas id="chartish"></canvas>
+<script>
+var ctx = document.getElementById('chartish').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
+
+    // The data for our dataset
+    data: {
+        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        datasets: [{
+            label: "My First dataset",
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [0, 10, 5, 2, 20, 30, 45],
+        }]
+    },
+
+    // Configuration options go here
+    options: {}
+});
+</script>
+
 
 <br><br>
 <br><br>
