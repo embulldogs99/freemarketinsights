@@ -43,6 +43,7 @@ def quandl_stocks(symbol, start_date=(2018, 1, 1), end_date=None):
 
 def quandl_adj_close(ticker):
 	if len(ticker)<5:
+		time.sleep(60)
 		data=pd.DataFrame(quandl_stocks(ticker))
 		#data=data[len(data)-1:]
 		data=data.tail(1)
@@ -88,6 +89,7 @@ def quandl_five_yr_low(ticker):
 
 def barchart(ticker):
     with requests.Session() as c:
+        time.sleep(60)
         u='https://www.barchart.com/stocks/quotes/'+ticker
         x=c.get(u)
         x=BeautifulSoup(x.content, "html.parser")
@@ -497,8 +499,9 @@ def contentfilter():
 
         for u in stocks:
             u=random.choice(stocks)
+            value=''
             try:
-                time.sleep(60)
+
                 url='htt'+'ps://news.google.com/news/rss/search/section/q/'+u+'/'+u+'?hl=en&gl=US&ned=us'
                 x=c.get(url)
                 x=BeautifulSoup(x.content)

@@ -122,9 +122,9 @@ def portfoliohistorycumcalc():
             conn.commit()
             row+=1
         else:
-            cumport=round(pastcumport+(pastcumport*pr),6)
-            cumsnp=round(pastcumsnp+(pastcumsnp*sr),6)
-            cumnasdaq=round(pastcumnasdaq+(pastcumnasdaq*nr),6)
+            cumport=Decimal(round(pastcumport+(pastcumport*pr),6))
+            cumsnp=Decimal(round(pastcumsnp+(pastcumsnp*sr),6))
+            cumnasdaq=Decimal(round(pastcumnasdaq+(pastcumnasdaq*nr),6))
 
             pastcumport=cumport
             pastcumsnp=cumsnp
