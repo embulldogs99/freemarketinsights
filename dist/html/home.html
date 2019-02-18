@@ -28,7 +28,7 @@
   <div class="dropdown">
     <button class="dropbtn"> X </button>
       <div class="dropcontent">
-        <a href="../" class="dropdown"> Home </a>
+        <a href="/html/home" class="dropdown"> Home </a>
         <a href="/html/about" class="dropdown"> About </a>
         <a href="/html/contact" class="dropdown"> Contact </a>
         <a href="/html/investors" class="dropdown"> Invest </a>
@@ -72,7 +72,7 @@
 <div class="vertical">
 
 
-<script src="js/Chart.js"></script>
+<script src="/js/Chart.js"></script>
 
 
 
@@ -137,10 +137,10 @@ var ctx = document.getElementById('myChart').getContext('2d');
 
     options:{}
 });
-    console.log(snp);
+
   }
 };
-xhttp3.open("Get", "json/portfoliohistory.json",true);
+xhttp3.open("Get", "/json/portfoliohistory.json",true);
 xhttp3.send();
 
 
@@ -179,7 +179,7 @@ xhttp.onreadystatechange=function(){
     document.getElementById('mbull').innerHTML=output;
     }
   };
-  xhttp.open("Get", "json/marketbulls.json",true);
+  xhttp.open("Get", "/json/marketbulls.json",true);
   xhttp.send();
 </script>
 
@@ -232,7 +232,7 @@ xhttp2.onreadystatechange=function(){
     document.getElementById('mbear').innerHTML=output2;
     }
   };
-  xhttp2.open("Get", "json/marketbears.json",true);
+  xhttp2.open("Get", "/json/marketbears.json",true);
   xhttp2.send();
 </script>
 
@@ -258,7 +258,7 @@ xhttp2.onreadystatechange=function(){
 
 <div class="title"> Tools</div>
     <a class="link" href="https://www.robinhood.com"> Trade with Robinhood</a>
-    <a class="link" href="/profile"> Signup for access to AI Stock sorter</a>
+    <a class="link" href="/html/profile"> Signup for access to AI Stock sorter</a>
     <a class="link" href="http://ws-na.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=US&source=ac&ref=qf_sp_asin_til&ad_type=product_link&tracking_id=embulldogs99-20&marketplace=amazon&region=US&placement=B00NB86OYE&asins=B00NB86OYE&linkId=428209263703e9c0969e2310d75fb6f2&show_border=false&link_opens_in_new_window=false&price_color=333333&title_color=0066c0&bg_color=ffffff"> Audio Books </a>
 
   <div class="title"> Book List</div>
