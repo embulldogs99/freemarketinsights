@@ -3,38 +3,23 @@
 
 <head>
 
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({
       google_ad_client: "ca-pub-4458360192360211",
       enable_page_level_ads: true
     });
-  </script>
+  </script> -->
 
 
 <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
-<link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#ffffff">
 
 <link href="css/mcleod-reset.css" rel="stylesheet">
 <link href="css/main.css" rel="stylesheet">
 <link href="css/main_iphone.css" media="(max-width: 600px)" rel="stylesheet">
-
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
-<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
-
-<!--- javascript -->
-<script type="text/javascript">
-  $(document).ready(function(){
-    $('#sortable').dataTable({
-        'iDisplayLength': 100
-    })})
-</script>
-
-
 
 </head>
 
@@ -43,21 +28,21 @@
   <div class="dropdown">
     <button class="dropbtn"> X </button>
       <div class="dropcontent">
-        <a href="/" class="dropdown"> Home </a>
-        <a href="/about" class="dropdown"> About </a>
-        <a href="/contact" class="dropdown"> Contact </a>
-        <a href="/investors" class="dropdown"> Invest </a>
-        <a href="/researchlinks" class="dropdown">Research</a>
-        <a href="/portfolio" class="dropdown">Portfolio</a>
+        <a href="../" class="dropdown"> Home </a>
+        <a href="/html/about" class="dropdown"> About </a>
+        <a href="/html/contact" class="dropdown"> Contact </a>
+        <a href="/html/investors" class="dropdown"> Invest </a>
+        <a href="/html/researchlinks" class="dropdown">Research</a>
+        <a href="/html/portfolio" class="dropdown">Portfolio</a>
       </div>
 </div>
 
 
       <div class="title"> Free Market Insights</div>
 
-    <a href="/signup">Sign Up</a> &nbsp/&nbsp
-    <a href="/login">Login</a>&nbsp/&nbsp
-    <a href="/profile">My Profile</a>
+    <a href="/html/signup">Sign Up</a> &nbsp/&nbsp
+    <a href="/html/login">Login</a>&nbsp/&nbsp
+    <a href="/html/profile">My Profile</a>
   </div><br>
 
   <div class="spacer">
@@ -87,16 +72,85 @@
 <div class="vertical">
 
 
+<script src="js/Chart.js"></script>
+
+
 
   <div class="title"> Cumulative Return Index Tracking </div><br>
-      <img src="/pics/cumreturn.PNG" width="800px;" height="300px;" style="border:10px solid lightgrey;"/>
-      {{range .Pperformance}}
-<font size="2px">Last Updated: {{.Date.Value}} </font>
-      {{end}}
+
+<canvas id="myChart" height="100" width="250"></canvas>
+
+
+<script>
+var xhttp3=new XMLHttpRequest();
+xhttp3.onreadystatechange=function(){
+  if (this.readyState ==4 && this.status ==200){
+    var response3=JSON.parse(xhttp3.responseText);
+    var snp=[1];
+    var port=[1];
+    var nas=[1];
+    var oldsnp=0;
+    var labels=["$1"];
+    for (var i=0;i<response3.length;i++){
+      if(i==0){
+        oldsnp=1+response3[i].snpreturn;
+        oldnas=1+response3[i].nasdaqreturn;
+        oldport=1+response3[i].portfolioreturn;
+        snp.push((1+Number(response3[i].snpreturn)).toFixed(3));
+        nas.push((1+Number(response3[i].nasdaqreturn)).toFixed(3));
+        port.push((1+Number(response3[i].portfolioreturn)).toFixed(3));
+        labels.push(response3[i].to_char);
+      }else{
+        snp.push((oldsnp+Number(oldsnp)*response3[i].snpreturn).toFixed(3));
+        nas.push((oldnas+Number(oldnas)*response3[i].nasdaqreturn).toFixed(3));
+        port.push((oldport+Number(oldport)*response3[i].portfolioreturn).toFixed(3));
+        labels.push(response3[i].to_char);
+        oldsnp=Number(oldsnp)+Number(oldsnp)*response3[i].snpreturn;
+        oldnas=Number(oldnas)+Number(oldnas)*response3[i].nasdaqreturn;
+        oldport=Number(oldport)+Number(oldport)*response3[i].portfolioreturn;
+      }
+
+    }
+var ctx = document.getElementById('myChart').getContext('2d');
+    var myLineChart = new Chart(ctx, {
+    type: 'line',
+    data:{
+      labels:labels,
+      datasets:[{
+        label:"SnP 500",
+        backgroundColor: 'rgba(0,0,0,0)',
+        borderColor: 'rgb(255, 99, 132)',
+        data:snp,
+      },{
+        label:"Nasdaq",
+        backgroundColor: 'rgba(0,0,0,0)',
+        borderColor: 'rgb(0, 99, 0)',
+        data:nas,
+      },{
+        label:"FMI Portfolio",
+        backgroundColor: 'rgba(0,0,0,.2)',
+        borderColor: 'rgb(0, 128, 128)',
+        data:port,
+      }]
+
+    },
+
+    options:{}
+});
+    console.log(snp);
+  }
+};
+xhttp3.open("Get", "json/portfoliohistory.json",true);
+xhttp3.send();
 
 
 
-<br><br>
+</script>
+
+
+
+
+
 <br><br>
 <br><br>
 
@@ -110,17 +164,18 @@ xhttp.onreadystatechange=function(){
     var response=JSON.parse(xhttp.responseText);
     var output='';
     for (var i=0;i<5;i++){
+      if (response[i].divyield==null){divyield="-";}else{divyield=response[i].divyield;}
       output +=
         '<tr>'+
         '<td>$'+response[i].target+'</td>'+
         '<td>$'+response[i].price+'</td>'+
-        '<td>'+response[i].returns/100+'%'+'</td>'+
-        '<td>'+response[i].divyield+'</td>'+
-        '<td><a href="http://www.google.com/search?q='+response[i].ticker+'stock+price"  target="_blank" >'+response[i].ticker+'</a></td>'+
+        '<td>'+response[i].returns+'%'+'</td>'+
+        '<td>'+divyield+'</td>'+
+        '<td><a href="http://www.google.com/search?q='+response[i].ticker+'+stock+price"  target="_blank" >'+response[i].ticker+'</a></td>'+
         '<td><a href="http://www.google.com/search?q='+response[i].note+'"  target="_blank" >'+response[i].note+'</a></td>'+
         '</tr>';
     }
-    console.log(output);
+
     document.getElementById('mbull').innerHTML=output;
     }
   };
@@ -159,13 +214,14 @@ xhttp2.onreadystatechange=function(){
     var response2=JSON.parse(xhttp2.responseText);
     var output2='';
     for (var i=0;i<5;i++){
+      if (response2[i].divyield==null){divyield="-";}else{divyield=response[i].divyield;}
       output2 +=
         '<tr>'+
         '<td>$'+response2[i].target+'</td>'+
         '<td>$'+response2[i].price+'</td>'+
-        '<td>'+response2[i].returns/100+'%'+'</td>'+
-        '<td>'+response2[i].divyield+'</td>'+
-        '<td><a href="http://www.google.com/search?q='+response2[i].ticker+'stock+price"  target="_blank" >'+response2[i].ticker+'</a></td>'+
+        '<td>'+response2[i].returns+'%'+'</td>'+
+        '<td>'+divyield+'</td>'+
+        '<td><a href="http://www.google.com/search?q='+response2[i].ticker+'+stock+price"  target="_blank" >'+response2[i].ticker+'</a></td>'+
         '<td><a href="http://www.google.com/search?q='+response2[i].note+'"  target="_blank" >'+response2[i].note+'</a></td>'+
         '</tr>';
     }
