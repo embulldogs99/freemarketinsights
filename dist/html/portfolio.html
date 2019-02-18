@@ -22,7 +22,7 @@
     <div class="dropdown">
       <button class="dropbtn"> X </button>
         <div class="dropcontent">
-          <a href="../" class="dropdown"> Home </a>
+          <a href="/html/home" class="dropdown"> Home </a>
           <a href="/html/about" class="dropdown"> About </a>
           <a href="/html/contact" class="dropdown"> Contact </a>
           <a href="/html/investors" class="dropdown"> Invest </a>
@@ -34,9 +34,9 @@
 
       <div class="title"> Free Market Insights</div>
 
-    <a href="/signup">Sign Up</a> &nbsp/&nbsp
-    <a href="/login">Login</a>&nbsp/&nbsp
-    <a href="/profile">My Profile</a>
+    <a href="/html/signup">Sign Up</a> &nbsp/&nbsp
+    <a href="/html/login">Login</a>&nbsp/&nbsp
+    <a href="/html/profile">My Profile</a>
   </div><br>
 
   <div class="spacer">
@@ -77,7 +77,39 @@
 
       </tr>
     </thead>
-    <tbody>
+    <tbody id="portfolio">
+
+
+
+      <script>
+      var xhttp=new XMLHttpRequest();
+      xhttp.onreadystatechange=function(){
+        if (this.readyState ==4 && this.status ==200){
+          var response=JSON.parse(xhttp.responseText);
+          var output='';
+          for (var i=0;i<5;i++){
+            if (response[i].divyield==null){divyield="-";}else{divyield=response[i].divyield;}
+            output +=
+              '<tr>'+
+              '<td>$'+response[i].target+'</td>'+
+              '<td>$'+response[i].price+'</td>'+
+              '<td>'+response[i].returns+'%'+'</td>'+
+              '<td>'+divyield+'</td>'+
+              '<td><a href="http://www.google.com/search?q='+response[i].ticker+'+stock+price"  target="_blank" >'+response[i].ticker+'</a></td>'+
+              '<td><a href="http://www.google.com/search?q='+response[i].note+'"  target="_blank" >'+response[i].note+'</a></td>'+
+              '</tr>';
+          }
+
+          document.getElementById('portfolio').innerHTML=output;
+          }
+        };
+        xhttp.open("Get", "/json/portfolio.json",true);
+        xhttp.send();
+      </script>
+
+
+
+
       {{range .}}
       <tr>
         <td><a href="http://www.google.com/search?q={{.Ticker}}+stock+price"  target="_blank" >{{.Ticker}}</a></td>

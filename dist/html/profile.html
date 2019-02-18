@@ -25,7 +25,7 @@
     <div class="dropdown">
       <button class="dropbtn"> X </button>
         <div class="dropcontent">
-          <a href="../" class="dropdown"> Home </a>
+          <a href="/html/home" class="dropdown"> Home </a>
           <a href="/html/about" class="dropdown"> About </a>
           <a href="/html/contact" class="dropdown"> Contact </a>
           <a href="/html/investors" class="dropdown"> Invest </a>
@@ -37,7 +37,7 @@
 
       <div class="title"> Free Market Insights</div>
 
-    <a href="/logout">Logout</a>
+    <a href="/html/home">Logout</a>
 
   </div><br>
 
@@ -50,18 +50,15 @@
 
 <body>
   <br><br>
-  <div class="slogan">Hello&nbsp;&nbsp;{{.Email.Value}}<br><br></div>
-  <div class="slogan">Your Investment Account Balance is&nbsp;&nbsp;${{.Balance.Value}}<br><br></div>
+  <div class="slogan">Hello<br><br></div>
+
 
   <div class="column">
-  <a href="/marketmentions" class="profilehelplinks">All Market Mentions Data</a>
-  <a href="/earnings" class="profilehelplinks">Earnings Announcements Data</a>
-  <a href="/bestbets" class="profilehelplinks">Last 20 Lays Best Bets</a>
+  <a href="/html/marketmentions" class="profilehelplinks">All Market Mentions Data</a>
+  <a href="/html/earnings" class="profilehelplinks">Earnings Announcements Data</a>
+  <a href="/html/bestbets" class="profilehelplinks">Last 20 Lays Best Bets</a>
   </div>
 
 
 </body>
 </html>
-
-{{range .}}
-{{end}}

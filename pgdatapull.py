@@ -55,6 +55,22 @@ print("pulled portfoliohistory")
 print("----------------------------")
 shutil.move("F:\json\portfoliohistory.json","dist/json/portfoliohistory.json")
 
+#Today Portfolio Movement
+cur.execute("COPY (SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(t))) FROM( SELECT to_char(date,'MM/DD/YYYY'),portfolio,snp,nasdaq,portfolioreturn,snpreturn,nasdaqreturn FROM fmi.portfoliohistory ORDER BY date DESC LIMIT 1) t) to 'F:/json/portfolioreturn.json'")
+conn.commit()
+print("----------------------------")
+print("pulled portfolioreturn")
+print("----------------------------")
+shutil.move("F:\json\portfolioreturn.json","dist/json/portfolioreturn.json")
+
+
+#Portfolio
+cur.execute("COPY (SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(t))) FROM (SELECT ticker,shares,price,value,target_price,exp_return*100,exp_value,target,to_char(target_date,'MM/DD/YYYY') FROM fmi.portfolio where ticker<>'CASH' ORDER BY exp_return desc) t) to 'F:/json/portfolio.json'")
+conn.commit()
+print("----------------------------")
+print("pulled portfolio")
+print("----------------------------")
+shutil.move("F:\json\portfolio.json","dist/json/portfolio.json")
 
 cur.close()
 conn.close()
