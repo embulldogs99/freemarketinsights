@@ -82,7 +82,7 @@ conn.commit()
 stocks=cur.fetchall()
 for s in stocks:
     for t in s:
-        statement="COPY (SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(t))) FROM (select DISTINCT ON (date) target,date from fmi.marketmentions where ticker='"+t+"' and report='analyst' order by date desc limit 10) t) to 'F:/json/p"+t+"+targettrend.json'"
+        statement="COPY (SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(t))) FROM (select DISTINCT ON (date) target,date,note from fmi.marketmentions where ticker='"+t+"' and report='analyst' order by date desc limit 10) t) to 'F:/json/p"+t+"+targettrend.json'"
         cur.execute(statement)
         shutil.move("F:\json\p"+t+"+targettrend.json","dist/json/"+t+"+targettrend.json")
 print("----------------------------")
