@@ -1,0 +1,42 @@
+<html>
+
+<table>
+
+<thead><th>Ticker</th><th>Target</th><th>Date</th></thead>
+  <tbody id="data"></tbody></table>
+
+
+<script>
+var c = url.searchParams.get("c");
+var ticker=c.split("-")[2];
+
+console.log(ticker);
+
+var xhttp=new XMLHttpRequest();
+xhttp.onreadystatechange=function(){
+  if (this.readyState ==4 && this.status ==200){
+    var response=JSON.parse(xhttp.responseText);
+    var output='';
+    for (var i=0;i<response.length;i++){
+      if(response[i].to_char==null){tg='-'}else{tg=response[i].to_char}
+
+      output +=
+        '<tr>'+
+        '<td><a href="http://www.google.com/search?q='+ticker+'+stock+price"  target="_blank" >'+ticker+'</a></td>'+
+        '<td>$'+response[i].target+'</td>'+
+        '<td>$'+response[i].date+'</td>'+
+        '</tr>';
+
+    }
+
+    document.getElementById('data').innerHTML=output;
+    }
+  };
+  xhttp.open("Get", "/json/"+ticker+"+targettrend.json",true);
+  xhttp.send();
+
+</script>
+
+
+
+</html>
