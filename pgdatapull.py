@@ -13,11 +13,14 @@ import quandl
 import random
 import os
 import shutil
+import numpy as np
+import matplotlib.pyplot as plt
+import datetime
 #
 # os.rename("path/to/current/file.foo", "path/to/new/destination/for/file.foo")
 # shutil.move("path/to/current/file.foo", "path/to/new/destination/for/file.foo")
 
-
+warnings.filterwarnings('ignore')
 #########################################################
 ##############  Database Connection   ###################
 
@@ -82,6 +85,48 @@ for s in stocks:
         statement="COPY (SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(t))) FROM (select DISTINCT ON (date) target,date from fmi.marketmentions where ticker='"+t+"' and report='analyst' order by date desc limit 10) t) to 'F:/json/p"+t+"+targettrend.json'"
         cur.execute(statement)
         shutil.move("F:\json\p"+t+"+targettrend.json","dist/json/"+t+"+targettrend.json")
+
+
+
+
+
+#Portfolio Target Trend Database Images
+cur.execute("select ticker from fmi.portfolio")
+conn.commit()
+stocks=cur.fetchall()
+
+for s in stocks:
+    for t in s:
+        x=[]
+        y=[]
+
+        statement="select DISTINCT ON (date) target,date from fmi.marketmentions where ticker='"+t+"' and report='analyst' order by date desc limit 10"
+        cur.execute(statement)
+        data=cur.fetchall()
+
+        try:
+            for tar,date in data:
+                x.append(date)
+                y.append(tar)
+
+
+            print(y)
+            print()
+            print()
+            print()
+            print()
+            print()
+            ax = plt.subplot(111)
+            ax.bar(x, y, width=10)
+            ax.xaxis_date()
+            plt.savefig("dist/portpics/"+t+"+tt.png")
+            plt.clf()
+
+        except:
+                pass
+
+
+
 
 
 
