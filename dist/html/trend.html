@@ -65,6 +65,15 @@
     </div><br>
     <br>
 
+<canvas id="image" width="800" height="400"></canvas>
+
+<script>
+  var z = window.location.href;
+  var ticker=z.split("?")[1];
+
+  output2='<img src="/portpics/'+ticker+'"/>'
+      document.getElementById('image').innerHTML=output2;
+      </script>
 
 
 <table class="portfolio">
