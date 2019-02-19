@@ -93,41 +93,6 @@ xhttp.onreadystatechange=function(){
     for (var i=0;i<response.length;i++){
       if(response[i].to_char==null){tg='-'}else{tg=response[i].to_char}
 
-
-
-                      var xhttp2=new XMLHttpRequest();
-                      xhttp2.onreadystatechange=function(){
-                        if (this.readyState==4 && this.status==200){
-                          var response2=JSON.parse(xhttp2.responseText);
-                          var dates=[];
-                          var targets=[];
-                          for (var t=0;t<response2.length;t++){
-                            dates+=response2.date;
-                            targets+=respons3.target;
-                          }
-                        }
-                      }
-                      xhttp2.open("Get", "/json/"+response[i].ticker+"+targettrend.json",true);
-                      xhttp2.send();
-
-
-                      var ctx = document.getElementById(response[i].ticker).getContext('2d');
-                          var myLineChart = new Chart(ctx, {
-                          type: 'line',
-                          data:{
-                            labels:dates,
-                            datasets:[{
-                              label:"Target Prices",
-                              backgroundColor: 'rgba(0,0,0,0)',
-                              borderColor: 'rgb(255, 99, 132)',
-                              data:targets,
-                            }]
-                          },
-                          options:{}
-                      });
-
-
-
       output +=
         '<tr>'+
         '<td><a href="http://www.google.com/search?q='+response[i].ticker+'+stock+price"  target="_blank" >'+response[i].ticker+'</a></td>'+
@@ -136,8 +101,9 @@ xhttp.onreadystatechange=function(){
         '<td>$'+response[i].target+'</td>'+
         '<td>'+tg+'</td>'+
         '<td>'+((response[i].target-response[i].price)/response[i].price).toFixed(2)+'%'+'</td>'+
-        '<td id='+response[i].ticker+'><a href="/html/portoflio"  target="_blank" >'+response[i].ticker+'</a></td>'+
+        '<td><a href="/html/portoflio"  target="_blank" ><img src="/portpics/'+response[i].ticker+'+tt.png"/></a></td>'+
         '</tr>';
+
     }
 
     document.getElementById('port').innerHTML=output;
