@@ -128,6 +128,7 @@ for s in stocks:
             plt.rcParams.update({'figure.autolayout': True})
             fig, ax = plt.subplots()
             ax.bar(x, y, align='edge', width=3)
+            ax.set_facecolor("white")
 
             plt.style.use('fivethirtyeight')
             plt.setp(ax.get_xticklabels(), rotation=90, horizontalalignment='right')
@@ -139,7 +140,7 @@ for s in stocks:
                     plt.annotate(str(b[i])+'@ $'+str(y[i]),(x[i],y[i]*random.random()),size=8)
 
             plt.annotate("Avg Target $"+str(round(np.mean(y),2)),(x[-1],np.mean(y)*1.2))
-            plt.annotate("Last Price $"+str(round(p[0],2)),(x[halfway],np.mean(y)*1.1))
+            plt.annotate("LP $"+str(round(p[0],2)),(x[halfway],np.mean(y)*1.1))
 
             ax.axhline(np.mean(y), ls='--', color='r')
             ax.axhline(p[0], ls='--', color='g')
