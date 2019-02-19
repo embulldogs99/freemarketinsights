@@ -97,7 +97,7 @@ xhttp.onreadystatechange=function(){
         'Last Target Mention: $<b>'+response[i].target+'</b><br>'+
         'Mention Date:<b> '+tg+'</b></td>'+
 
-        '<td>'+((response[i].target-response[i].price)/response[i].price).toFixed(2)+'%'+'</td>'+
+        '<td><b>'+((response[i].target-response[i].price)/response[i].price).toFixed(2)+'%'+'</b></td>'+
         '<td><a href="/html/trend?'+response[i].ticker+'"  target="_blank" ><img src="/portpics/'+response[i].ticker+'+tt.png" width="400" height="300"/></a></td>'+
         '</tr>';
 
