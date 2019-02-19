@@ -1,6 +1,66 @@
 <html>
 
+
+<head>
+
+<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#ffffff">
+
+<link href="/css/mcleod-reset.css" rel="stylesheet">
+<link href="/css/main.css" rel="stylesheet">
+<link href="/css/main_iphone.css" media="(max-width: 600px)" rel="stylesheet">
+
+
+
+</head>
+
+<header>
+  <div class="banner">
+    <div class="dropdown">
+      <button class="dropbtn"> X </button>
+        <div class="dropcontent">
+          <a href="/html/home" class="dropdown"> Home </a>
+          <a href="/html/about" class="dropdown"> About </a>
+          <a href="/html/contact" class="dropdown"> Contact </a>
+          <a href="/html/investors" class="dropdown"> Invest </a>
+          <a href="/html/researchlinks" class="dropdown">Research</a>
+          <a href="/html/portfolio" class="dropdown">Portfolio</a>
+        </div>
+  </div>
+
+
+      <div class="title"> Free Market Insights</div>
+
+    <a href="/html/signup">Sign Up</a> &nbsp/&nbsp
+    <a href="/html/login">Login</a>&nbsp/&nbsp
+    <a href="/html/profile">My Profile</a>
+  </div><br>
+
+  <div class="spacer">
+
+
+<br>
+<br>
+<br>
+
+    <div class="slogan">A Rational Approach to an Irrational Market</div>
+  </div>
+
+</header>
+
+
+  <br>  <br>
+  <a href="/html/portfolio"><button> Back to Portfolio</button></a>
+
+
+<div class="posts">
+  <div class="vertical">
 <table>
+
+
 
 <thead><th>Ticker</th><th>Target</th><th>Date</th></thead>
   <tbody id="data"></tbody></table>
@@ -24,6 +84,7 @@ xhttp.onreadystatechange=function(){
         '<td><a href="http://www.google.com/search?q='+ticker+'+stock+price"  target="_blank" >'+ticker+'</a></td>'+
         '<td>$'+response[i].target+'</td>'+
         '<td>$'+response[i].date+'</td>'+
+        '<td><a href="http://www.google.com/search?q='+response[i].note+'" target="_blank">'+response[i].note+'</a></td>'+
         '</tr>';
 
     }
@@ -36,6 +97,8 @@ xhttp.onreadystatechange=function(){
 
 </script>
 
+</div>
+</div>
 
 
 </html>
