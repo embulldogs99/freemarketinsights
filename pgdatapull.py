@@ -85,7 +85,9 @@ for s in stocks:
         statement="COPY (SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(t))) FROM (select DISTINCT ON (date) target,date from fmi.marketmentions where ticker='"+t+"' and report='analyst' order by date desc limit 10) t) to 'F:/json/p"+t+"+targettrend.json'"
         cur.execute(statement)
         shutil.move("F:\json\p"+t+"+targettrend.json","dist/json/"+t+"+targettrend.json")
-
+print("----------------------------")
+print("pulled portfolio JSON")
+print("----------------------------")
 
 
 
@@ -100,7 +102,7 @@ for s in stocks:
         x=[]
         y=[]
 
-        statement="select DISTINCT ON (date) target,date from fmi.marketmentions where ticker='"+t+"' and report='analyst' order by date desc limit 10"
+        statement="select DISTINCT ON (date) target,date from fmi.marketmentions where ticker='"+t+"' and report='analyst' and date> (CURRENT_DATE - INTERVAL '1 year') order by date desc"
         cur.execute(statement)
         data=cur.fetchall()
 
@@ -110,18 +112,33 @@ for s in stocks:
                 y.append(tar)
 
 
-            ax = plt.subplot(111)
-            ax.bar(x, y, align='edge', width=6)
+            plt.rcParams.update({'figure.autolayout': True})
+            fig, ax = plt.subplots()
+            ax.bar(x, y, align='edge', width=3)
+
+            plt.style.use('fivethirtyeight')
+            plt.setp(ax.get_xticklabels(), rotation=90, horizontalalignment='right')
+            ax.set(ylim=[0,np.amax(y)*1.1], xlabel='Date', ylabel='$',title=t+' Target Prices')
+
+            plt.annotate("$"+str(round(np.mean(y),2)),(x[0],np.mean(y)))
+            ax.axhline(np.mean(y), ls='--', color='r')
             ax.xaxis_date()
-            ax.tick_params(axis='x', labelrotation=90)
-            plt.savefig("dist/portpics/"+t+"+tt.png")
+
+
+            file="dist/portpics/"+t+"+tt.png"
+            if os.path.isfile(file):
+                os.remove(file)
+            plt.savefig(file)
             plt.clf()
 
-        except:
-                pass
+        except Exception as e:
+            print(e)
+            pass
 
 
-
+print("----------------------------")
+print("pulled portfolio trend images")
+print("----------------------------")
 
 
 

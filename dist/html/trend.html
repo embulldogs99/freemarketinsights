@@ -7,10 +7,9 @@
 
 
 <script>
-var c = url.searchParams.get("c");
-var ticker=c.split("-")[2];
+var c = window.location.href;
+var ticker=c.split("?")[1];
 
-console.log(ticker);
 
 var xhttp=new XMLHttpRequest();
 xhttp.onreadystatechange=function(){
