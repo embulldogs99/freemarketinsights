@@ -110,14 +110,8 @@ for s in stocks:
                 y.append(tar)
 
 
-            print(y)
-            print()
-            print()
-            print()
-            print()
-            print()
             ax = plt.subplot(111)
-            ax.bar(x, y, width=10)
+            ax.bar(x, y, align='edge', width=5)
             ax.xaxis_date()
             plt.savefig("dist/portpics/"+t+"+tt.png")
             plt.clf()
