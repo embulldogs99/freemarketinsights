@@ -101,16 +101,21 @@ for s in stocks:
     for t in s:
         x=[]
         y=[]
+        b=[]
         p=[]
 
-        statement="select DISTINCT ON (date) target,date from fmi.marketmentions where ticker='"+t+"' and report='analyst' and date> (CURRENT_DATE - INTERVAL '1 year') order by date desc"
+        statement="select DISTINCT ON (date) target,date,bank from fmi.marketmentions where ticker='"+t+"' and report='analyst' and date> (CURRENT_DATE - INTERVAL '1 year') order by date desc"
         cur.execute(statement)
         data=cur.fetchall()
 
         try:
-            for tar,date in data:
+            for tar,date,bank in data:
                 x.append(date)
                 y.append(tar)
+                if bank=='Analysts' or bank=='Other' or bank=='Zacks' or bank=='Price Target Review' or bank=='Price Target Recommendation' or bank=='Brokerages' or bank=='Price Target Summary' or bank=='Consensus Target Price' or bank=='Avg. Price Target Opinion' or bank=='Avg. Price Target Recap' or bank=="Avg. Price Target Review" or bank=='Avg. Price Target Opinion' or bank=='Price Target Outlook':
+                    b.append('')
+                else:
+                    b.append(bank)
 
                 statement2="select DISTINCT price from fmi.portfolio where ticker='"+t+"'"
 
@@ -128,8 +133,14 @@ for s in stocks:
             plt.setp(ax.get_xticklabels(), rotation=90, horizontalalignment='right')
             ax.set(ylim=[0,np.amax(y)*1.1], xlabel='Date', ylabel='$',title=t+' Target Prices')
 
-            plt.annotate("Avg Target $"+str(round(np.mean(y),2)),(x[-1],np.mean(y)))
-            plt.annotate("Last Price $"+str(round(p[0],2)),(x[0],p[0]))
+            halfway=int(round(len(x)*.2,0))
+            for i in range(0,len(x)):
+                if b[i]!='':
+                    plt.annotate(str(b[i])+'@ $'+str(y[i]),(x[i],y[i]*random.random()),size=8)
+
+            plt.annotate("Avg Target $"+str(round(np.mean(y),2)),(x[-1],np.mean(y)*1.2))
+            plt.annotate("Last Price $"+str(round(p[0],2)),(x[halfway],np.mean(y)*1.1))
+
             ax.axhline(np.mean(y), ls='--', color='r')
             ax.axhline(p[0], ls='--', color='g')
             ax.xaxis_date()

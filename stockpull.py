@@ -528,19 +528,19 @@ def contentfilter():
                     if 'Brokerages' in grab:
                         bank='Brokerages'
                     if 'Price Target Outlook:' in grab:
-                        bank='Price Target Outlook:'
+                        bank='Price Target Outlook'
                     if 'Avg. Price Target Review:' in grab:
-                        bank='Avg. Price Target Review:'
+                        bank='Avg. Price Target Review'
                     if 'Avg. Price Target Recap:' in grab:
-                        bank='Avg. Price Target Recap:'
+                        bank='Avg. Price Target Recap'
                     if 'Avg. Price Target Opinion:' in grab:
-                        bank='Avg. Price Target Opinion:'
+                        bank='Avg. Price Target Opinion'
                     if 'Consensus Target Price' in grab:
                         bank='Consensus Target Price'
                     if 'Price Target Recommendation:' in grab:
-                        bank='Price Target Recommendation:'
+                        bank='Price Target Recommendation'
                     if 'Price Target Summary:' in grab:
-                        bank='Price Target Summary:'
+                        bank='Price Target Summary'
 
                 # Specific Banks or Data Market Information Sites
                     if 'Barclays' in grab:
@@ -562,7 +562,7 @@ def contentfilter():
                     if 'Citigroup' in grab:
                         bank='Citigroup'
                     if 'Zacks:' in grab:
-                        bank='Zacks:'
+                        bank='Zacks'
                     if 'Wells Fargo' in grab:
                         bank='Wells Fargo & Co'
                     if 'Wolfe Research' in grab:
