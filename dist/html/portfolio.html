@@ -92,10 +92,10 @@ xhttp.onreadystatechange=function(){
       output +=
         '<tr>'+
         '<td><a href="http://www.google.com/search?q='+response[i].ticker+'+stock+price"  target="_blank" >'+response[i].ticker+'</a></td>'+
-        '<td>Current Price: $'+response[i].price+'<br>'+
-        'Initial Target Price: $'+response[i].target_price+'<br>'+
-        'Last Target Mention: $'+response[i].target+'<br>'+
-        'Mention Date: '+tg+'</td>'+
+        '<td>Current Price: $<b>'+response[i].price+'</b><br>'+
+        'Initial Target Price: $<b>'+response[i].target_price+'</b><br>'+
+        'Last Target Mention: $<b>'+response[i].target+'</b><br>'+
+        'Mention Date:<b> '+tg+'</b></td>'+
 
         '<td>'+((response[i].target-response[i].price)/response[i].price).toFixed(2)+'%'+'</td>'+
         '<td><a href="/html/trend?'+response[i].ticker+'"  target="_blank" ><img src="/portpics/'+response[i].ticker+'+tt.png" width="400" height="300"/></a></td>'+
