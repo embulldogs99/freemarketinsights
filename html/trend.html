@@ -53,12 +53,21 @@
 
 
   <br>  <br>
-  <a href="/html/portfolio"><button> Back to Portfolio</button></a>
+  <a href="/html/portfolio"><button class="landingbutton"> Back to Portfolio</button></a><br><br>
 
 
 <div class="posts">
   <div class="vertical">
-<table>
+
+
+    <div class="title">
+      Last Year of News
+    </div><br>
+    <br>
+
+
+
+<table class="portfolio">
 
 
 
@@ -83,7 +92,7 @@ xhttp.onreadystatechange=function(){
         '<tr>'+
         '<td><a href="http://www.google.com/search?q='+ticker+'+stock+price"  target="_blank" >'+ticker+'</a></td>'+
         '<td>$'+response[i].target+'</td>'+
-        '<td>$'+response[i].date+'</td>'+
+        '<td>'+response[i].date+'</td>'+
         '<td><a href="http://www.google.com/search?q='+response[i].note+'" target="_blank">'+response[i].note+'</a></td>'+
         '</tr>';
 
