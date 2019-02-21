@@ -585,8 +585,8 @@ def contentfilter():
                         bank='Credit Suisse'
                     if 'Baird' in grab:
                         bank='Baird'
-                    if 'Susquehanna Banc' in grab:
-                        bank='Susquehanna Banc'
+                    if 'Susquehanna' in grab:
+                        bank='Susquehanna'
                     if 'Canaccord Genuity' in grab:
                         bank='Canaccord Genuity'
                     if 'B. Riley' in grab:
