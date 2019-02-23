@@ -38,6 +38,16 @@ print("pulled market bulls")
 print("----------------------------")
 
 shutil.move("F:\json\marketbulls.json","dist/json/marketbulls.json")
+filename="dist/json/marketbulls.json"
+fileread=open(filename,"r")
+filestring=fileread.read()
+filestring=str(filestring).replace("\\\\","")
+fileread.close()
+filewrite=open(filename,"w")
+filewrite.write(filestring)
+filewrite.close()
+
+
 
 #MarketBears
 
@@ -48,6 +58,15 @@ print("pulled market bears")
 print("----------------------------")
 
 shutil.move("F:\json\marketbears.json","dist/json/marketbears.json")
+filename2="dist/json/marketbears.json"
+fileread2=open(filename2,"r")
+filestring2=fileread2.read()
+filestring2=str(filestring2).replace("\\\\","")
+fileread2.close()
+filewrite2=open(filename2,"w")
+filewrite2.write(filestring2)
+filewrite2.close()
+
 
 
 #PortfolioHistory
