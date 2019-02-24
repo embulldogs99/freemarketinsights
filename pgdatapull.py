@@ -195,5 +195,30 @@ print("----------------------------")
 
 
 
+#Best Bets
+sqlstatmt="COPY (SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(t))) FROM (SELECT target,price,returns,ticker,note,to_char(date,'MM/DD/YYYY'),q_eps,a_eps,report,q_pe,a_pe,divyield*100 FROM fmi.marketmentions WHERE returns>.2 AND a_eps>0 AND date > current_timestamp - INTERVAL '20 days' ORDER BY returns desc) t) to 'F:/json/bestbets.json';"
+cur.execute(sqlstatmt)
+shutil.move("F:/json/bestbets.json","dist/json/bestbets.json")
+print("----------------------------")
+print("pulled Best Bets")
+print("----------------------------")
+
+
+statement="COPY (SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(t))) FROM (SELECT target,price,returns,ticker,note,to_char(date,'MM/DD/YYYY'),q_eps,a_eps,report,q_pe,a_pe,divyield FROM fmi.marketmentions WHERE report='analyst' AND date > current_timestamp - INTERVAL '365 days') t) to 'F:/json/marketmentions.json'"
+cur.execute(statement)
+shutil.move("F:/json/marketmentions.json","dist/json/marketmentions.json")
+print("----------------------------")
+print("pulled Last year of MarketMentions")
+print("----------------------------")
+
+
+sqlstatmt="COPY (SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(t))) FROM (SELECT target,price,returns,ticker,note,to_char(date,'MM/DD/YYYY'),q_eps,a_eps,report,q_pe,a_pe,divyield FROM fmi.marketmentions WHERE report='earnings' AND date > current_timestamp - INTERVAL '30 days') t) to 'F:/json/earnings.json'"
+cur.execute(sqlstatmt)
+shutil.move("F:/json/earnings.json","dist/json/earnings.json")
+print("----------------------------")
+print("pulled Last 30 days of earnings")
+print("----------------------------")
+
+
 cur.close()
 conn.close()
