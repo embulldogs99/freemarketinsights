@@ -74,12 +74,12 @@ var cookie = document.cookie; -->
 
   <script>
 
-  var email=document.getElementById("email").value;
-  var password=document.getElementById("pass").value;
 $('form').submit(function(e){
-
-
 e.preventDefault();
+    var email=document.getElementById("email").value;
+    var password=document.getElementById("pass").value;
+
+
 const fs = require('fs');
 var md=forge.md.sha512.create();
 md.update(email);
