@@ -5,7 +5,7 @@
 <link href="/css/main_iphone.css" media="(max-width: 600px)" rel="stylesheet">
 
 
-<!-- 
+<!--
 // Store it in the cookies
 document.cookie="selected=john"
 
@@ -13,6 +13,9 @@ document.cookie="selected=john"
 var cookie = document.cookie; -->
 
 
+<script>
+if document.cookie.split(";").length==4{location.replace("/html/profile");}
+</script>
 
 <html>
 
