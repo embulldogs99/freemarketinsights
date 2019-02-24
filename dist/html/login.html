@@ -66,6 +66,19 @@ if (document.cookie.split(";").length==4){location.replace("/html/profile");}
 
         <script>
 
+
+
+        function createCookie(name,value,days) {
+        	if (days) {
+        		var date = new Date();
+        		date.setTime(date.getTime()+(days*24*60*60*1000));
+        		var expires = "; expires="+date.toGMTString();
+        	}
+        	else var expires = "";
+        	document.cookie = name+"="+value+expires+"; path=/";
+        }
+
+
       function userPost(form){
           var email=form.email.value;
 
@@ -80,7 +93,7 @@ if (document.cookie.split(";").length==4){location.replace("/html/profile");}
           // var user={"email":encriptedemail,"pass":encriptedpass};
 
 
-          document.cookie=email;
+          createCookie("email",email,1);
           location.replace("/html/profile");
 
         }
