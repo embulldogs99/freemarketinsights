@@ -1,5 +1,6 @@
 
 
-name=document.cookie.split(";")[0];
-document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+var cookies = document.cookie.split(";");
+for (var i = 0; i < cookies.length; i++)
+  eraseCookie(cookies[i].split("=")[0]);
 window.location.replace("/html/home");
