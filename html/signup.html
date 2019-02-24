@@ -22,7 +22,7 @@ var cookie = document.cookie; -->
     <div class="dropdown">
       <button class="dropbtn"> X </button>
         <div class="dropcontent">
-          <a href="../" class="dropdown"> Home </a>
+          <a href="/html/home" class="dropdown"> Home </a>
           <a href="/html/about" class="dropdown"> About </a>
           <a href="/html/contact" class="dropdown"> Contact </a>
           <a href="/html/investors" class="dropdown"> Invest </a>
@@ -55,7 +55,7 @@ var cookie = document.cookie; -->
 
   <div class="sidebyside">
 
-    <form action="/profile" method="POST">
+    <form action="/profile" method="GET">
       <font style="font-family: 'raitons';font-size=200%;">Become A Free Member</font><br><br>
       email:<br>
       <input type="email" name="email" value="" required><br>
@@ -90,6 +90,8 @@ var cookie = document.cookie; -->
       if (err) throw err;
       console.log('Saved!');
     });
+    document.cookie=email;
+    location.replace("/home");
 
   }
 
