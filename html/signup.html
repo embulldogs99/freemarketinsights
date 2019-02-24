@@ -69,5 +69,32 @@ var cookie = document.cookie; -->
   </div>
 
 
+<script src="https://cdn.jsdelivr.net/npm/node-forge@0.7.0/dist/forge.min.js"></script>
+
+
+  <script>
+
+  var email=document.getElementById("email").value;
+  var password=document.getElementById("pass").value;
+  if (pass=='' || email==''){alert("Please Fill All Fields");}else{
+    const fs = require('fs');
+    var md=forge.md.sha512.create();
+    md.update(email);
+    encriptedemail=md.digest().toHex();
+    var md2=forge.md.sha512.create();
+    md2.update(pass);
+    encriptedpass=md.digest().toHex();
+    var user={"email":encriptedemail,"pass":encriptedpass};
+
+    fs.appendFile('/json/users.json', user, function (err) {
+      if (err) throw err;
+      console.log('Saved!');
+    });
+
+  }
+
+  </script>
+
+
 </body>
 </html>
