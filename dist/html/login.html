@@ -60,13 +60,37 @@ if document.cookie.split(";").length==4{location.replace("/html/profile");}
       <script src="https://cdn.jsdelivr.net/npm/node-forge@0.7.0/dist/forge.min.js"></script>
 
 
+        <script>
+
+      function userPost(form){
+          var email=form.email.value;
+
+
+          // var md=forge.md.sha512.create();
+          // md.update(email);
+          // encriptedemail=md.digest().toHex();
+          // var md2=forge.md.sha512.create();
+          // md2.update(pass);
+          // encriptedpass=md.digest().toHex();
+          //
+          // var user={"email":encriptedemail,"pass":encriptedpass};
+
+
+          document.cookie=email;
+          location.replace("/html/profile");
+
+        }
+
+        </script>
 
 
 <div class="posts">
 
-  <div class="sidebyside">
-          <font style="font-family: 'raitons';font-size="200%";">Enter The Members Arena for FREE by Submitting Your Email Address</font><br><br>
-    <form action="/login" method="POST">
+
+          <font style="font-family: 'arial';font-size="200%";">Enter The Members Arena for FREE by Submitting Your Email Address</font>
+          <br><br>
+
+    <form method="POST">
 
       Email:<br>
       <input type="email" name="email" value="" required><br>
@@ -75,39 +99,10 @@ if document.cookie.split(";").length==4{location.replace("/html/profile");}
       <!-- password:<br> <input type="password" name="pass" value="" required><br>
       <br><br> -->
 
-      <input class="buttons" type="button" style="color: black; background-color:white; font-family: 'raitons', Fallback, sans-serif;" value="Login" onClick="userPost(this.form)">
+      <input class="buttons" type="button" value="Login" onClick="userPost(this.form)">
 
     </form>
 
-
-
-            <script>
-
-          function userPost(form){
-              var email=form.email.value;
-              var pass=form.pass.value;
-
-
-              var formData = new FormData();
-
-              var md=forge.md.sha512.create();
-              md.update(email);
-              encriptedemail=md.digest().toHex();
-              var md2=forge.md.sha512.create();
-              md2.update(pass);
-              encriptedpass=md.digest().toHex();
-
-              var user={"email":encriptedemail,"pass":encriptedpass};
-
-              formData.append('user',user,'/json/users.json');
-              document.cookie=email;
-              location.replace("/html/profile");
-
-            }
-
-            </script>
-            
-  </div>
 </div>
 
 </body>
