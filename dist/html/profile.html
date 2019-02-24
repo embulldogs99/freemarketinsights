@@ -61,9 +61,9 @@
   <div class="slogan" id="user"> </div>
 
     <script>
-    var user=document.cookie.split("email")[1].split("=")[1];
+    var user=document.cookie.split("email")[1];
     if (user==undefined){location.replace("/html/login");}else{
-        document.getElementById('user').innerHTML='Hello '+user+
+        document.getElementById('user').innerHTML='Hello '+user.split("=")[1]+
         '<br>'+
         '<br>'+
         '<br>'+
