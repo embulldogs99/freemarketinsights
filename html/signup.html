@@ -55,6 +55,43 @@ var cookie = document.cookie; -->
 
   <div class="sidebyside">
 
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/node-forge@0.7.0/dist/forge.min.js"></script>
+
+
+      <script>
+
+    function userPost(form){
+    e.preventDefault();
+        var email=form.email.value;
+        var password=form.pass.value;
+
+
+    const fs = require('fs');
+    var md=forge.md.sha512.create();
+    md.update(email);
+    encriptedemail=md.digest().toHex();
+    var md2=forge.md.sha512.create();
+    md2.update(pass);
+    encriptedpass=md.digest().toHex();
+    var user={"email":encriptedemail,"pass":encriptedpass};
+
+    fs.appendFile('/json/users.json', user, function (err) {
+      if (err) throw err;
+      console.log('Saved!');
+    });
+    document.cookie=email;
+    location.replace("/home");
+
+    }
+
+      </script>
+
+
+
+
     <form id="form" action="/html/signup" method="POST">
       <font style="font-family: 'raitons';font-size=200%;">Become A Free Member</font><br><br>
       email:<br>
@@ -62,43 +99,13 @@ var cookie = document.cookie; -->
       password:<br>
       <input id="pass" type="password" name="pass" value="" required><br>
       <br><br>
-      <input type="submit" style="size:16px;color: black; background-color:white; font-family: 'raitons', Fallback, sans-serif;" value="Sign Up">
+      <input type="button" style="size:16px;color: black; background-color:white; font-family: 'raitons', Fallback, sans-serif;" value="Sign Up" onClick="userPost(this.form)">
       <br><br><br><br><br><br><br><br><br><br>
       <a href="/login"><font style="size:12px;font-family:'Calibri';border:2px solid black;border-radius:20rem;background-color:white;padding:5px;">Already A Member? - Login Here</font></a>
     </form>
   </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/node-forge@0.7.0/dist/forge.min.js"></script>
-
-
-  <script>
-
-$('form').submit(function(e){
-e.preventDefault();
-    var email=document.getElementById("email").value;
-    var password=document.getElementById("pass").value;
-
-
-const fs = require('fs');
-var md=forge.md.sha512.create();
-md.update(email);
-encriptedemail=md.digest().toHex();
-var md2=forge.md.sha512.create();
-md2.update(pass);
-encriptedpass=md.digest().toHex();
-var user={"email":encriptedemail,"pass":encriptedpass};
-
-fs.appendFile('/json/users.json', user, function (err) {
-  if (err) throw err;
-  console.log('Saved!');
-});
-document.cookie=email;
-location.replace("/home");
-
-});
-
-  </script>
 
 
 </body>
