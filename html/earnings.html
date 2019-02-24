@@ -3,9 +3,9 @@
 
 <head>
 
-<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#ffffff">
 
@@ -33,7 +33,7 @@
     <div class="dropdown">
       <button class="dropbtn"> X </button>
         <div class="dropcontent">
-          <a href="../" class="dropdown"> Home </a>
+          <a href="/html/home" class="dropdown"> Home </a>
           <a href="/html/about" class="dropdown"> About </a>
           <a href="/html/contact" class="dropdown"> Contact </a>
           <a href="/html/investors" class="dropdown"> Invest </a>
@@ -44,9 +44,7 @@
 
       <div class="title"> Free Market Insights</div>
 
-    <a href="/signup">Sign Up</a> &nbsp*&nbsp
-    <a href="/login">Login</a>&nbsp*&nbsp
-    <a href="/profile">My Profile</a>
+    <a href="/html/login">Members Area</a> &nbsp/&nbsp
   </div><br>
 
   <div class="spacer">
@@ -60,7 +58,50 @@
 <div class="page">
 <div class="posts">
 
+
+
+
+  <script>
+  var xhttp=new XMLHttpRequest();
+  xhttp.onreadystatechange=function(){
+    if (this.readyState ==4 && this.status ==200){
+
+      var response=JSON.parse(xhttp.responseText);
+
+      var output='';
+      for (var i=0;i<5;i++){
+        if (response[i].divyield==null){divyield="-";}else{divyield=response[i].divyield;}
+        output +=
+          '<tr>'+
+          '<td>$'+response[i].target+'</td>'+
+          '<td>$'+response[i].price+'</td>'+
+          '<td>'+response[i].returns+'%'+'</td>'+
+          '<td>'+response[i].a_eps+'%'+'</td>'+
+          '<td>'+response[i].q_eps+'%'+'</td>'+
+          '<td>'+divyield+'</td>'+
+          '<td><a href="http://www.google.com/search?q='+response[i].ticker+'+stock+price"  target="_blank" >'+response[i].ticker+'</a></td>'+
+          '<td><a href="http://www.google.com/search?q='+response[i].note+'"  target="_blank" >'+response[i].note+'</a></td>'+
+          '<td>'+response[i].to_char+'%'+'</td>'+
+          '<td>'+response[i].a_pe+'%'+'</td>'+
+          '<td>'+response[i].q_pe+'%'+'</td>'+
+          '<td>'+response[i].report+'%'+'</td>'+
+          '</tr>';
+      }
+
+      document.getElementById('earnings').innerHTML=output;
+      }
+    };
+    xhttp.open("Get", "/json/earnings.json",true);
+    xhttp.send();
+  </script>
+
+
+
 <div class="posttitle">
+
+
+
+
   Earnings Announcements
 </div>
 
@@ -70,15 +111,17 @@
   ex) Search: analyst BB AA CC 2018-03</font><br><br>
 
 
+
 <br>
   <table style="text-align:center;" id="sortable">
     <thead>
       <tr>
         <th>Target Price</th>
-        <th>Today's Price</th>
+        <th>Price</th>
         <th>Exp Return</th>
         <th>Anul_EPS</th>
         <th>Qtr EPS Reported</th>
+        <th>Divyield</th>
         <th>Ticker</th>
         <th>News Title</th>
         <th>Date</th>
@@ -88,26 +131,7 @@
       </tr>
     </thead>
 
-    <tbody>
-
-      {{range .}}
-      <tr>
-        <td>{{.Target.Value}}</td>
-        <td>{{.Price.Value}}</td>
-        <td>{{.Returns.Value}}</td>
-        <td>{{.A_eps.Value}}</td>
-        <td>{{.Q_eps.Value}}</td>
-        <td>{{.Ticker.Value}}</td>
-        <td>{{.Note.Value}}</td>
-        <td>{{.Date.Value}}</td>
-        <td>{{.A_pe.Value}}</td>
-        <td>{{.Q_pe.Value}}</td>
-        <td>{{.Report.Value}}</td>
-
-      </tr>
-      {{end}}
-
-    </tbody>
+    <tbody id="earnings"></tbody>
 
 
 

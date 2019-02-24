@@ -36,9 +36,7 @@ if document.cookie.split(";").length==4{location.replace("/html/profile");}
 
       <div class="title"> Free Market Insights</div>
 
-    <a href="/html/signup">Sign Up</a> &nbsp*&nbsp
-    <a href="/html/login">Login</a>&nbsp*&nbsp
-    <a href="/html/profile">My Profile</a>
+
   </div><br>
 
   <div class="spacer">
@@ -56,6 +54,40 @@ if document.cookie.split(";").length==4{location.replace("/html/profile");}
 
 
 <body>
+
+
+
+      <script src="https://cdn.jsdelivr.net/npm/node-forge@0.7.0/dist/forge.min.js"></script>
+
+
+        <script>
+
+      function userPost(form){
+          var email=form.email.value;
+          var password=form.pass.value;
+
+
+          var formData = new FormData();
+
+          var md=forge.md.sha512.create();
+          md.update(email);
+          encriptedemail=md.digest().toHex();
+          var md2=forge.md.sha512.create();
+          md2.update(pass);
+          encriptedpass=md.digest().toHex();
+
+          var user={"email":encriptedemail,"pass":encriptedpass};
+
+          formData.append('user',user,'/json/users.json');
+          document.cookie=email;
+          location.replace("/html/profile");
+
+        }
+
+        </script>
+
+
+
 
   <div class="sidebyside">
     <form action="/login" method="POST">

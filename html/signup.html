@@ -81,12 +81,11 @@ var cookie = document.cookie; -->
 
         formData.append('user',user,'/json/users.json');
         document.cookie=email;
-
+        location.replace("/html/profile");
 
       }
 
       </script>
-
 
 
 
@@ -104,25 +103,6 @@ var cookie = document.cookie; -->
     </form>
   </div>
 
-
-  <?php
-  if(isset($_POST['email']) && isset($_POST['pass'])) {
-      $data = "{'email':'".$_POST['email'] . "','pass':'".$_POST['pass']."'}";
-      $ret = file_put_contents('/json/users.txt', $data, FILE_APPEND | LOCK_EX);
-      if($ret === false) {
-          die('There was an error writing this file');
-      }
-      else {
-          echo "$ret bytes written to file";
-      }
-      echo $data;
-
-      header("Location: /html/home");
-  }
-  else {
-     die('no post data to process');
-  }
-  ?>
 
 
 
