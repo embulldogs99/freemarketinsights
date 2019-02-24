@@ -80,8 +80,9 @@ if (document.cookie.split(";").length==4){location.replace("/html/profile");}
 
 
       function userPost(form){
-          var email=form.email.value;
 
+          var email=form.email.value;
+          if (email==''){alert("Please Fill In Your Email")}else{
 
           // var md=forge.md.sha512.create();
           // md.update(email);
@@ -95,7 +96,7 @@ if (document.cookie.split(";").length==4){location.replace("/html/profile");}
 
           createCookie("email",email,1);
           location.replace("/html/profile");
-
+        }
         }
 
         </script>
