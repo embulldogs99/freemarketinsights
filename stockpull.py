@@ -719,6 +719,12 @@ def contentfilter():
 
                                 epsexpreturn=(targetprice-price)/price
 
+                                ##Cleaning Grab (note) to remove "" and / as this will break javascript on html load
+                                grab=grab.replace('"','')
+                                grab=grab.replace('/','')
+                                grab=grab.replace('\\','')
+                                grab=grab.replace('\\\\','')
+
 
 
                                 if price*.1 < targetprice and price*10>targetprice:
