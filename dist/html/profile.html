@@ -57,11 +57,11 @@
   <div class="slogan" id="user"> </div>
 
     <script>
-    var user=document.cookie;
+    var user=document.cookie.split(";")[0];
         document.getElementById('user').innerHTML='Hello '+user;
 
     </script>
-    
+
   <div class="column">
   <a href="/html/marketmentions" class="profilehelplinks">All Market Mentions Data</a>
   <a href="/html/earnings" class="profilehelplinks">Earnings Announcements Data</a>
