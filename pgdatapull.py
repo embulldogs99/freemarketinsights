@@ -37,12 +37,12 @@ print("----------------------------")
 print("pulled market bulls")
 print("----------------------------")
 
-shutil.move("F:\json\marketbulls.json","dist/json/marketbulls.json")
+shutil.move("F:/json/marketbulls.json","dist/json/marketbulls.json")
 filename="dist/json/marketbulls.json"
-fileread=open(filename,"r")
+fileread=open(filename,"r",encoding="utf8")
 filestring=fileread.read()
 filestring=str(filestring).replace("\\\\","")
-filestring=str(filestring).replace("\\\","")
+filestring=str(filestring).replace("\\","")
 filestring=str(filestring).replace("\\","")
 filestring=str(filestring).replace('"',"")
 filestring=str(filestring).replace('"Buy"','Buy')
@@ -64,12 +64,12 @@ print("----------------------------")
 print("pulled market bears")
 print("----------------------------")
 
-shutil.move("F:\json\marketbears.json","dist/json/marketbears.json")
+shutil.move("F:/json/marketbears.json","dist/json/marketbears.json")
 filename2="dist/json/marketbears.json"
 fileread2=open(filename2,"r")
 filestring2=fileread2.read()
 filestring2=str(filestring2).replace("\\\\","")
-filestring2=str(filestring2).replace("\\\","")
+filestring2=str(filestring2).replace("\\","")
 filestring2=str(filestring2).replace("\\","")
 filestring2=str(filestring2).replace('"',"")
 filestring2=str(filestring2).replace('"Buy"','Buy')
@@ -89,7 +89,7 @@ conn.commit()
 print("----------------------------")
 print("pulled portfoliohistory")
 print("----------------------------")
-shutil.move("F:\json\portfoliohistory.json","dist/json/portfoliohistory.json")
+shutil.move("F:/json/portfoliohistory.json","dist/json/portfoliohistory.json")
 
 #Today Portfolio Movement
 cur.execute("COPY (SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(t))) FROM( SELECT to_char(date,'MM/DD/YYYY'),portfolio,snp,nasdaq,portfolioreturn,snpreturn,nasdaqreturn FROM fmi.portfoliohistory ORDER BY date DESC LIMIT 1) t) to 'F:/json/portfolioreturn.json'")
@@ -97,7 +97,7 @@ conn.commit()
 print("----------------------------")
 print("pulled portfolioreturn")
 print("----------------------------")
-shutil.move("F:\json\portfolioreturn.json","dist/json/portfolioreturn.json")
+shutil.move("F:/json/portfolioreturn.json","dist/json/portfolioreturn.json")
 
 
 #Portfolio
@@ -106,7 +106,7 @@ conn.commit()
 print("----------------------------")
 print("pulled portfolio")
 print("----------------------------")
-shutil.move("F:\json\portfolio.json","dist/json/portfolio.json")
+shutil.move("F:/json/portfolio.json","dist/json/portfolio.json")
 
 
 #Portfolio Target Trend Database
@@ -117,7 +117,7 @@ for s in stocks:
     for t in s:
         statement="COPY (SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(t))) FROM (select DISTINCT ON (date) target,date,note from fmi.marketmentions where ticker='"+t+"' and report='analyst' and date> (CURRENT_DATE - INTERVAL '1 year') order by date desc) t) to 'F:/json/targettrend"+t+".json'"
         cur.execute(statement)
-        shutil.move("F:\json\targettrend"+t+".json","dist/json/"+t+"+targettrend.json")
+        shutil.move("F:/json/targettrend"+t+".json","dist/json/"+t+"+targettrend.json")
 print("----------------------------")
 print("pulled portfolio JSON")
 print("----------------------------")
