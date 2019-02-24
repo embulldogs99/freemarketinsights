@@ -64,7 +64,8 @@ if (document.cookie.split(";").length<=3){location.replace("/html/login");}
   <div class="slogan" id="user"> </div>
 
     <script>
-    var user=document.cookie.split(";").split("=")[1];
+    var user=document.cookie.split(";")[0].split("=")[1];
+    if (user==undefined){location.replace("/html/login");}else{
         document.getElementById('user').innerHTML='Hello '+user+
         '<br>'+
         '<br>'+
@@ -76,7 +77,7 @@ if (document.cookie.split(";").length<=3){location.replace("/html/login");}
         'Here you will find a plethora of data sources to aid in your investment research'+
         '<br>'+
         '<br>';
-
+}
     </script>
 
   <div class="column">
