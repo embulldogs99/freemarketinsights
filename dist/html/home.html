@@ -161,7 +161,12 @@ xhttp3.send();
 var xhttp=new XMLHttpRequest();
 xhttp.onreadystatechange=function(){
   if (this.readyState ==4 && this.status ==200){
-    var response=JSON.parse(xhttp.responseText);
+    try {
+      var response=JSON.parse(xhttp.responseText);
+    } catch(e){
+      alert(e);
+    }
+  }
     var output='';
     for (var i=0;i<5;i++){
       if (response[i].divyield==null){divyield="-";}else{divyield=response[i].divyield;}
@@ -275,18 +280,7 @@ xhttp2.onreadystatechange=function(){
   <div class="vertical2">
   <div class="ads">
 
-Ads here<br>
-Ads<br>
-Ads here<br>
-Ads<br>Ads here<br>
-Ads<br>Ads here<br>
-Ads<br>Ads here<br>
-Ads<br>Ads here<br>
-Ads<br>Ads here<br>
-Ads<br>Ads here<br>
-Ads<br>Ads here<br>
-Ads<br>Ads here<br>
-Ads<br>
+<img src='/pics/robinhoodlogo.png'/>
 </div>
 
 
