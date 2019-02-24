@@ -136,7 +136,7 @@ header{
 #sortable a:hover{
   background: orange;
 }
-img .icon:hover{
+.icon:hover{
   border:5px solid rgba(0,0,0,.3);
 }
 
