@@ -95,7 +95,7 @@ footer{
   align-items: center;
   justify-content: center;
   text-align: center;
-  
+
   /*border: 2px solid black;*/
 }
 
@@ -135,6 +135,9 @@ header{
 }
 #sortable a:hover{
   background: orange;
+}
+img .icon:hover{
+  border:5px solid rgba(0,0,0,.3);
 }
 
 .hometable{

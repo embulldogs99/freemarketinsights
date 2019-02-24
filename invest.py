@@ -77,7 +77,8 @@ def stocksell(ticker,shares,price):
     cur.execute("""UPDATE fmi.portfolio set shares=%s,value=%s,exp_value=%s WHERE ticker=%s;""", (newcash,newcash,newcash,'CASH'))
     conn.commit()
 
-    cur.execute("""DELETE FROM fmi.portfolio where ticker=%s;""", ticker)
+    stmt="DELETE FROM fmi.portfolio where ticker="+ticker
+    cur.execute(stmt)
     conn.commit()
 
     cur.close()
