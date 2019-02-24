@@ -68,23 +68,22 @@ var cookie = document.cookie; -->
         var password=form.pass.value;
 
 
-    const fs = require('fs');
-    var md=forge.md.sha512.create();
-    md.update(email);
-    encriptedemail=md.digest().toHex();
-    var md2=forge.md.sha512.create();
-    md2.update(pass);
-    encriptedpass=md.digest().toHex();
-    var user={"email":encriptedemail,"pass":encriptedpass};
+        var formData = new FormData();
 
-    fs.appendFile('/json/users.json', user, function (err) {
-      if (err) throw err;
-      console.log('Saved!');
-    });
-    document.cookie=email;
-    location.replace("/html/home");
+        var md=forge.md.sha512.create();
+        md.update(email);
+        encriptedemail=md.digest().toHex();
+        var md2=forge.md.sha512.create();
+        md2.update(pass);
+        encriptedpass=md.digest().toHex();
 
-    }
+        var user={"email":encriptedemail,"pass":encriptedpass};
+        
+        formData.append('user',user,'/json/users.json');
+        document.cookie=email;
+        location.replace("/html/home");
+
+      }
 
       </script>
 
