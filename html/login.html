@@ -19,7 +19,8 @@ var cookie = document.cookie; -->
 
 
 <script>
-if (document.cookie.split(";").length==4){location.replace("/html/profile");}
+var user=document.cookie.split("email")[1];
+if (user!=undefined){location.replace("/html/profile");}
 </script>
 
 </head>
