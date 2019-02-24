@@ -55,7 +55,7 @@ var cookie = document.cookie; -->
 
   <div class="sidebyside">
 
-    <form action="/html/signup" method="GET">
+    <form id="form" action="/html/signup" method="POST">
       <font style="font-family: 'raitons';font-size=200%;">Become A Free Member</font><br><br>
       email:<br>
       <input id="email" type="email" name="email" value="" required><br>
@@ -76,24 +76,27 @@ var cookie = document.cookie; -->
 
   var email=document.getElementById("email").value;
   var password=document.getElementById("pass").value;
-  if (pass=='' || email==''){alert("Please Fill All Fields");}else{
-    const fs = require('fs');
-    var md=forge.md.sha512.create();
-    md.update(email);
-    encriptedemail=md.digest().toHex();
-    var md2=forge.md.sha512.create();
-    md2.update(pass);
-    encriptedpass=md.digest().toHex();
-    var user={"email":encriptedemail,"pass":encriptedpass};
+$('form').submit(function(e){
 
-    fs.appendFile('/json/users.json', user, function (err) {
-      if (err) throw err;
-      console.log('Saved!');
-    });
-    document.cookie=email;
-    location.replace("/home");
 
-  }
+e.preventDefault();
+const fs = require('fs');
+var md=forge.md.sha512.create();
+md.update(email);
+encriptedemail=md.digest().toHex();
+var md2=forge.md.sha512.create();
+md2.update(pass);
+encriptedpass=md.digest().toHex();
+var user={"email":encriptedemail,"pass":encriptedpass};
+
+fs.appendFile('/json/users.json', user, function (err) {
+  if (err) throw err;
+  console.log('Saved!');
+});
+document.cookie=email;
+location.replace("/home");
+
+});
 
   </script>
 
