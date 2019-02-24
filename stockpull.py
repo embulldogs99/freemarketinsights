@@ -497,7 +497,7 @@ def contentfilter():
         map=['']
         stocks=stocklist
 
-        for u in stocks:
+        for u in range(1,100):
             u=random.choice(stocks)
             value=''
             try:
@@ -699,7 +699,7 @@ def contentfilter():
                                 ape=round(price/float(epsreference),2)
 
                                 ######Calling prices to ensure they are available upon fail
-                                price=barchart(u)
+                                price=barchart(stock)
 
                                 #determine EPS growth rate
                                 epsgrowth=(qpe*4-ape)/abs(ape)
@@ -746,13 +746,13 @@ def contentfilter():
 
                             # Find price target callouts
                             if grab.find('arget') > 0:
-                                price=barchart(u)
+                                price=barchart(stock)
                                 predreturn=(value-price)/price
                                 if predreturn>1 or predreturn<-.8:
-                                    price=quandl_adj_close(u)
+                                    price=quandl_adj_close(stock)
                                     predreturn=(value-price)/price
                                     if predreturn>1 or predreturn<-.8:
-                                        price=googlefinancepricepull(u)
+                                        price=googlefinancepricepull(stock)
                                         predreturn=(value-price)/price
 
                                 if price*.1 < value and price*10>value:

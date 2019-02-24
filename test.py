@@ -1,4 +1,4 @@
-## Imports #####################
+##### Imports #####################
 
 import requests
 import bs4
@@ -14,9 +14,15 @@ import psycopg2
 import quandl
 import random
 
-
-
 warnings.filterwarnings('ignore')
+today=datetime.date.today()
+
+###########################################################
+##########################################################
+######## Used QUANDL Functions #########################
+
+quandl.ApiConfig.api_key = 'omQiMysF2NQ1B-xZEJBk'
+
 
 def quandl_stocks(symbol, start_date=(2018, 1, 1), end_date=None):
     query_list = ['WIKI' + '/' + symbol + '.' + str(k) for k in range(11, 12)]
@@ -187,18 +193,8 @@ def googlefinancepricepull(ticker):
             price=0
         return (price)
 
+ticker='NGHC'
 
-url="https://finance.google.com/finance?q="+'GLEN'+"&output=json"
-with requests.Session() as c:
-    x=c.get(url)
-    x=BeautifulSoup(x.content)
-    d=x.find_all()
-    d=str(d)
-    if d.find("The block will expire shortly after those requests stop"):
-        print("oops")
-    s=d.find("<b>")
-    short=d[s+20:s+2000]
-    s2=short.find("<b>")
-    short=short[s2:s2+2000]
-    s3=short.find("</b>")
-    price=short[3:s3]
+print(barchart(ticker))
+print(quandl_adj_close(ticker))
+print(googlefinancepricepull(ticker))
