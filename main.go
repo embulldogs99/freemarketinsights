@@ -121,22 +121,6 @@ func login(w http.ResponseWriter, r *http.Request) {
 
 
 
-func logout(w http.ResponseWriter, r *http.Request) {
-	if !alreadyLoggedIn(r) {http.Redirect(w, r, "/login", http.StatusSeeOther)}
-	c, _ := r.Cookie("session")
-	//delete the session
-	delete(dbs, c.Value)
-	//remove the cookie
-	c = &http.Cookie{
-		Name:  "session",
-		Value: "",
-		//max avge value of less than 0 means delete the cookie now
-		MaxAge: -1,
-	}
-	http.SetCookie(w, c)
-	http.Redirect(w, r, "/login", http.StatusSeeOther)
-}
-
 func getUser(w http.ResponseWriter, r *http.Request) user {
 	//gets cookie
 	c, err := r.Cookie("session")
