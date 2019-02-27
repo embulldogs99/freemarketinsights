@@ -16,6 +16,7 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
 
 <!--- javascript -->
 <script type="text/javascript">
@@ -186,7 +187,7 @@ var sortable = new Sortable(el, {
         var response=JSON.parse(xhttp.responseText);
 
         var output='';
-        for (var i=0;i<5;i++){
+        for (var i=0;i<;i++){
           if (response[i].divyield==null){divyield="-";}else{divyield=response[i].divyield;}
           output +=
             '<tr>'+
