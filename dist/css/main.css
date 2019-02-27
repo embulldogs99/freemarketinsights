@@ -98,6 +98,11 @@ footer{
   /*border: 2px solid black;*/
 }
 .homepage{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   width:80vw;
 }
 
