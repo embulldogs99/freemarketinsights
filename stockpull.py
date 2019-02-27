@@ -751,7 +751,7 @@ def contentfilter():
                                 if predreturn>1 or predreturn<-.8:
                                     price=quandl_adj_close(stock)
                                     predreturn=(value-price)/price
-                                    if predreturn>1 or predreturn<-.8:
+                                    if predreturn>1 and predreturn<2 or predreturn<-.8 and predreturn>-1:
                                         price=googlefinancepricepull(stock)
                                         predreturn=(value-price)/price
 

@@ -6,7 +6,8 @@ At FreeMarketInsights, we provide actionable qualitative and quantitative stock 
 <b>Takeaways</b><br>
 $10,000 today can be worth ~$200,000 in 30 years if invested properly. Not everyone has $10,000 on hand right now, but with commitment and consistency, we can all save a little bit today, to have a larger sum tomorrow, which will grow to a significant amount in the future.
 
-Please check out the website at <a href="www.freemarketinsights.com">www.freemarketinsights.com</a> to learn more
+Please check out the website at <a href="www.freemarketinsights.com">www.freemarketinsights.com</a> to learn more<br><br>
 
-Libraries Used:
+<b>Libraries Used:</b><br>
 <a href="https://www.kryogenix.org/code/browser/sorttable/#ajaxtables">Sorttable</a><br>
+<a href="https://www.chartjs.org/">Chart.JS</a>
