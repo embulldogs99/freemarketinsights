@@ -114,7 +114,7 @@ footer{
   width: 80vw;
   /*border: solid 2px orange;*/
   line-height:25px;
-  padding:2px;
+  padding:10px;
   font-family: 'arial', sans-serif;
 }
 header{
@@ -133,9 +133,13 @@ header{
     font-weight: 600;
     cursor: crosshair;
     padding: 3px;
-    border: .5px solid black;
+    /* border: .5px solid black; */
     width: 90%;
     text-align: center;
+}
+.sortable td{
+  padding: 5px;
+  border-right:.5px rgba(0,0,0,.4);
 }
 .sortable a{
   background: lightblue;
