@@ -204,7 +204,7 @@ print("pulled Best Bets")
 print("----------------------------")
 
 
-statement="COPY (SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(t))) FROM (SELECT target,price,returns,ticker,note,to_char(date,'MM/DD/YYYY'),q_eps,a_eps,report,q_pe,a_pe,divyield FROM fmi.marketmentions WHERE report='analyst' AND date > current_timestamp - INTERVAL '365 days') t) to 'F:/json/marketmentions.json'"
+statement="COPY (SELECT ARRAY_TO_JSON(ARRAY_AGG(ROW_TO_JSON(t))) FROM (SELECT target,price,returns,ticker,note,to_char(date,'MM/DD/YYYY'),q_eps,a_eps,report,q_pe,a_pe,divyield FROM fmi.marketmentions WHERE report='analyst' AND date > current_timestamp - INTERVAL '365 days' ORDER BY date) t) to 'F:/json/marketmentions.json'"
 cur.execute(statement)
 shutil.move("F:/json/marketmentions.json","dist/json/marketmentions.json")
 print("----------------------------")
