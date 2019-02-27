@@ -130,20 +130,20 @@ header{
 .sortable{
     background-color:#eee;
     color:#666666;
-    font-weight: 600;
+
     cursor: crosshair;
-    padding: 3px;
     /* border: .5px solid black; */
-    width: 90%;
+    width: 80vw;
     text-align: center;
 }
 .sortable td{
-  padding: 5px;
-  border-right:1px rgba(0,0,0,.5);
+  border-right:1px rgba(0,0,0,1);
 }
 .sortable th{
   white-space: nowrap;
-  
+  border-bottom: 1px rgba(0,0,0,1);
+  padding: 5px;
+      font-weight: 600;
 }
 .sortable a{
   background: lightblue;
