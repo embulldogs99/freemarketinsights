@@ -127,7 +127,7 @@ header{
   font-family: 'raitons', sans-serif;
 }
 
-#sortable{
+.sortable{
     background-color:#eee;
     color:#666666;
     font-weight: 600;
@@ -137,10 +137,10 @@ header{
     width: 90%;
     text-align: center;
 }
-#sortable a{
+.sortable a{
   background: lightblue;
 }
-#sortable a:hover{
+.sortable a:hover{
   background: orange;
 }
 .icon:hover{
