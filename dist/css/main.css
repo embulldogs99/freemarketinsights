@@ -95,8 +95,10 @@ footer{
   align-items: center;
   justify-content: center;
   text-align: center;
-
   /*border: 2px solid black;*/
+}
+.homepage{
+  width:80vw;
 }
 
 .posts{
@@ -294,6 +296,7 @@ border: 1px solid black;
 
 .profilehelplinks{
   padding: 7px;
+  margin: 5px;
   border: solid 2px black;
   border-radius: 2rem;
   border-style: solid;
@@ -301,7 +304,6 @@ border: 1px solid black;
   text-align: center;
   align-items: center;
   font-size: 25px;
-  width: 60%;
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
