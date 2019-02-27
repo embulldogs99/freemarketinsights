@@ -128,7 +128,7 @@ header{
 }
 
 .sortable{
-    background-color:#eee;
+    /* background-color:#eee; */
     color:#666666;
 
     cursor: crosshair;
@@ -137,13 +137,14 @@ header{
     text-align: center;
 }
 .sortable td{
-  border-right:1px rgba(0,0,0,1);
+  border-right:1px solid rgba(0,0,0,.5);
 }
 .sortable th{
   white-space: nowrap;
-  border-bottom: 1px rgba(0,0,0,1);
+  border-bottom: 1px ;
   padding: 5px;
       font-weight: 600;
+        border-bottom:1px solid rgba(0,0,0,.5);
 }
 .sortable a{
   background: lightblue;
