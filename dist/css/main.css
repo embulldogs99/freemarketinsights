@@ -139,7 +139,11 @@ header{
 }
 .sortable td{
   padding: 5px;
-  border-right:.5px rgba(0,0,0,.4);
+  border-right:1px rgba(0,0,0,.5);
+}
+.sortable th{
+  white-space: nowrap;
+  
 }
 .sortable a{
   background: lightblue;
