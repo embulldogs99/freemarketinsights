@@ -12,4 +12,10 @@ Please check out the website at <a href="www.freemarketinsights.com">www.freemar
 <a href="https://www.kryogenix.org/code/browser/sorttable/#ajaxtables">Sorttable</a><br>
 <a href="https://www.chartjs.org/">Chart.JS</a><br>
 <a href="https://www.dividendchannel.com/ex-dividend-calendar/"> Dividend Calendar</a><br>
-<a href=""
+<a href="https://www.alphavantage.co/documentation/">Alpha Vantage Stock Prices</a><br>
+<br>
+<br>
+
+
+<b>Libraries Investigating:</b><br>
+<a href="https://product.intrinio.com/financial-data/us-fundamentals-financials-metrics-ratios"> Intrinio</a>

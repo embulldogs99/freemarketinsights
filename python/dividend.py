@@ -17,12 +17,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 import datetime
 from selenium import webdriver
+
+warnings.filterwarnings('ignore')
+
 url="https://www.dividendchannel.com/ex-dividend-calendar/?confirm=1"
-
-from selenium import webdriver
-import time
-
-array=[]
+finaldata=[]
+try:
+    outfile=open('../dist/json/dividend.json','r')
+    item=json.load(outfile)
+    for i in item:
+        finaldata.append(i)
+except:
+    pass
 
 driver = webdriver.Firefox()
 driver.get(url)
@@ -90,12 +96,11 @@ for z in t:
                 i=i+1
             if len(tester1)<=100 and len(tester2)<=100 and len(tester3)<=100 and len(tester4)<=100 and len(tester5)<=100 and len(tester6)<=100 and len(str(data))>=70:
                 # json_data=json.dumps(data)
-                array.append(data)
+
+                finaldata.append(data)
 
 
 
 
-
-with open('dist/json/dividend.json', 'a+') as outfile:
-    json.dump(array, outfile)
-    outfile.close()
+with open('../dist/json/dividend.json', 'w') as outfile:
+    json.dump(finaldata, outfile)
