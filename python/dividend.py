@@ -18,10 +18,12 @@ import matplotlib.pyplot as plt
 import datetime
 from selenium import webdriver
 
+
 warnings.filterwarnings('ignore')
 
 url="https://www.dividendchannel.com/ex-dividend-calendar/?confirm=1"
 finaldata=[]
+tempdata=[]
 try:
     outfile=open('../dist/json/dividend.json','r')
     item=json.load(outfile)
@@ -54,6 +56,7 @@ for z in t:
                         es=strcol.find('"><font')
                         ticker=strcol[:es]
                         data['Ticker']=ticker
+
                     else:
                         data['Ticker']='-'
                     # tickerpoint=strcol.find("/symbol/")
@@ -98,9 +101,14 @@ for z in t:
                 # json_data=json.dumps(data)
 
                 finaldata.append(data)
+                tempdata.append(data)
 
 
 
 
 with open('../dist/json/dividend.json', 'w') as outfile:
     json.dump(finaldata, outfile)
+    outfile.close()
+with open('..dist/json/tempdividend.json','w') as outfile:
+    json.dump(tempdata,outfile)
+    outfile.close()

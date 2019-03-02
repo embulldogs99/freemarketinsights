@@ -13,6 +13,7 @@ Please check out the website at <a href="www.freemarketinsights.com">www.freemar
 <a href="https://www.chartjs.org/">Chart.JS</a><br>
 <a href="https://www.dividendchannel.com/ex-dividend-calendar/"> Dividend Calendar</a><br>
 <a href="https://www.alphavantage.co/documentation/">Alpha Vantage Stock Prices</a><br>
+< ahref="https://eodhistoricaldata.com/">EOD Historical Data - Unicorn data Services - Dividends Data</a><br>
 <br>
 <br>
 

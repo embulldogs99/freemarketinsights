@@ -1,7 +1,8 @@
 from nasdaq import nasdaqpull
 import json
 import decimal
-
+from unicornpull import daydeltacalc
+from unicornpull import unicornpull
 
 finaldata=[]
 growthfile='../dist/json/dividendgrowth.json'
@@ -14,35 +15,31 @@ except:
     pass
 f.close()
 
-file=open('../dist/json/dividend.json','r')
+file=open('../dist/json/tempdividend.json','r')
 data=json.load(file)
 for item in data:
     entry={}
     if item['Ticker']!='-':
-        ticker=item['Ticker']
-        entry['Ticker']=ticker
-        type=item['Type']
-        entry['Type']=type
-        dividend=decimal.Decimal(item['Dividend'])
-        entry['Dividend']=float(dividend)
+        entry['Ticker']=item['Ticker']
+        entry['Type']=item['Type']
+        entry['Dividend']=item['Dividend']
         try:
-            nasdaqdata=nasdaqpull(ticker)
-            annualdividend=decimal.Decimal(nasdaqdata['Anul_Div'])
-            entry['Annual_Dividend']=annualdividend
-            if type=='Q':
-                dividendgrowth=(dividend*4.0-annualdividend)/annualdividend
-                print(dividendgrowth)
-            if type=='M':
-                dividendgrowth=(dividend*12.0-annualdividend)/annualdividend
-            if type=='A':
-                dividendgrowth=(dividend-annualdividend)/annualdividend
-            entry['Dividend_Growth%']=dividendgrowth
-            finaldata.append(entry)
+            unicorndata=unicornpull(item['Ticker'])
+            entry['LastDiv']=unicorndata['Div']
+            entry['LastDivDate']=unicorndata['DivDate']
+            entry['LastDivType']=unicorndata['DivType']
+            entry['DivHistory']=unicorndata
         except:
-            annualdividend='-'
-            entry['Annual_Dividend']=annualdividend
-            entry['Dividend_Growth%']='-'
+            entry['LastDiv']={}
+            entry['LastDivDate']={}
+            entry['LastDivType']={}
+            entry['DivHistory']={}
+
+        finaldata.append(entry)
+    else:
+        pass
 
 file.close()
 outfile=open('../dist/json/dividendgrowth.json','w')
 json.dump(finaldata,outfile)
+outfile.close()
