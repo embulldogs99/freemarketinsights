@@ -12,7 +12,7 @@ try:
         finaldata.append(i)
 except:
     pass
-
+f.close()
 
 file=open('../dist/json/dividend.json','r')
 data=json.load(file)
@@ -28,23 +28,21 @@ for item in data:
         try:
             nasdaqdata=nasdaqpull(ticker)
             annualdividend=decimal.Decimal(nasdaqdata['Anul_Div'])
-            entry['Annual_Dividend']=float(annualdividend)
+            entry['Annual_Dividend']=annualdividend
+            if type=='Q':
+                dividendgrowth=(dividend*4.0-annualdividend)/annualdividend
+                print(dividendgrowth)
+            if type=='M':
+                dividendgrowth=(dividend*12.0-annualdividend)/annualdividend
+            if type=='A':
+                dividendgrowth=(dividend-annualdividend)/annualdividend
+            entry['Dividend_Growth%']=dividendgrowth
+            finaldata.append(entry)
         except:
             annualdividend='-'
             entry['Annual_Dividend']=annualdividend
-        if annualdividend=='-':
-            dividendgrowth='-'
-        else:
-            if type=='Q':
-                dividendgrowth=round(float((((dividend+dividend+dividend+dividend)-annualdividend)/annualdividend))*100.0,3)
-            if type=='M':
-                dividendgrowth=round((dividend*12-annualdividend)/annualdividend,3)
-            if type=='A':
-                dividendgrowth=round((dividend-annualdividend)/annualdividend,3)
+            entry['Dividend_Growth%']='-'
 
-        entry['Dividend_Growth%']=str(dividendgrowth)
-        if entry['Dividend_Growth%']!='-':
-            finaldata.append(entry)
-
+file.close()
 outfile=open('../dist/json/dividendgrowth.json','w')
 json.dump(finaldata,outfile)
