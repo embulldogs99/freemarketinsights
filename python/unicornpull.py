@@ -21,7 +21,7 @@ def daydeltacalc(date1,date2):
 def unicornpull(ticker):
     try:
         apikey='5c7a1f395c9e04.94980178'
-        url='https://eodhistoricaldata.com/api/div/'+ticker+'.US?api_token='+apikey+'&from=2016-01-01'
+        url='https://eodhistoricaldata.com/api/div/'+ticker+'.US?api_token='+apikey
         d=pd.read_csv(url)
         data=pd.DataFrame(d)
         entry={}
@@ -44,5 +44,6 @@ def unicornpull(ticker):
         entry['T-5DivDate']=data['Date'].iloc[-7]
         entry['T-5DivType']=daydeltacalc(data['Date'].iloc[-7],data['Date'].iloc[-8])
         return entry
-    except:
+    except Exception as e:
         return {}
+        print(e)
