@@ -28,21 +28,21 @@ def unicornpull(ticker):
         entry['Div']=data['Dividends'].iloc[-2]
         entry['DivDate']=data['Date'].iloc[-2]
         entry['DivType']=daydeltacalc(data['Date'].iloc[-2],data['Date'].iloc[-3])
-        entry['T-1Div']=data['Dividends'].iloc[-3]
-        entry['T-1DivDate']=data['Date'].iloc[-3]
-        entry['T-1DivType']=daydeltacalc(data['Date'].iloc[-3],data['Date'].iloc[-4])
-        entry['T-2Div']=data['Dividends'].iloc[-4]
-        entry['T-2DivDate']=data['Date'].iloc[-4]
-        entry['T-2DivType']=daydeltacalc(data['Date'].iloc[-4],data['Date'].iloc[-5])
-        entry['T-3Div']=data['Dividends'].iloc[-5]
-        entry['T-3DivDate']=data['Date'].iloc[-5]
-        entry['T-3DivType']=daydeltacalc(data['Date'].iloc[-5],data['Date'].iloc[-6])
-        entry['T-4Div']=data['Dividends'].iloc[-6]
-        entry['T-4DivDate']=data['Date'].iloc[-6]
-        entry['T-4DivType']=daydeltacalc(data['Date'].iloc[-6],data['Date'].iloc[-7])
-        entry['T-5Div']=data['Dividends'].iloc[-7]
-        entry['T-5DivDate']=data['Date'].iloc[-7]
-        entry['T-5DivType']=daydeltacalc(data['Date'].iloc[-7],data['Date'].iloc[-8])
+        entry['T1Div']=data['Dividends'].iloc[-3]
+        entry['T1DivDate']=data['Date'].iloc[-3]
+        entry['T1DivType']=daydeltacalc(data['Date'].iloc[-3],data['Date'].iloc[-4])
+        entry['T2Div']=data['Dividends'].iloc[-4]
+        entry['T2DivDate']=data['Date'].iloc[-4]
+        entry['T2DivType']=daydeltacalc(data['Date'].iloc[-4],data['Date'].iloc[-5])
+        entry['T3Div']=data['Dividends'].iloc[-5]
+        entry['T3DivDate']=data['Date'].iloc[-5]
+        entry['T3DivType']=daydeltacalc(data['Date'].iloc[-5],data['Date'].iloc[-6])
+        entry['T4Div']=data['Dividends'].iloc[-6]
+        entry['T4DivDate']=data['Date'].iloc[-6]
+        entry['T4DivType']=daydeltacalc(data['Date'].iloc[-6],data['Date'].iloc[-7])
+        entry['T5Div']=data['Dividends'].iloc[-7]
+        entry['T5DivDate']=data['Date'].iloc[-7]
+        entry['T5DivType']=daydeltacalc(data['Date'].iloc[-7],data['Date'].iloc[-8])
         return entry
     except Exception as e:
         return {}
