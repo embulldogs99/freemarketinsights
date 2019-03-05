@@ -105,7 +105,11 @@ footer{
   text-align: center;
 
 }
+.chartcontainer{
+  margin-left:20px;
+  margin-right:20px;
 
+}
 .posts{
   display: flex;
   flex-direction: column;
