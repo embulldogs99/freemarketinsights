@@ -109,7 +109,7 @@ footer{
   margin-left:20px;
   margin-right:20px;
   width: 60vw;
-  height: 60vh;
+  height: 20vh;
 
 }
 .posts{
@@ -164,6 +164,7 @@ header{
 }
 
 .hometable{
+    font-size: 20px;
   margin-bottom: 50px;
   margin-right: 5px;
 }
@@ -177,7 +178,7 @@ header{
   padding: 5px;
 }
 .hometable td{
-  font-size: 20px;
+
  text-align:center;
  vertical-align: middle;
 }
