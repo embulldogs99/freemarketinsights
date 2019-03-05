@@ -28,7 +28,7 @@
       var response=JSON.parse(xhttp.responseText);
 
       var output='';
-      for (var i=0;i<5;i++){
+      for (var i=0;i<response.length;i++){
         if (response[i].divyield==null){divyield="-";}else{divyield=response[i].divyield;}
         output +=
           '<tr>'+
