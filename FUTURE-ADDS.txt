@@ -1,0 +1,31 @@
+1)dynamic time based stock price pull to have more accurate dividend yields
+
+2)gold vs snp vs inflation js chart in gold research
+
+3)make {username:stocklist} json file that allows users to add and remove stocks they want to track and also keeps track of emails (but encrypts the email with a sha algorithm)
+
+https://stackoverflow.com/questions/3012566/how-to-upload-string-as-file-with-jquery-or-other-js-framework
+
+var s = 'some string data';
+var filename = 'foobar.txt';
+
+var formData = new FormData();
+formData.append('file', new File([new Blob([s])], filename));
+formData.append('another-form-field', 'some value');
+
+$.ajax({
+    url: '/upload',
+    data: formData,
+    processData: false,
+    contentType: false,
+    type: 'POST',
+    success: function () {
+        console.log('ok');
+    },
+    error: function () {
+        console.log('err'); // replace with proper error handling
+    }
+});
+
+
+4)
