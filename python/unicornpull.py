@@ -21,7 +21,7 @@ def daydeltacalc(date1,date2):
 def unicornpull(ticker):
     try:
         apikey='5c7a1f395c9e04.94980178'
-        url='https://eodhistoricaldata.com/api/div/'+ticker+'.US?api_token='+apikey
+        url='https://eodhistoricaldata.com/api/div/'+ticker+'.US?api_token='+apikey+'&from=2016-01-01'
         d=pd.read_csv(url)
         data=pd.DataFrame(d)
         entry={}

@@ -28,7 +28,21 @@ for item in data:
             entry['LastDiv']=unicorndata['Div']
             entry['LastDivDate']=unicorndata['DivDate']
             entry['LastDivType']=unicorndata['DivType']
-            entry['DivHistory']=unicorndata
+            entry['T1LastDiv']=unicorndata['T1Div']
+            entry['T1LastDivDate']=unicorndata['T1DivDate']
+            entry['T1LastDivType']=unicorndata['T1DivType']
+            entry['T2LastDiv']=unicorndata['T2Div']
+            entry['T2LastDivDate']=unicorndata['T2DivDate']
+            entry['T2LastDivType']=unicorndata['T2DivType']
+            entry['T3LastDiv']=unicorndata['T3Div']
+            entry['T3LastDivDate']=unicorndata['T3DivDate']
+            entry['T3LastDivType']=unicorndata['T3DivType']
+            entry['T4LastDiv']=unicorndata['T4Div']
+            entry['T4LastDivDate']=unicorndata['T4DivDate']
+            entry['T4LastDivType']=unicorndata['T4DivType']
+            entry['T5LastDiv']=unicorndata['T5Div']
+            entry['T5LastDivDate']=unicorndata['T5DivDate']
+            entry['T5LastDivType']=unicorndata['T5DivType']
         except:
             entry['LastDiv']={}
             entry['LastDivDate']={}
