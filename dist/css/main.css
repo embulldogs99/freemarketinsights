@@ -105,7 +105,7 @@ footer{
   text-align: center;
 
 }
-#myChart{
+.chartcontainer{
   margin-left:20px;
   margin-right:20px;
   width: 60vw;
@@ -167,6 +167,7 @@ header{
     font-size: 20px;
   margin-bottom: 50px;
   margin-right: 5px;
+  width:60vw;
 }
 .hometableticker{
   font-size:25px;
@@ -195,6 +196,7 @@ border-bottom: 1px solid lightgrey;
 }
 .hometable a{
   color: red;
+
 }
 .hometable a:hover{
   color: blue;
