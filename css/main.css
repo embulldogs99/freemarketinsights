@@ -105,7 +105,7 @@ footer{
   text-align: center;
 
 }
-.chartcontainer{
+#myChart{
   margin-left:20px;
   margin-right:20px;
   width: 60vw;
