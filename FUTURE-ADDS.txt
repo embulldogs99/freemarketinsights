@@ -28,4 +28,5 @@ $.ajax({
 });
 
 
-4)
+4) 'stock advisor' pay screen
+https://www.fool.com/order/fe_offers/1c40e03f-7ca4-4869-8f65-1ce070c2d334?utm_campaign=410639&c=sa-bbn-eg-aw&campaign=sa-partner-centric&utm_source=aw&source=awin&utm_medium=affiliate&testId=op-sa-pc-awin&awc=12195_1551774813_8dfef6f60d5c55497fdf01eb238c784f&cellId=2
