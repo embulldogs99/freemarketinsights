@@ -195,7 +195,6 @@ border-bottom: 1px solid lightgrey;
 }
 .hometable a{
   color: red;
-  font-size: 10px;
 }
 .hometable a:hover{
   color: blue;
