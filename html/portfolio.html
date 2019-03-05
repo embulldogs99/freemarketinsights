@@ -67,6 +67,7 @@
         <th>Prices</th>
         <th>Exp Return</th>
         <th>Target Trend</th>
+        <th>Dividends Trend</th>
 
       </tr>
     </thead>
@@ -85,6 +86,41 @@ xhttp.onreadystatechange=function(){
     var response=JSON.parse(xhttp.responseText);
     var output='';
     for (var i=0;i<response.length;i++){
+      dividends=[];
+      divdates=[];
+      dividends.push(response[i].DivHistory.Div)
+      divdates.push(response[i].DivHistory.DivDate)
+      dividends.push(response[i].DivHistory.T1Div)
+      divdates.push(response[i].DivHistory.T1DivDate)
+      dividends.push(response[i].DivHistory.T2Div)
+      divdates.push(response[i].DivHistory.T2DivDate)
+      dividends.push(response[i].DivHistory.T3Div)
+      divdates.push(response[i].DivHistory.T3DivDate)
+      dividends.push(response[i].DivHistory.T4Div)
+      divdates.push(response[i].DivHistory.T4DivDate)
+      dividends.push(response[i].DivHistory.T5Div)
+      divdates.push(response[i].DivHistory.T5DivDate)
+
+
+      var ctx = document.getElementById('myChart').getContext('2d');
+          var myLineChart = new Chart(ctx, {
+          type: 'line',
+          data:{
+            labels:divdates,
+            datasets:[{
+              label:"Dividends",
+              backgroundColor: 'rgba(0,0,0,0)',
+              borderColor: 'rgb(255, 99, 132)',
+              data:dividends,
+            }]
+
+          },
+
+          options:{}
+      });
+
+
+
       if(response[i].to_char==null){tg='-'}else{tg=response[i].to_char}
 
       output +=
@@ -97,6 +133,7 @@ xhttp.onreadystatechange=function(){
 
         '<td><b>'+((response[i].target-response[i].price)/response[i].price).toFixed(2)+'%'+'</b></td>'+
         '<td><a href="/html/trend?'+response[i].ticker+'"  target="_blank" ><img src="/portpics/'+response[i].ticker+'+tt.png" width="400" height="300"/></a></td>'+
+        '<td id="myChart"></td>'+
         '</tr>';
 
     }
