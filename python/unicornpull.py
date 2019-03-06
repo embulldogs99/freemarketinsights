@@ -21,28 +21,12 @@ def daydeltacalc(date1,date2):
 def unicornpull(ticker):
     try:
         apikey='5c7a1f395c9e04.94980178'
-        url='https://eodhistoricaldata.com/api/div/'+ticker+'.US?api_token='+apikey+'&from=2016-01-01'
+        url='https://eodhistoricaldata.com/api/div/'+ticker+'.US?api_token='+apikey
         d=pd.read_csv(url)
         data=pd.DataFrame(d)
         entry={}
-        entry['Div']=data['Dividends'].iloc[-2]
-        entry['DivDate']=data['Date'].iloc[-2]
-        entry['DivType']=daydeltacalc(data['Date'].iloc[-2],data['Date'].iloc[-3])
-        entry['T1Div']=data['Dividends'].iloc[-3]
-        entry['T1DivDate']=data['Date'].iloc[-3]
-        entry['T1DivType']=daydeltacalc(data['Date'].iloc[-3],data['Date'].iloc[-4])
-        entry['T2Div']=data['Dividends'].iloc[-4]
-        entry['T2DivDate']=data['Date'].iloc[-4]
-        entry['T2DivType']=daydeltacalc(data['Date'].iloc[-4],data['Date'].iloc[-5])
-        entry['T3Div']=data['Dividends'].iloc[-5]
-        entry['T3DivDate']=data['Date'].iloc[-5]
-        entry['T3DivType']=daydeltacalc(data['Date'].iloc[-5],data['Date'].iloc[-6])
-        entry['T4Div']=data['Dividends'].iloc[-6]
-        entry['T4DivDate']=data['Date'].iloc[-6]
-        entry['T4DivType']=daydeltacalc(data['Date'].iloc[-6],data['Date'].iloc[-7])
-        entry['T5Div']=data['Dividends'].iloc[-7]
-        entry['T5DivDate']=data['Date'].iloc[-7]
-        entry['T5DivType']=daydeltacalc(data['Date'].iloc[-7],data['Date'].iloc[-8])
+        for i in range(1,len(data.index)-1):
+            entry[data['Date'].iloc[i]]={'Div':data['Dividends'].iloc[i],'Type':daydeltacalc(data['Date'].iloc[i],data['Date'].iloc[i-1])}
         return entry
     except Exception as e:
         return {}

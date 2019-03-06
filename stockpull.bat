@@ -19,3 +19,6 @@ python stockpull.py
 cd ..
 
 gitrun.bat
+
+pause
+
