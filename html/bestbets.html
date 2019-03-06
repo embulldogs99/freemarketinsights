@@ -27,19 +27,20 @@
 
       var output='';
       for (var i=0;i<response.length;i++){
-        if (response[i].divyield==null){divyield="-";}else{divyield=response[i].divyield;}
+        if (response[i].divyield==null){divyield="-";}else{divyield=response[i].divyield+'%';}
+        if (response[i].q_eps==null){q_eps="-";}else{q_eps='$'+response[i].q_eps;}
         output +=
           '<tr>'+
           '<td>$'+response[i].target+'</td>'+
           '<td>$'+response[i].price+'</td>'+
-          '<td>'+response[i].returns*100+'%'+'</td>'+
-          '<td>'+response[i].q_eps+'%'+'</td>'+
-          '<td>'+response[i].a_eps+'%'+'</td>'+
+          '<td>'+Math.round(response[i].returns*100)+'%'+'</td>'+
+          '<td>'+q_eps+'</td>'+
+          '<td>$'+response[i].a_eps+'%'+'</td>'+
           '<td>'+divyield+'</td>'+
           '<td><a href="http://www.google.com/search?q='+response[i].ticker+'+stock+price"  target="_blank" >'+response[i].ticker+'</a></td>'+
           '<td><a href="http://www.google.com/search?q='+response[i].note+'"  target="_blank" >'+response[i].note+'</a></td>'+
           '<td>'+response[i].to_char+'</td>'+
-          '<td>'+response[i].report+'</td>'+
+          '<td>'+response[i].bank+'</td>'+
           '</tr>';
       }
 
@@ -74,7 +75,7 @@ Latest Best Bets
         <th>Ticker</th>
         <th>News Title</th>
         <th>Date</th>
-        <th>Report</th>
+        <th>Bank</th>
       </tr>
     </thead>
 
