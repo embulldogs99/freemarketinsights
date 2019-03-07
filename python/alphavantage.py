@@ -13,50 +13,31 @@ import psycopg2
 import quandl
 import random
 from datetime import date, timedelta
+import numpy as np
+
 
 warnings.filterwarnings('ignore')
-today=datetime.date.today()
-searchtoday=today.strftime('%Y-%m-%d')
-yesterday=datetime.date.today()-timedelta(1)
-searchyesterday=yesterday.strftime('%Y-%m-%d')
-twodayago=datetime.date.today()-timedelta(2)
-searchtwodayago=twodayago.strftime('%Y-%m-%d')
-threedayago=datetime.date.today()-timedelta(3)
-searchthreedayago=threedayago.strftime('%Y-%m-%d')
 
 apikey='DFL9CKR6I3AXY7CC'
 
 def alphavantagepricepull(ticker):
     try:
-        url="https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol="+ticker+"&apikey="+apikey
+        url="https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol="+ticker+"&apikey="+apikey
         data=requests.get(url)
         binary=data.content
         output=json.loads(binary)
-        price=output['Time Series (Daily)'][searchtoday]['5. adjusted close']
+        price=output['Global Quote']['05. price']
         return price
     except:
-        try:
-            url="https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol="+ticker+"&apikey="+apikey
-            data=requests.get(url)
-            binary=data.content
-            output=json.loads(binary)
-            price=output['Time Series (Daily)'][searchyesterday]['5. adjusted close']
-            return price
-        except:
-            try:
-                url="https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol="+ticker+"&apikey="+apikey
-                data=requests.get(url)
-                binary=data.content
-                output=json.loads(binary)
-                price=output['Time Series (Daily)'][searchtwodayago]['5. adjusted close']
-                return price
-            except:
-                try:
-                    url="https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol="+ticker+"&apikey="+apikey
-                    data=requests.get(url)
-                    binary=data.content
-                    output=json.loads(binary)
-                    price=output['Time Series (Daily)'][searchthreedayago]['5. adjusted close']
-                    return price
-                except:
-                    return 0.00000001
+        return 0.00000001
+
+def alphavantageyearbenchmark():
+    url='https://www.alphavantage.co/query?function=SECTOR&apikey=DFL9CKR6I3AXY7CC'
+    data=requests.get(url)
+    jsondata=json.loads(data.content)
+    performancedata=jsondata["Rank G: 1 Year Performance"]
+    array=[]
+    for d in performancedata:
+        if performancedata[d]!=None:
+            array.append(float(performancedata[d].replace('%','')))
+    return round(np.mean(array),2)

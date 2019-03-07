@@ -29,6 +29,7 @@ try:
     item=json.load(outfile)
     for i in item:
         finaldata.append(i)
+    outfile.close()
 except:
     pass
 
@@ -106,9 +107,11 @@ for z in t:
 
 
 
-with open('../dist/json/dividend.json', 'w') as outfile:
-    json.dump(finaldata, outfile)
-    outfile.close()
-with open('..dist/json/tempdividend.json','w') as outfile:
-    json.dump(tempdata,outfile)
-    outfile.close()
+outfile=open('../dist/json/dividend.json', 'w')
+json.dump(finaldata, outfile)
+outfile.close()
+
+
+ofile=open('../dist/json/tempdividend.json','w')
+json.dump(tempdata,ofile)
+ofile.close()

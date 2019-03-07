@@ -14,6 +14,8 @@ python dividendgrowth.py
 
 python stockrank.py
 
+python portdivimages.py
+
 python stockpull.py
 
 cd ..

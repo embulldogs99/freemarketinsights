@@ -11,7 +11,7 @@ def daydeltacalc(date1,date2):
     d1=datetime.strptime(date1,"%Y-%m-%d")
     d2=datetime.strptime(date2,"%Y-%m-%d")
     delta=d1-d2
-    if delta.days>80 and delta.days<120:
+    if delta.days>46 and delta.days<164:
         return 'Q'
     if delta.days<45:
         return 'M'
