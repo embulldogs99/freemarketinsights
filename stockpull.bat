@@ -16,6 +16,8 @@ python stockrank.py
 
 python portdivimages.py
 
+python targettracker.py
+
 python stockpull.py
 
 cd ..

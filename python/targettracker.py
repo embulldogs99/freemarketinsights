@@ -16,6 +16,16 @@ from alphavantage import alphavantagepricepull
 
 warnings.filterwarnings('ignore')
 
+finaldata=[]
+
+try:
+    outfile=open('../dist/json/historicalanalysis/targettracker.json','r')
+    item=json.load(outfile)
+    for i in item:
+        finaldata.append(i)
+    outfile.close()
+except:
+    pass
 
 
 quandl.ApiConfig.api_key = 'omQiMysF2NQ1B-xZEJBk'
@@ -75,7 +85,7 @@ def barchart(ticker):
 
 
 def spyprice(year,month,day):
-    x=pd.read_csv('SPY.csv')
+    x=pd.read_csv('../SPY.csv')
     if len(month)<2:
         month="0"+month
     if len(day)<2:
@@ -103,10 +113,11 @@ start = time.time()
 print("beginning analysis")
 
 now = datetime.datetime.now()
-today=str(now.year)+'-'+str(now.month)+'-'+str(now.day-1)
+today=str(now.year)+'-'+str(now.month)+'-'+str(now.day)
 ###########
 #################################Year-Month-Date
-query="Select target, price, returns, ticker, date, note,a_eps, bank from fmi.marketmentions where date<'"+today+"' and report='analyst' ORDER BY random() limit 1000"
+query="Select target, price, returns, ticker, date, note,a_eps, bank from fmi.marketmentions where date='"+today+"' and report='analyst'"
+
 resoverall = connection.execute(query)
 #############Grab Data from SQL Alchemy Execution########################
 df=DataFrame(resoverall.fetchall())
@@ -114,109 +125,97 @@ df=DataFrame(resoverall.fetchall())
 df.columns=resoverall.keys()
 
 
-fdf=DataFrame(columns=('ticker','date','target','price','exp_return','current','act_return','index_return','excess_return','prediction','direction_call_count','note','a_eps','bank'))
-
-insertcount=0
 
 newindexprice=alphavantagepricepull('SPY')
 
-try:
-
-    for index,row in df.iterrows():
 
 
-        # Define posting date and days
-        date=str(row['date'])
-        postingdate=datetime.datetime.strptime(date,"%Y-%m-%d")
-        postingyear=postingdate.year
-        postingmonth=postingdate.month
-        postingday=postingdate.day
+for index,row in df.iterrows():
+
+    entry={}
+
+    entry['Date']=str(row['date'])
+
+    # Define posting date and days
+    date=str(row['date'])
+    postingdate=datetime.datetime.strptime(date,"%Y-%m-%d")
+    postingyear=postingdate.year
+    postingmonth=postingdate.month
+    postingday=postingdate.day
 
 
-        # determine index return from posting date to today
-        # if price is not available, check next day, or next month
+    # determine index return from posting date to today
+    # if price is not available, check next day, or next month
+    try:
+        oldindexprice=spyprice(str(postingyear),str(postingmonth),str(postingday))
+    except:
         try:
-            oldindexprice=spyprice(str(postingyear),str(postingmonth),str(postingday))
+            oldindexprice=spyprice(str(postingyear),str(postingmonth),str(postingday+1))
         except:
             try:
-                oldindexprice=spyprice(str(postingyear),str(postingmonth),str(postingday+1))
+                oldindexprice=spyprice(str(postingyear),str(postingmonth),str(postingday+2))
             except:
                 try:
-                    oldindexprice=spyprice(str(postingyear),str(postingmonth),str(postingday+2))
+                    oldindexprice=spyprice(str(postingyear),str(postingmonth),str(postingday+3))
                 except:
                     try:
-                        oldindexprice=spyprice(str(postingyear),str(postingmonth),str(postingday+3))
+                        oldindexprice=spyprice(str(postingyear),str(postingmonth+1),str(postingday))
                     except:
                         try:
-                            oldindexprice=spyprice(str(postingyear),str(postingmonth+1),str(postingday))
+                            oldindexprice=spyprice(str(postingyear),str(postingmonth+1),str(postingday+1))
                         except:
-                            try:
-                                oldindexprice=spyprice(str(postingyear),str(postingmonth+1),str(postingday+1))
-                            except:
-                                oldindexprice=newindexprice
+                            oldindexprice=newindexprice
 
-        # having problems with the old found SPY price being zero
-        if oldindexprice==0:
-            oldindexprice=newindexprice
-        if oldindexprice==0:
-            oldindexprice=1
-        indexreturn=(float(newindexprice)-float(oldindexprice))/float(oldindexprice)
+    # having problems with the old found SPY price being zero
+    if oldindexprice==0:
+        oldindexprice=newindexprice
+    if oldindexprice==0:
+        oldindexprice=1
+    indexreturn=(float(newindexprice)-float(oldindexprice))/float(oldindexprice)
 
-
-        bank=row['bank']
-
-        curprice1=float(barchart(row['ticker']))
-        curprice2=float(alphavantagepricepull(row['ticker']))
-
-        if curprice2>0 and .9*curprice1 <= curprice2 <= 1.1*curprice1:
-            curprice=curprice2
-        else:
-            curprice=float(row['price'])
+    entry['IndexPrice']=oldindexprice
+    entry['IndexReturn']=indexreturn
 
 
+    bank=row['bank']
+    entry['Bank']=bank
+
+    curprice1=float(barchart(row['ticker']))
+    curprice2=float(alphavantagepricepull(row['ticker']))
+
+    if curprice2>0 and .9*curprice1 <= curprice2 and curprice2 <= 1.1*curprice1:
+        curprice=curprice2
+    else:
+        curprice=float(row['price'])
 
 
-        actret=(curprice-float(row['price']))/float(row['price'])
-        expret=float(row['returns'])
-        # determine excess return
-        excessreturn=actret-indexreturn
+    entry['Price']=curprice
+
+    actret=(curprice-float(row['price']))/float(row['price'])
+    entry['Return']=actret
+    expret=float(row['returns'])
+    entry['ExpReturn']=expret
+    # determine excess return
+    excessreturn=actret-indexreturn
+    entry['ExcessReturn']=excessreturn
 
 
-        if expret>0:
-            prediction='bull'
-        else:
-            prediction='bear'
+    if expret>0:
+        prediction='bull'
+    else:
+        prediction='bear'
+    entry['Prediction']=prediction
 
-        if excessreturn>0 and expret>0:
-            dircalcount=1
-        elif excessreturn<0 and expret<0:
-            dircalcount=1
-        else:
-            dircalcount=0
+    if excessreturn>0 and expret>0:
+        dircalcount=1
+    elif excessreturn<0 and expret<0:
+        dircalcount=1
+    else:
+        dircalcount=0
 
+    entry['DirCal']=dircalcount
+    finaldata.append(entry)
 
-        fdf=fdf.append(pd.Series([row['ticker'],row['date'],float(row['target']),float(row['price']),expret,curprice,actret,indexreturn,excessreturn,prediction,dircalcount,row['note'],float(row['a_eps']),bank], index=fdf.columns), ignore_index=True)
-        insertcount=insertcount+1
-
-
-
-
-
-    fdf['ret_delta']=fdf['act_return']-fdf['exp_return']
-    fdf['excess_ret_delta']=fdf['excess_return']-fdf['exp_return']
-    fdf['a_eps_score']=(fdf['a_eps']-fdf['a_eps'].mean())/fdf['a_eps'].std()
-
-    # select stocks with an actual expected return
-    fdf=fdf.loc[fdf['act_return'] != 0]
-    # filter for stocks with an above average annual eps
-    # fdf=fdf.loc[fdf['a_eps_score'] > 0]
-
-    # print(df.loc[df['B'].isin(['one','three'])])
-
-
-    #out to json
-    fdf.to_json('../dist/json/historicalanalysis/targettracker.json', orient='records')
-except Exception as e:
-    exc_type, exc_obj, exc_tb = sys.exc_info()
-    fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-    print(exc_type, fname, exc_tb.tb_lineno)
+ofile=open('../dist/json/historicalanalysis/targettracker.json','w')
+json.dump(finaldata,ofile)
+ofile.close()
