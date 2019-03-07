@@ -63,15 +63,22 @@
     </div><br>
     <br>
 
-<ul id="image" width="800" height="400"></ul>
-
+<ul id="targs" width="800" height="400"></ul>
+<br>
+<br>
+<br>
+<ul id="divs" width="800" height="400"></ul>
+<br>
+<br>
 <script>
   var z = window.location.href;
   var ticker2=z.split("?")[1];
 
-  output2='<img src="/portpics/'+ticker2+'+tt.png"/>'
-      document.getElementById('image').innerHTML=output2;
-      </script>
+  output2='<img src="/portpics/'+ticker2+'+tt.png"/>';
+  output3='<img src="/portpics/'+ticker2+'+divs.png"/>';
+      document.getElementById('targs').innerHTML=output2;
+      document.getElementById('divs').innerHTML=output2;
+</script>
 
 
 <table class="portfolio">
