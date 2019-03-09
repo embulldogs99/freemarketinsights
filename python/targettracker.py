@@ -113,10 +113,13 @@ start = time.time()
 print("beginning analysis")
 
 now = datetime.datetime.now()
+lastyear=str(now.year-1)+'-'+str(now.month)+'-'+str(now.day)
+months=[6,7,8,9,10,11,12,1,2,3,4,5,6,7,8,9,10,11,12]
+sixmoago=str(now.year)+'-'+str(months[6+now.month-6])+'-'+str(now.day)
 today=str(now.year)+'-'+str(now.month)+'-'+str(now.day)
 ###########
 #################################Year-Month-Date
-query="Select target, price, returns, ticker, date, note,a_eps, bank from fmi.marketmentions where date='"+today+"' and report='analyst'"
+query="Select target, price, returns, ticker, date, note,a_eps, bank from fmi.marketmentions where date='"+lastyear+"' or date='"+sixmoago+"' and report='analyst'"
 
 resoverall = connection.execute(query)
 #############Grab Data from SQL Alchemy Execution########################
@@ -134,14 +137,22 @@ for index,row in df.iterrows():
 
     entry={}
 
-    entry['Date']=str(row['date'])
-
-    # Define posting date and days
     date=str(row['date'])
     postingdate=datetime.datetime.strptime(date,"%Y-%m-%d")
     postingyear=postingdate.year
     postingmonth=postingdate.month
     postingday=postingdate.day
+
+    if postingmonth!=now.month:
+        entry['Period']='6mo'
+    else:
+        entry['Period']='1year'
+
+
+    entry['AnnouncementDate']=str(row['date'])
+    entry['AssessmentDate']=today
+    # Define posting date and days
+
 
 
     # determine index return from posting date to today
@@ -171,7 +182,7 @@ for index,row in df.iterrows():
         oldindexprice=newindexprice
     if oldindexprice==0:
         oldindexprice=1
-    indexreturn=(float(newindexprice)-float(oldindexprice))/float(oldindexprice)
+    indexreturn=round((float(newindexprice)-float(oldindexprice))/float(oldindexprice),3)
 
     entry['IndexPrice']=oldindexprice
     entry['IndexReturn']=indexreturn
@@ -191,7 +202,7 @@ for index,row in df.iterrows():
 
     entry['Price']=curprice
 
-    actret=(curprice-float(row['price']))/float(row['price'])
+    actret=round((curprice-float(row['price']))/float(row['price']),3)
     entry['Return']=actret
     expret=float(row['returns'])
     entry['ExpReturn']=expret

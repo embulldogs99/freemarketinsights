@@ -18,6 +18,8 @@ python portdivimages.py
 
 python targettracker.py
 
+python goldprices.py
+
 python stockpull.py
 
 cd ..
