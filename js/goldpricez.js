@@ -1,7 +1,7 @@
 
 
-var xhttp=new XMLHttpRequest();
-var response=JSON.parse(xhttp.responseText);
+var client=new XMLHttpRequest();
+var response=JSON.parse(client.responseText);
 var oldusgold=response['T1']['ound_price_usd'];
 var newusgold=response['T']['ound_price_usd'];
 var goldchange=(newusgold-oldusgold)/oldusgold;
@@ -19,5 +19,5 @@ var output='<tr>'+
 '<td>'+spxtogoldchange+'</td>'+
 '</tr>';
 document.getElementById('goldtable').innerHTML=output;
-xhttp.open("Get","/json/goldpricez.json",true);
-xhttp.send();
+client.open("Get","/json/goldpricez.json",true);
+client.send();
