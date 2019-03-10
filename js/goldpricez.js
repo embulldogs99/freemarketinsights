@@ -1,6 +1,7 @@
 
 
 var client=new XMLHttpRequest();
+client.onreadystatechange=function(){
 var response=JSON.parse(client.responseText);
 var oldusgold=response['T1']['ound_price_usd'];
 var newusgold=response['T']['ound_price_usd'];
@@ -19,6 +20,7 @@ output+='<tr>'+
 '<td>SPX to Gold Ratio Change %:</td>'+
 '<td>'+spxtogoldchange+'</td>'+
 '</tr>';
+}
 document.write(output);
 client.open("Get","/json/goldpricez.json",true);
 client.send();
