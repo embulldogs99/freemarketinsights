@@ -14,7 +14,7 @@ var newspxtogold=response.T[0].spx_gold;
 var spxtogoldchange=(newspxtogold-oldspxtogold)/oldspxtogold;
 var output='';
 output+='<tr>'+
-'<td>Gold Price USD</td>'+
+'<td class="goldimage"></td>'+
 '<td>'+newusgold+'</td>'+
 '<td>Gold Price Change:'+'</td>'+
 '<td>'+goldchange+'</td>'+
