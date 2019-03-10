@@ -97,6 +97,12 @@ footer{
   text-align: center;
   /*border: 2px solid black;*/
 }
+.goldimage{
+  background-image: url("/pics/gold_usd.png");
+}
+.goldimage:hover{
+  background-image:url("/pics/gold_usd_green.png");
+}
 .homepage{
   display: flex;
   flex-direction: row;
