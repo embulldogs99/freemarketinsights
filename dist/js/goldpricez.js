@@ -24,7 +24,7 @@ output+='<tr>'+
 '</tr>';
 
 document.write(output);
-}
+};
 }
 
 run();
