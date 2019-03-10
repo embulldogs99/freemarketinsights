@@ -13,7 +13,7 @@ body{
   background-color: rgba(0,0,0,.05);
   font-family: 'arial', sans-serif;
 }
-footer{
+.landingfooter{
   color:rgba(0, 0, 0, 0.15);
     font-family: 'arial', sans-serif;
     font-size: 10px;
