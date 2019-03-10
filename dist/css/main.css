@@ -124,8 +124,9 @@ body{
   text-align: center;
 }
 .homepagefooter{
-  width: 100%;
+
   background-image: url("/pics/footer_image.png");
+    width: 100vw;
   height: 300px;
   display: flex;
   flex-direction: row;
