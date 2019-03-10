@@ -18,6 +18,6 @@ var output='<tr>'+
 '<td>SPX to Gold Ratio Change %:</td>'+
 '<td>'+spxtogoldchange+'</td>'+
 '</tr>';
-document.getElementById('goldtable').innerHTML=output;
+document.write(output);
 client.open("Get","/json/goldpricez.json",true);
 client.send();
