@@ -130,11 +130,17 @@ footer{
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+}
+.goldtable{
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px;
 }
 .tools{
   display:flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   border-top: 2px solid rgba(0,0,0,.2);
