@@ -25,7 +25,7 @@ date={}
 for i in jsondata:
     entry[i]=jsondata[i]
 
-entry['spx/gold']=round(float(alphavantagepricepull('SPX'))/float(jsondata['ounce_price_usd']),3)
+entry['spx_gold']=round(float(alphavantagepricepull('SPX'))/float(jsondata['ounce_price_usd']),3)
 
 finaldata['T']=entry
 
