@@ -23,7 +23,7 @@ output+='<tr>'+
 '<td>'+spxtogoldchange+'</td>'+
 '</tr>';
 
-document.write(output);
+    document.getElementById('goldtable').innerHTML=output;
 };
 }
 
