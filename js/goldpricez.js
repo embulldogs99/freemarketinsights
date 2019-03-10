@@ -22,9 +22,9 @@ output+='<tr>'+
 '<td>SPX to Gold Ratio Change %:</td>'+
 '<td>'+spxtogoldchange+'</td>'+
 '</tr>';
-}
-document.write(output);
 
+document.write(output);
+}
 }
 
 run();
