@@ -1,7 +1,7 @@
 
 
 function goldpull(){
-  var xhttp=new XMLHTTPRequest();
+  var xhttp=new XMLHttpRequest();
   xhttp.onreadystatechange=function(){
     var response=JSON.parse(xhttp.responseText);
     var oldusgold=response['T1']['ound_price_usd'];
