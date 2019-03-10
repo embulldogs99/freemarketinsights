@@ -1,6 +1,8 @@
 
-
+function run(){
 var client=new XMLHttpRequest();
+client.open("Get","/json/goldpricez.json",true);
+client.send();
 client.onreadystatechange=function(){
 var response=JSON.parse(client.responseText);
 var oldusgold=response['T1']['ound_price_usd'];
@@ -22,5 +24,7 @@ output+='<tr>'+
 '</tr>';
 }
 document.write(output);
-client.open("Get","/json/goldpricez.json",true);
-client.send();
+
+}
+
+run();
