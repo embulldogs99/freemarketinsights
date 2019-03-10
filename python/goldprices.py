@@ -27,7 +27,7 @@ for i in jsondata:
 
 entry['spx_gold']=round(float(alphavantagepricepull('SPX'))/float(jsondata['ounce_price_usd']),3)
 
-finaldata['T']=entry
+finaldata['T']=[entry]
 
 outfile=open('../dist/json/goldpricez.json','w')
 json.dump(finaldata,outfile)
