@@ -8,7 +8,8 @@ var goldchange=(newusgold-oldusgold)/oldusgold;
 var oldspxtogold=response['T1']['spx/gold'];
 var newspxtogold=response['T']['spx/gold'];
 var spxtogoldchange=(newspxtogold-oldspxtogold)/oldspxtogold;
-var output='<tr>'+
+var output='';
+output+='<tr>'+
 '<td>Gold Price USD</td>'+
 '<td>'+newusgold+'</td>'+
 '<td>Gold Price Change:'+'</td>'+
