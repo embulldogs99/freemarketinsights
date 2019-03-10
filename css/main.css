@@ -99,9 +99,13 @@ footer{
 }
 .goldimage{
   background-image: url("/pics/gold_usd.png");
+  width: 100px;
+  height: 100px;
 }
 .goldimage:hover{
   background-image:url("/pics/gold_usd_green.png");
+  width: 100px;
+  height: 100px;
 }
 .homepage{
   display: flex;
