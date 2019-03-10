@@ -3,6 +3,7 @@ function run(){
 var client=new XMLHttpRequest();
 client.open("Get","/json/goldpricez.json",true);
 client.send();
+console.log(client.responseText);
 client.onreadystatechange=function(){
 var response=JSON.parse(client.responseText);
 var oldusgold=response.T1[0].ounce_price_usd;
