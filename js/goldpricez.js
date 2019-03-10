@@ -29,7 +29,7 @@ if (spxtogoldchange>0){
 }
 var output='';
 output+='<tr>'+
-'<a href="/research/gold"><td><div class="goldimage"></div></a><br><font style="font-weight:900;"$'+newusgold+'</font></td>'+
+'<td><a href="/research/gold"><div class="goldimage"></div></a><font style="font-weight:900;"$'+newusgold+'</font></td>'+
 '<td>'+goldchangeimage+goldchange+'%</td>'+
 '<td>SPX to Gold Ratio <br>'+newspxtogold+'</td>'+
 '<td>'+spxgoldchangeimage+spxtogoldchange+'%</td>'+
