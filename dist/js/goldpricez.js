@@ -13,26 +13,25 @@ var oldspxtogold=response.T1[0].spx_gold;
 var newspxtogold=response.T[0].spx_gold;
 var spxtogoldchange=(newspxtogold-oldspxtogold)/oldspxtogold;
 if (goldchange>0){
-  var goldchangeimage='<img src="/pics/green_arrow.png" height="50" width="50"/>';
+  var goldchangeimage='<div class="green_arrow"></div>';
 }else if (goldchangeimage<0){
-  goldchangeimage='<img src="/pics/red_arrow.png" height="50" width="50"/>';
+  goldchangeimage='<div class="red_arrow"></div>';
 }else {
-  goldchangeimage='<img src="/pics/nochange.png" height="50" width="50"/>';
+  goldchangeimage='<div class="nochange"></div>';
 }
 
 if (spxtogoldchange>0){
-  spxgoldchangeimage='<img src="/pics/green_arrow.png" height="50" width="50"/>';
+  spxgoldchangeimage='<div class="green_arrow"></div>';
 } else if (spxtogoldchange<0){
-  spxgoldchangeimage='<img src="/pics/red_arrow.png" height="50" width="50"/>';
+  spxgoldchangeimage='<div class="red_arrow"></div>';
 } else{
-  spxgoldchangeimage='<img src="/pics/nochange.png" height="50" width="50"/>';
+  spxgoldchangeimage='<div class="nochange"></div>';
 }
 var output='';
 output+='<tr>'+
-'<a href="/research/gold"><td class="goldimage"></a><br><font style="font-weight:900;"$'+newusgold+'</font></td>'+
+'<a href="/research/gold"><td><div class="goldimage"></div></a><br><font style="font-weight:900;"$'+newusgold+'</font></td>'+
 '<td>'+goldchangeimage+goldchange+'%</td>'+
-'<td>SPX to Gold Ratio</td>'+
-'<td>'+newspxtogold+'</td>'+
+'<td>SPX to Gold Ratio <br>'+newspxtogold+'</td>'+
 '<td>'+spxgoldchangeimage+spxtogoldchange+'%</td>'+
 '</tr>';
 

@@ -107,13 +107,38 @@ footer{
   width: 100px;
   height: 100px;
 }
+.green_arrow{
+  background-image: url("/pics/green_arrow.png")
+}
+.red_arrow{
+  background-image: url("/pics/red_arrow.png")
+}
+.nochange{
+  background-image: url("/pics/nochange.png")
+}
 .homepage{
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   text-align: center;
-
+}
+.homepagefooter{
+  width: 100%;
+  background-image: url("/pics/footer_image.png");
+  height: 300px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.tools{
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-top: 2px solid rgba(0,0,0,.2);
+  border-bottom: 2px solid rgba(0,0,0,.2);
 }
 .chartcontainer{
   margin-left:20px;
