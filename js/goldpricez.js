@@ -24,6 +24,7 @@ output+='<tr>'+
 '</tr>';
 
     document.getElementById('goldtable').innerHTML=output;
+    conole.log(output);
 };
 }
 
