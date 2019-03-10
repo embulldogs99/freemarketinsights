@@ -5,8 +5,8 @@ client.open("Get","/json/goldpricez.json",true);
 client.send();
 client.onreadystatechange=function(){
 var response=JSON.parse(client.responseText);
-var oldusgold=response.T1[0].ound_price_usd;
-var newusgold=response.T[0].ound_price_usd;
+var oldusgold=response.T1[0].ounce_price_usd;
+var newusgold=response.T[0].ounce_price_usd;
 var goldchange=(newusgold-oldusgold)/oldusgold;
 var oldspxtogold=response.T1[0].spx_gold;
 var newspxtogold=response.T[0].spx_gold;
