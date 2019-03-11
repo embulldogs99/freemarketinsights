@@ -11,9 +11,16 @@ Please check out the website at <a href="www.freemarketinsights.com">www.freemar
 <b>Libraries Used:</b><br>
 <a href="https://www.kryogenix.org/code/browser/sorttable/#ajaxtables">Sorttable</a><br>
 <a href="https://www.chartjs.org/">Chart.JS</a><br>
+<br>
+<b>Data Sources:</b>
+<a href="https://news.google.com/news/rss/search/">Google RSS News</a><br>
+<a href="https://www.barchart.com"> Barchart Stock Prices</a><br>
+<a href="https://quandl.com"> Quandl Stock API</a><br>
+<a href="http://finance.yahoo.com/quote/"> Yahoo Finance EPS</a><br>
 <a href="https://www.dividendchannel.com/ex-dividend-calendar/"> Dividend Calendar</a><br>
-<a href="https://www.alphavantage.co/documentation/">Alpha Vantage Stock Prices</a><br>
-< ahref="https://eodhistoricaldata.com/">EOD Historical Data - Unicorn data Services - Dividends Data</a><br>
+<a href="https://www.alphavantage.co/">Alpha Vantage Stock Prices</a><br>
+< ahref="https://eodhistoricaldata.com/">EOD Historical Data - Unicorn data Services - Dividends</a><br>
+<a href="https://iextrading.com/"> IEX Trading</a><br>
 <br>
 <br>
 

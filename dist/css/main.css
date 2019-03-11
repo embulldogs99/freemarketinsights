@@ -138,6 +138,10 @@ body{
   flex-direction: row;
   justify-content: space-between;
   padding: 20px;
+  text-align: center;
+  border: 1px solid black;
+  width:100%;
+  height: 50px;
 }
 .tools{
   display:flex;
@@ -146,6 +150,16 @@ body{
   justify-content: center;
   border-top: 2px solid rgba(0,0,0,.2);
   border-bottom: 2px solid rgba(0,0,0,.2);
+}
+.tools img{
+  width:200px;
+  height:200px;
+}
+.tools img:hover{
+  width:200px;
+  height:200px;
+  border: 2px solid lightgrey;
+
 }
 .chartcontainer{
   margin-left:20px;
