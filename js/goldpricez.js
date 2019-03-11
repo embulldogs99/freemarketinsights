@@ -8,10 +8,10 @@ client.onreadystatechange=function(){
 var response=JSON.parse(client.responseText);
 var oldusgold=response.T1[0].ounce_price_usd;
 var newusgold=response.T[0].ounce_price_usd;
-var goldchange=(newusgold-oldusgold)/oldusgold;
+var goldchange=parseFloat(((newusgold-oldusgold)/oldusgold*100).toFixed(3));
 var oldspxtogold=response.T1[0].spx_gold;
 var newspxtogold=response.T[0].spx_gold;
-var spxtogoldchange=(newspxtogold-oldspxtogold)/oldspxtogold;
+var spxtogoldchange=parseFloat(((newspxtogold-oldspxtogold)/oldspxtogold*100).toFixed(3));
 if (goldchange>0){
   var goldchangeimage='<div class="green_arrow"></div>';
 }else if (goldchangeimage<0){
