@@ -124,14 +124,13 @@ body{
   text-align: center;
 }
 .homepagefooter{
-
   background-image: url("/pics/footer_image.png");
-    width: 100vw;
+  width: 100vw;
   height: 300px;
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+  align-items: right;
+  word-spacing: 20px;
 }
 .goldtable{
   display:flex;
