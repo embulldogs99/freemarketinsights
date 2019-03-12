@@ -21,7 +21,7 @@ client.onreadystatechange=function(){
     '<td>'+response[i].ticker+'</td>'+
     '<td>$'+response[i].price+'</td>'+
     '<td>$'+response[i].target+'</td>'+
-    '<td>'+response[i].score+'</td>'+
+    '<td>'+(response[i].score).toFixed(2)+'</td>'+
     '<td>$'+response[i].a_eps+'</td>'+
     '<td>'+fyld+'</td>'+
     '</tr>';
