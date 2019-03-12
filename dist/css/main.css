@@ -98,6 +98,7 @@ body{
   /*border: 2px solid black;*/
 }
 .goldtable{
+    background-size: contain;
   display:flex;
   flex-direction: row;
   justify-content: space-between;
