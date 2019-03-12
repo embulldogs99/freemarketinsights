@@ -3,8 +3,8 @@ function run(){
 var client=new XMLHttpRequest();
 client.open("Get","/json/stockrank.json",true);
 client.send();
-var response=JSON.parse(client.responseText);
 client.onreadystatechange=function(){
+  var response=JSON.parse(client.responseText);
   var output='';
   output+='<tr>'+
   '<th>Ticker</th>'+
