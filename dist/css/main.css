@@ -109,17 +109,19 @@ body{
   height: 50px;
 }
 .goldtable td{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   vertical-align:middle;
   text-align: center;
   font-weight: 900;
   width:50vw;
-  margin-right: 50vw;
-  margin-left: 50vw;
 }
 .goldimage{
-  background-image: url("/pics/gold_usd.png");
+  /* background-image: url("/pics/gold_usd.png");
   background-size: contain;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
 }
 .goldimage:hover{
   background-image:url("/pics/gold_usd_green.png");
