@@ -27,11 +27,13 @@ if (spxtogoldchange>0){
   spxgoldchangeimage='<div class="nochange"></div>';
 }
 var output='';
-output='<tr>'+
+output+='<tr>'+
 '<td><a href="/research/gold"><div class="goldimage"></div></a><font style="font-weight:900;"$'+newusgold+'</font></td>'+
 '<td>'+goldchangeimage+goldchange+'%</td>'+
-'<td>SPX to Gold Ratio <br>'+newspxtogold+'</td>'+
-'<td>'+spxgoldchangeimage+spxtogoldchange+'%</td>'+
+'<td>SPX/G</td>'+
+'<td>'+newspxtogold+'</td>'+
+'<td>'+spxgoldchangeimage+'</td>'+
+'<td>'+spxtogoldchange+'%</td>'+
 '</tr>';
 
     document.getElementById('goldtable').innerHTML=output;

@@ -101,6 +101,10 @@ body{
   background-image: url("/pics/gold_usd.png");
   width: 100%;
   height: 100%;
+  border: 2px solid red;
+  padding: 50px;
+  display: flex;
+  justify-content: space-between;
 }
 .goldimage:hover{
   background-image:url("/pics/gold_usd_green.png");
