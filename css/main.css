@@ -117,6 +117,7 @@ body{
   text-align: center;
   font-weight: 900;
   width:30vw;
+  border: 2px solid red;
 }
 .goldimage{
   background-image: url("/pics/gold_usd.png");
