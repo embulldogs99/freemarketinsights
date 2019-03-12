@@ -130,6 +130,8 @@ body{
   display: flex;
   flex-direction: row;
   align-items: right;
+  text-align: center;
+  justify-content: center;
   word-spacing: 20px;
 }
 .goldtable{
