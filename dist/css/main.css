@@ -117,22 +117,21 @@ body{
 }
 .goldimage{
   background-image: url("/pics/gold_usd.png");
-
   border: 2px solid red;
-  background-size: 100% 50px;
+  background-size: 100%;
 }
 .goldimage:hover{
   background-image:url("/pics/gold_usd_green.png");
-  background-size: contain;
+  background-size: 100%;
 
 }
 .green_arrow{
   background-image: url("/pics/green_arrow.png");
-  background-size: contain;
+  background-size: 100%;
 }
 .red_arrow{
   background-image: url("/pics/red_arrow.png");
-  background-size: contain;
+  background-size: 100%;
 }
 .nochange{
   background-image: url("/pics/nochange.png");
@@ -557,9 +556,7 @@ color: orange;
   align-items: center;
   text-align: center;
 }
-img{
-  padding: 20px 0px;
-}
+
 d{
   font-weight: 900;
 }
