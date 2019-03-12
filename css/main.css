@@ -109,35 +109,36 @@ body{
   height: 50px;
 }
 .goldtable td{
-  height: 50px;
+  vertical-align:middle;
+  text-align: center;
   font-weight: 900;
   width:3vw;
-  margin-right: 2vw;
+  margin-right: 10vw;
+  margin-left: 10vw;
 }
 .goldimage{
   background-image: url("/pics/gold_usd.png");
-  border: 2px solid red;
-  background-size: 100%;
+  background-size: contain;
   background-repeat: no-repeat;
 }
 .goldimage:hover{
   background-image:url("/pics/gold_usd_green.png");
-  background-size: 100%;
+  background-size: contain;
   background-repeat: no-repeat;
 }
 .green_arrow{
   background-image: url("/pics/green_arrow.png");
-  background-size: 100%;
+  background-size: contain;
     background-repeat: no-repeat;
 }
 .red_arrow{
   background-image: url("/pics/red_arrow.png");
-  background-size: 100%;
+  background-size: contain;
     background-repeat: no-repeat;
 }
 .nochange{
   background-image: url("/pics/nochange.png");
-  background-size:  100%;
+  background-size:  contain;
     background-repeat: no-repeat;
 }
 .homepage{
