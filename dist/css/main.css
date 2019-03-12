@@ -111,6 +111,7 @@ body{
 .goldtable td{
   height: 50px;
   font-weight: 900;
+  width:3vw;
 }
 .goldimage{
   background-image: url("/pics/gold_usd.png");
