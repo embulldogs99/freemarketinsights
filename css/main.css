@@ -112,9 +112,9 @@ body{
   vertical-align:middle;
   text-align: center;
   font-weight: 900;
-  width:3vw;
-  margin-right: 10vw;
-  margin-left: 10vw;
+  width:50vw;
+  margin-right: 50vw;
+  margin-left: 50vw;
 }
 .goldimage{
   background-image: url("/pics/gold_usd.png");
