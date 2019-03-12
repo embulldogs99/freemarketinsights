@@ -147,6 +147,7 @@ body{
   align-items: center;
   justify-content: center;
   text-align: center;
+  margin: 5px;
 }
 .homepagefooter{
   background-image: url("/pics/footer_image.png");
@@ -157,6 +158,7 @@ body{
   align-items: right;
   text-align: center;
   justify-content: center;
+  vertical-align: middle;
   word-spacing: 20px;
 }
 
@@ -287,8 +289,8 @@ border-bottom: 1px solid lightgrey;
   border-right: 1px solid grey;
 }
 .ads{
-  margin: 10%;
-  padding: 10%;
+  margin: 3%;
+  padding: 3%;
 }
 .searchbar{
   width: 400px;
