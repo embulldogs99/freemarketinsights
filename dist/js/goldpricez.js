@@ -24,7 +24,7 @@ if (spxtogoldchange==0){spxgoldchangeimage=' class="nochange"';}
 
 var output='';
 output+='<tr>'+
-'<a href="/research/gold"><td class="goldimage"><img src="/pics/gold_usd.png"/></td></a>'+
+'<a href="/research/gold"><td class="goldimage"> </td></a>'+
 '<td>$'+newusgold+'</td>'+
 '<td>'+goldchange+'%</td>'+
 '<td'+goldchangeimage+'></td>'+
