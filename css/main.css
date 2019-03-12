@@ -111,14 +111,15 @@ body{
   height: 50px;
 }
 .goldtable td{
-  width:'100/8%';
+  width:12.5%;
+  height: 50px;
   font-weight: 900;
 }
 .goldimage{
   background-image: url("/pics/gold_usd.png");
-  background-size: contain;
+
   border: 2px solid red;
-  padding: 50px;
+  background-size: 100% 50px;
 }
 .goldimage:hover{
   background-image:url("/pics/gold_usd_green.png");
