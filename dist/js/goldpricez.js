@@ -5,11 +5,11 @@ client.open("Get","/json/goldpricez.json",true);
 client.send();
 client.onreadystatechange=function(){
 var response=JSON.parse(client.responseText);
-var oldusgold=response.T1.ounce_price_usd;
-var newusgold=response.T.ounce_price_usd;
+var oldusgold=response.T1[0].ounce_price_usd;
+var newusgold=response.T[0].ounce_price_usd;
 var goldchange=parseFloat(((newusgold-oldusgold)/oldusgold*100).toFixed(3));
-var oldspxtogold=response.T1.spx_gold;
-var newspxtogold=response.T.spx_gold;
+var oldspxtogold=response.T1[0].spx_gold;
+var newspxtogold=response.T[0].spx_gold;
 var spxtogoldchange=parseFloat(((newspxtogold-oldspxtogold)/oldspxtogold*100).toFixed(3));
 if (goldchange>0){
   var goldchangeimage='<div class="green_arrow"></div>';
@@ -28,7 +28,8 @@ if (spxtogoldchange>0){
 }
 var output='';
 output+='<tr>'+
-'<td><a href="/research/gold"><div class="goldimage"></div></a><font style="font-weight:900;"$'+newusgold+'</font></td>'+
+'<td><a href="/research/gold"><td class="goldimage"></td></a>'+
+'<td style="font-weight:900;">$'+newusgold+'</td>'+
 '<td>'+goldchangeimage+goldchange+'%</td>'+
 '<td>SPX/G</td>'+
 '<td>'+newspxtogold+'</td>'+

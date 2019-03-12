@@ -5,7 +5,6 @@ from bs4 import BeautifulSoup
 from alphavantage import alphavantagepricepull
 import datetime
 
-finalfinaldata=[]
 finaldata={}
 startfile=open('../dist/json/goldpricez.json','r')
 startdata=json.load(startfile)
@@ -29,8 +28,7 @@ for i in jsondata:
 entry['spx_gold']=round(float(alphavantagepricepull('SPX'))/float(jsondata['ounce_price_usd']),3)
 
 finaldata['T']=[entry]
-finalfinaldata=finalfinaldata.append(finaldata)
 
 outfile=open('../dist/json/goldpricez.json','w')
-json.dump(finalfinaldata,outfile)
+json.dump(finaldata,outfile)
 outfile.close()
