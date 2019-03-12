@@ -21,13 +21,10 @@ if (goldchange>0){
 }
 
 var spxgoldchangeimage='';
-if (spxtogoldchange>0){
-  spxgoldchangeimage+=' class="green_arrow"';
-} else if (spxtogoldchange<0){
-  spxgoldchangeimage+=' class="red_arrow"';
-} else{
-  spxgoldchangeimage+=' class="nochange"';
-}
+if (spxtogoldchange>0){spxgoldchangeimage+=' class="green_arrow"';}
+if (spxtogoldchange<0){spxgoldchangeimage+=' class="red_arrow"';}
+if (spxtogoldchange==0){spxgoldchangeimage+=' class="nochange"';}
+
 var output='';
 output+='<tr>'+
 '<a href="/research/gold"><td class="goldimage"></td></a>'+
