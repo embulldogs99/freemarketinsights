@@ -119,9 +119,9 @@ body{
   width:50vw;
 }
 .goldimage{
-  /* background-image: url("/pics/gold_usd.png");
+  background-image: url("/pics/gold_usd.png");
   background-size: contain;
-  background-repeat: no-repeat; */
+  background-repeat: no-repeat;
 }
 .goldimage:hover{
   background-image:url("/pics/gold_usd_green.png");
