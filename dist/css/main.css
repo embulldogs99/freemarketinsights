@@ -97,28 +97,44 @@ body{
   text-align: center;
   /*border: 2px solid black;*/
 }
+.goldtable{
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: center;
+  vertical-align: middle;
+  padding: 20px;
+  text-align: center;
+  border: 1px solid black;
+  width:100%;
+  height: 50px;
+}
+.goldtable td{
+  width:'100/8%';
+  font-weight: 900;
+}
 .goldimage{
   background-image: url("/pics/gold_usd.png");
-  width: 100%;
-  height: 100%;
+  background-size: contain;
   border: 2px solid red;
   padding: 50px;
-  display: flex;
-  justify-content: space-between;
 }
 .goldimage:hover{
   background-image:url("/pics/gold_usd_green.png");
-  width: 100%;
-  height: 100%;
+  background-size: contain;
+
 }
 .green_arrow{
   background-image: url("/pics/green_arrow.png");
+  background-size: contain;
 }
 .red_arrow{
   background-image: url("/pics/red_arrow.png");
+  background-size: contain;
 }
 .nochange{
   background-image: url("/pics/nochange.png");
+  background-size: contain;
 }
 .homepage{
   display: flex;
@@ -138,16 +154,7 @@ body{
   justify-content: center;
   word-spacing: 20px;
 }
-.goldtable{
-  display:flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 20px;
-  text-align: center;
-  border: 1px solid black;
-  width:100%;
-  height: 50px;
-}
+
 .tools{
   display:flex;
   flex-direction: row;
