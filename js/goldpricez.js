@@ -30,7 +30,7 @@ if (spxtogoldchange>0){
 }
 var output='';
 output+='<tr>'+
-'<td><a href="/research/gold"><td class="goldimage"></td></a>'+
+'<a href="/research/gold"><td class="goldimage"></td></a>'+
 '<td>$'+newusgold+'</td>'+
 '<td>'+goldchange+'%</td>'+
 '<td'+goldchangeimage+'></td>'+
