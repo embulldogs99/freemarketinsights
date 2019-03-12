@@ -15,14 +15,14 @@ client.onreadystatechange=function(){
   '<th>Five Year Low Distance</th>'+
   '</tr>';
   for (var i=0;i<response.length;i++){
-    if (response.fiveyrlow_distance!='-'){fyld='-';}
-      else{fyld=(response.fiveyrlow_distance*100).toFixed(2)+'%';}
+    if (response[i].fiveyrlow_distance!='-'){fyld='-';}
+      else{fyld=(response[i].fiveyrlow_distance*100).toFixed(2)+'%';}
     output+='<tr>'+
-    '<td>'+response.ticker+'</td>'+
-    '<td>$'+response.price+'</td>'+
-    '<td>$'+response.target+'</td>'+
-    '<td>'+response.score+'</td>'+
-    '<td>$'+response.a_eps+'</td>'+
+    '<td>'+response[i].ticker+'</td>'+
+    '<td>$'+response[i].price+'</td>'+
+    '<td>$'+response[i].target+'</td>'+
+    '<td>'+response[i].score+'</td>'+
+    '<td>$'+response[i].a_eps+'</td>'+
     '<td>'+fyld+'</td>'+
     '</tr>';
   }
