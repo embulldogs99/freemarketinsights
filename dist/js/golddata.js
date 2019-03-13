@@ -16,7 +16,7 @@ $.getScript('/js/papaparse.js', function()
 
     var output='';
     for (var i=0;i<obj.data.length;i++){
-      output+=obj.data[i];
+      output+=obj.data[i]+'<br><br>';
     }
 
     document.getElementById('goldata').innerHTML=output;
