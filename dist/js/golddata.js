@@ -13,7 +13,7 @@ $.getScript('/js/papaparse.js', function()
   client.send();
   client.onreadystatechange=function(){
     var obj=Papa.parse(client.responseText);
-    document.getElementById('goldata').innerHTML=obj;
+    document.getElementById('goldata').innerHTML=obj.data;
   };
 
 
