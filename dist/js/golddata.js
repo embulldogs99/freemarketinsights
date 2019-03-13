@@ -12,7 +12,8 @@ $.getScript('/js/papaparse.js', function()
   client.open("Get","/csv/spxvsgoldata.csv",true);
   client.send();
   client.onreadystatechange=function(){
-    var obj=Papa.parse(client.responseText);
+    var obj=Papa.parse(client.responseText, {delimiter:",", header:true});
+
     document.getElementById('goldata').innerHTML=obj.data;
   };
 
