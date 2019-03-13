@@ -14,7 +14,12 @@ $.getScript('/js/papaparse.js', function()
   client.onreadystatechange=function(){
     var obj=Papa.parse(client.responseText, {delimiter:",", header:true});
 
-    document.getElementById('goldata').innerHTML=obj.data;
+    var output='';
+    for (var i=0;i<obj.length;i++){
+      output+=obj[i];
+    }
+
+    document.getElementById('goldata').innerHTML=output;
   };
 
 
