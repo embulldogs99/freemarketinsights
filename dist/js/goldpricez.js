@@ -26,12 +26,10 @@ var output='';
 output+='<tr>'+
 '<a href="/research/gold"><td class="goldimage"> </td></a>'+
 '<td>$'+newusgold+'</td>'+
-'<td>'+goldchange+'%</td>'+
-'<td'+goldchangeimage+'></td>'+
+'<td>'+goldchange+'%'+goldchangeimage+'</td>'+
 '<td>SPX/G</td>'+
 '<td>'+newspxtogold+'</td>'+
-'<td>'+spxtogoldchange+'%</td>'+
-'<td'+spxgoldchangeimage+'></td>'+
+'<td>'+spxtogoldchange+'%'+spxgoldchangeimage+'</td>'+
 '</tr>';
 
     document.getElementById('goldtable').innerHTML=output;
