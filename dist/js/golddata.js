@@ -15,8 +15,8 @@ $.getScript('/js/papaparse.js', function()
     var obj=Papa.parse(client.responseText, {delimiter:",", header:true});
 
     var output='';
-    for (var i=0;i<obj.length;i++){
-      output+=obj[i];
+    for (var i=0;i<obj.data.length;i++){
+      output+=obj.data[i];
     }
 
     document.getElementById('goldata').innerHTML=output;
