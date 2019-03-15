@@ -42,18 +42,32 @@ $.getScript('/js/papaparse.js', function()
             datasets:[{
               label:"Gold",
               backgroundColor: 'rgba(0,0,0,0)',
-              borderColor: 'rgb(255, 99, 132)',
+              borderColor: 'rgb(255, 223, 0)',
               data:gold,
             },{
               label:"SPX",
               backgroundColor: 'rgba(0,0,0,0)',
-              borderColor: 'rgb(0, 99, 0)',
+              borderColor: 'rgb(0, 0, 200)',
               data:spx,
             }]
 
           },
 
-          options:{}
+          options:{
+            title:{
+              display:true,
+              text:'Historical Prices'
+            },
+            scales:{
+              yAxes:[{
+                ticks:{
+                  callback: function(value, index, values){
+                    return value.toLocaleString("en-US",{style:"currency", currency:"USD"});
+                  }
+                }
+              }]
+            }
+          }
       });
 
 
@@ -67,18 +81,32 @@ $.getScript('/js/papaparse.js', function()
                   datasets:[{
                     label:"Gold Cumulative Return",
                     backgroundColor: 'rgba(0,0,0,0)',
-                    borderColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 223, 0)',
                     data:goldcum,
                   },{
                     label:"SPX Cumulative Return",
                     backgroundColor: 'rgba(0,0,0,0)',
-                    borderColor: 'rgb(0, 99, 0)',
+                    borderColor: 'rgb(0, 0, 200)',
                     data:spxcum,
                   }]
 
                 },
 
-                options:{}
+                options:{
+                  title:{
+                    display:true,
+                    text:'Cumulative Return'
+                  },
+                  scales:{
+                    yAxes:[{
+                      ticks:{
+                        callback: function(value, index, values){
+                          return value.toLocaleString("en-US",{style:"currency", currency:"USD"});
+                        }
+                      }
+                    }]
+                  }
+                }
             });
 
 
