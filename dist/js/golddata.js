@@ -109,8 +109,6 @@ $.getScript('/js/papaparse.js', function()
                 }
             });
 
-
-    document.getElementById('goldata').innerHTML=dates;
   };
 
 
