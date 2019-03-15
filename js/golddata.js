@@ -21,13 +21,13 @@ $.getScript('/js/papaparse.js', function()
     var goldcum=[];
     var spxcum=[];
     for (var i=0;i<obj.data.length;i++){
-        if (i!=0){
+
           dates.push(obj.data[i][0]);
           gold.push(obj.data[i][1]);
           spx.push(obj.data[i][2]);
           goldcum.push(obj.data[i][3]);
           spxcum.push(obj.data[i][4]);
-        }
+
 
       }
 
