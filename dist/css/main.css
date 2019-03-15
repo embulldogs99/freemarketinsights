@@ -194,6 +194,7 @@ body{
   line-height:25px;
   padding:10px;
   font-family: 'arial', sans-serif;
+  white-space: nowrap;
 }
 header{
   /*border-bottom: 2px solid rgba(60,60,255,1);*/
