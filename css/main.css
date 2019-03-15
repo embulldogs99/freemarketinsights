@@ -552,6 +552,15 @@ color: orange;
 
   font-size:110%;
 }
+.link4{
+    color:rgba(0,0,100,1);
+    style:underline;
+}
+.link4:hover{
+    color:rgba(100,0,100,1);
+    style:underline;
+    font-weight: 900;
+}
 
 .images{
   display: flex;
