@@ -28,11 +28,17 @@ function bankstats(){
   xhttp.onreadystatechange=function(){
     if (this.readyState==4 && this.status==200){
       var response=JSON.parse(xhttp.responseText);
-      var data=response;
+      var data=response.data;
       console.log(data);
       output='<tr><th>Bank</th><th>Prediction</th><th>Avg Actual Return</th><th>Avg Expected Return</th><th>Average Return Delta</th></tr>';
       for (i=0;i<data.length;i++){
-        output+='';
+        output+='<tr>'+
+        '<td>'+data[i].bank+'</td>'+
+        '<td>'+data[i].prediction+'</td>'+
+        '<td>'+data[i].act_return+'</td>'+
+        '<td>'+data[i].exp_return+'</td>'+
+        '<td>'+data[i].ret_delta+'</td>'+
+        '</tr>';
       }
       document.getElementById('bankstats').innerHTML=output;
     }
