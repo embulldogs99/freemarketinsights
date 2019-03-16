@@ -24,7 +24,7 @@ function bankstats(){
   xhttp.onreadystatechange=function(){
     if (this.readyState==4 && this.status==200){
       var response=JSON.parse(xhttp.responseText);
-      var data=response.data;
+      var data=response.schema.data;
       output='<tr><th>Bank</th><th>Prediction</th><th>Avg Actual Return</th><th>Avg Expected Return</th><th>Average Return Delta</th></tr>';
       for (i=0;i<data.length;i++){
         output+='';
