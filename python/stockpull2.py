@@ -491,6 +491,8 @@ def randomstockpick():
     array=[]
     for i in range(1,5):
         u=random.choice(stocklist)
+        if u.find('^')>0:
+            u=u[:u.find('^')]
         array.append(u)
     return array
 
@@ -550,298 +552,339 @@ def marketmentions(tickerarray):
                     info=str(t.text)
                     if info.find(';')>0:
                         info=info[:info.find(';')]
-###Dynamically determining stock based on text. Assuming results may not match original search keyword
+
+################################################################################################
+###Dynamically determining stock based on text.
+# Stock found in RSS feed may not match original stock being search for.
+
                     stock=info[info.find('(')+1:info.find(')')].replace('NYSE:','').replace('NASDAQ:','').replace('NYSE ','').replace(':','').replace(' ','')
-                    grab=info
-# Define which bank is making the comment
-# Generic Cases
-                    bank='Other'
-                    if 'Analysts' in grab:
-                        bank='Analysts'
-                    if 'Brokerages' in grab:
-                        bank='Brokerages'
-                    if 'Price Target Outlook' in grab:
-                        bank='Price Target Outlook'
-                    if 'Avg. Price Target Review:' in grab:
-                        bank='Avg. Price Target Review'
-                    if 'Avg. Price Target Recap:' in grab:
-                        bank='Avg. Price Target Recap'
-                    if 'Avg. Price Target Opinion:' in grab:
-                        bank='Avg. Price Target Opinion'
-                    if 'Consensus Target Price' in grab:
-                        bank='Consensus Target Price'
-                    if 'Price Target Recommendation:' in grab:
-                        bank='Price Target Recommendation'
-                    if 'Price Target Summary:' in grab:
-                        bank='Price Target Summary'
-# Specific Banks or Data Market Information Sites
-                    if 'Barclays' in grab:
-                        bank='Barclays'
-                    if 'Goldman Sachs' in grab:
-                        bank='Goldman Sachs'
-                    if 'Och-Ziff' in grab:
-                        bank='Och-Ziff'
-                    if 'Jeffries' in grab:
-                        bank='Jeffries'
-                    if 'Bank of America' in grab:
-                        bank='Bank of America'
-                    if 'Piper Jaffray' in grab:
-                        bank='Piper Jaffray'
-                    if 'Royal Bank of Canada' in grab:
-                        bank='Royal Bank of Canada'
-                    if 'Cantor Fitzgerald' in grab:
-                        bank='Cantor Fitzgerald'
-                    if 'Citigroup' in grab:
-                        bank='Citigroup'
-                    if 'Zacks:' in grab:
-                        bank='Zacks'
-                    if 'Wells Fargo' in grab:
-                        bank='Wells Fargo & Co'
-                    if 'Wolfe Research' in grab:
-                        bank='Wolfe Research'
-                    if 'UBS' in grab:
-                        bank='UBS'
-                    if 'Telsey Advisory Group' in grab:
-                        bank='Telsey Advisory Group'
-                    if 'SunTrust Banks' in grab:
-                        bank='SunTrust Banks'
-                    if 'Stifel Nicolaus' in grab:
-                        bank='Stifel Nicolaus'
-                    if 'Oppenheimer' in grab:
-                        bank='Oppenheimer'
-                    if 'Morgan Stanley' in grab:
-                        bank='Morgan Stanley'
-                    if 'JPMorgan' in grab:
-                        bank='JPMorgan'
-                    if 'Credit Suisse' in grab:
-                        bank='Credit Suisse'
-                    if 'Baird' in grab:
-                        bank='Baird'
-                    if 'Susquehanna' in grab:
-                        bank='Susquehanna'
-                    if 'Canaccord Genuity' in grab:
-                        bank='Canaccord Genuity'
-                    if 'B. Riley' in grab:
-                        bank='B. Riley'
-                    if 'BMO Capital Markets' in grab:
-                        bank='BMO Capital Markets'
-                    if 'Raymond James' in grab:
-                        bank='Raymond James'
-                    if 'Deutsche Bank' in grab:
-                        bank='Deutsche Bank'
-                    if 'Scotiabank' in grab:
-                        bank='Scotiabank'
-                    if 'BWS Financial' in grab:
-                        bank='BWS Financial'
-                    if 'HC Wainwright' in grab:
-                        bank='HC Wainwright'
-## Begin filtering the data for model output
-## First find $$$$
-                    if grab.count('$') > 0:
-                        targ=int(0)
-                        targ=grab.find('$')
-                        value=grab[targ+1:targ+5]
-######## now you have the targeted value, time to clean up
-                        if value[2:len(value)].count('-')>0:
-                            value=value.replace('-','')
-                        if value.endswith('.'):
-                            value=value.replace('.','')
-                        value=value.replace(' ','')
-                        value=value.replace(',','')
-                        value=value.replace('k','000')
-                        value=value.replace('K','000')
-                        value=value.replace('m','000000')
-                        value=value.replace('M','000000')
-                        value=value.replace('b','000000000')
-                        value=value.replace('B','000000000')
-                        value=value.replace('T','')
-                        value=value.replace(' ','')
-                        value=value.replace('in','')
-                        value=value.replace('i','')
-                        value=value.replace('/','')
-                        value=value.replace('S','')
-                        value=value.replace('s','')
-                        value=value.replace('h','')
-                        value=value.replace('a','')
-#try to convert the value into a float
-                        try:
-                            value=float(value)
+
+# Once stock is found, make sure the ticker is legitimate and wont cause errors for our other functions
+# Also, if we cannot find a target or EPS callout, lets not pull the rest of the other functions
+                    if len(stock)>1 and len(stock)<7 and info.find('arget') > 0 or info.find('EPS') >0 or info.find('eps')>0 or info.find('Earnings')>0 or info.find('earnings') > 0:
+
+                        grab=info
+    # Define which bank is making the comment
+    # Generic Cases
+                        bank='Other'
+                        if 'Analysts' in grab:
+                            bank='Analysts'
+                        if 'Brokerages' in grab:
+                            bank='Brokerages'
+                        if 'Price Target Outlook' in grab:
+                            bank='Price Target Outlook'
+                        if 'Avg. Price Target Review:' in grab:
+                            bank='Avg. Price Target Review'
+                        if 'Avg. Price Target Recap:' in grab:
+                            bank='Avg. Price Target Recap'
+                        if 'Avg. Price Target Opinion:' in grab:
+                            bank='Avg. Price Target Opinion'
+                        if 'Consensus Target Price' in grab:
+                            bank='Consensus Target Price'
+                        if 'Price Target Recommendation:' in grab:
+                            bank='Price Target Recommendation'
+                        if 'Price Target Summary:' in grab:
+                            bank='Price Target Summary'
+    # Specific Banks or Data Market Information Sites
+                        if 'Barclays' in grab:
+                            bank='Barclays'
+                        if 'Goldman Sachs' in grab:
+                            bank='Goldman Sachs'
+                        if 'Och-Ziff' in grab:
+                            bank='Och-Ziff'
+                        if 'Jeffries' in grab:
+                            bank='Jeffries'
+                        if 'Bank of America' in grab:
+                            bank='Bank of America'
+                        if 'Piper Jaffray' in grab:
+                            bank='Piper Jaffray'
+                        if 'Royal Bank of Canada' in grab:
+                            bank='Royal Bank of Canada'
+                        if 'Cantor Fitzgerald' in grab:
+                            bank='Cantor Fitzgerald'
+                        if 'Citigroup' in grab:
+                            bank='Citigroup'
+                        if 'Zacks:' in grab:
+                            bank='Zacks'
+                        if 'Wells Fargo' in grab:
+                            bank='Wells Fargo & Co'
+                        if 'Wolfe Research' in grab:
+                            bank='Wolfe Research'
+                        if 'UBS' in grab:
+                            bank='UBS'
+                        if 'Telsey Advisory Group' in grab:
+                            bank='Telsey Advisory Group'
+                        if 'SunTrust Banks' in grab:
+                            bank='SunTrust Banks'
+                        if 'Stifel Nicolaus' in grab:
+                            bank='Stifel Nicolaus'
+                        if 'Oppenheimer' in grab:
+                            bank='Oppenheimer'
+                        if 'Morgan Stanley' in grab:
+                            bank='Morgan Stanley'
+                        if 'JPMorgan' in grab:
+                            bank='JPMorgan'
+                        if 'Credit Suisse' in grab:
+                            bank='Credit Suisse'
+                        if 'Baird' in grab:
+                            bank='Baird'
+                        if 'Susquehanna' in grab:
+                            bank='Susquehanna'
+                        if 'Canaccord Genuity' in grab:
+                            bank='Canaccord Genuity'
+                        if 'B. Riley' in grab:
+                            bank='B. Riley'
+                        if 'BMO Capital Markets' in grab:
+                            bank='BMO Capital Markets'
+                        if 'Raymond James' in grab:
+                            bank='Raymond James'
+                        if 'Deutsche Bank' in grab:
+                            bank='Deutsche Bank'
+                        if 'Scotiabank' in grab:
+                            bank='Scotiabank'
+                        if 'BWS Financial' in grab:
+                            bank='BWS Financial'
+                        if 'HC Wainwright' in grab:
+                            bank='HC Wainwright'
+    ## Begin filtering the data for model output
+    ## First find $$$$
+                        if grab.count('$') > 0:
+                            targ=int(0)
+                            targ=grab.find('$')
+                            value=grab[targ+1:targ+5]
+    ######## now you have the targeted value, time to clean up
+                            if value[2:len(value)].count('-')>0:
+                                value=value.replace('-','')
+                            if value.endswith('.'):
+                                value=value.replace('.','')
+                            value=value.replace(' ','')
+                            value=value.replace(',','')
+                            value=value.replace('k','000')
+                            value=value.replace('K','000')
+                            value=value.replace('m','000000')
+                            value=value.replace('M','000000')
+                            value=value.replace('b','000000000')
+                            value=value.replace('B','000000000')
+                            value=value.replace('T','')
+                            value=value.replace(' ','')
+                            value=value.replace('in','')
+                            value=value.replace('i','')
+                            value=value.replace('/','')
+                            value=value.replace('S','')
+                            value=value.replace('s','')
+                            value=value.replace('h','')
+                            value=value.replace('a','')
+    #try to convert the value into a float
+                            try:
+                                value=float(value)
 #if not a possible float at this point, we will stop trying
-                        except Exception as e:
-                            print("------------------------------------")
-                            print(e)
-                            print(u)
-                            print("failed to convert value to float with value of:")
-                            print(value)
-                            print("and grab:")
-                            print(grab)
-                            print()
-                            print("------------------------------------")
-                            value=0
-# Only selecting stocks we have a value
-                        if value>0:
-# Pulling Additional Stock Information
-                            try:
-                                iexinfo=iexstockinfo(u)
-                                yrlow=iexinfo['week52Low']
-                                yrhigh=iexinfo['week52High']
-                                marketcap=iexinfo['marketCap']
-                                peratio=iexinfo['peRatio']
-                                price=iexinfo['latestPrice']
-                            except Exception as e:
-                                print('------------------------------------')
-                                print()
-                                print()
-                                print('iexinfo failed to pull')
-                                print()
-                                print(u)
-                                print()
-                                print(e)
-                                print()
-                                print('------------------------------------')
-                                yrlow=None
-                                yrhigh=None
-                                marketcap=None
-                                peratio=None
-                                price=0
-                            try:
-                                epsreference=yahooepspuller(u)
+# remember floats can be tricky to find and exact decimals often do not have flaoting points. we will try a few tricks to get it to work here
                             except:
-                                epsreference=None
-                            try:
-                                fiveyrlow=quandl_five_yr_low(u)
-                            except:
-                                fiveyrlow=None
-                            try:
-                                fiveyrlow=quandl_five_yr_low(u)
-                            except:
-                                fiveyrlow=None
-
-######Calling prices to ensure they are available
-                            try:
-                                if price==0:
-                                    price=alphavantagepricepull(u)
-                                    if price==0:
-                                        price=barchart(u)
-                                price=float(price)
-                            except:
-                                print('---------------------------')
-                                print()
-                                print()
-                                print('Could not determine price')
-                                print()
-                                print()
-                                print(u)
-                                print('-----------------------------')
-# Grab last dividend
-                            try:
-                                divdata=unicornpull(u)
-                                dividend=divdata['Div']
-                                divyield=divdata['Div']/price
-                            except:
-                                divyield=None
-
-# Finalize on the Annual PE ratio of not available from iex
-                            try:
-                                ape=peratio
-                                if peratio==None:
-                                    ape=round(price/float(epsreference),2)
-                            except Exception as e:
-                                print('-----------------------------------')
-                                print('failed on annual EPS ')
-                                print()
-                                print(e)
-                                print()
-                                print(u)
-                                print()
-                                print('-----------------------------------')
-                                ape=0
-
-# Find EPS callouts
-                            if grab.find('EPS') >0 or grab.find('eps')>0 or grab.find('Earnings')>0 or grab.find('earnings') > 0:
-#determine quarterly PE from the announcement
                                 try:
-                                    qpe=round(price/float(value),2)
+                                    value=float(value*100)/100
                                 except:
-                                    qpe=0
-#determine EPS growth rate
-# if variables not availale, so no growth
-                                if qpe!=0 or ape!=0:
-                                    epsgrowth=(qpe*4-ape)/abs(ape)
-                                    targetprice=price+price*epsgrowth/8
-                                else:
-                                    epsgrowth=0
-                                    targetprice=price
-# determine target price based on EPS growth ranges
-                                if epsgrowth>=2:
-                                    targetprice=price*2
-                                if epsgrowth>=1 and epsgrowth<2:
-                                    targetprice=price*1.2
-                                if epsgrowth<1 and epsgrowth>=0:
-                                    targetprice=price+(price*epsgrowth/8)
-                                if epsgrowth>-1 and epsgrowth<0:
-                                    targetprice=price*.8
-                                if epsgrowth<=-1:
-                                    targetprice=price/2
+                                    try:
+                                        value=float(value+.00001)
+                                    except:
+                                        try:
+                                            value=float(value*100000)/100000
+                                        except Exception as e:
+                                            print("------------------------------------")
+                                            print(e)
+                                            print(stock)
+                                            print("failed to convert value to float with value of:")
+                                            print(value)
+                                            print("and grab:")
+                                            print(grab)
+                                            print()
+                                            print('error occured at line ~700')
+                                            print("------------------------------------")
 
-                                epsexpreturn=(targetprice-price)/price
 
-##Cleaning Grab (note) to remove "" and / as this will break javascript on html load
-                                grab=grab.replace('"','')
-                                grab=grab.replace('/','')
-                                grab=grab.replace('\\','')
-                                grab=grab.replace('\\\\','')
 
-#########################################################
-##############  Database Connection   ###################
-                                conn = psycopg2.connect("dbname='postgres' user='postgres' password='postgres' host='localhost' port='5432'")
-                                cur = conn.cursor()
-    							# execute a statement
-                                cur.execute("INSERT INTO fmi.marketmentions (target, price, returns, ticker, note, date, q_eps, a_eps, report, q_pe,a_pe, divyield,bank,yrlow,yrhigh,fiveyrlow) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s,%s,%s,%s,%s,%s,%s,%s)", (targetprice,price,epsexpreturn,u,grab,pub,value,epsreference,'earnings',qpe,ape,divyield,bank,yrlow,yrhigh,fiveyrlow))
-                                print("----------------------------")
-                                print("inserted value")
-                                conn.commit()
-    							# close the communication with the PostgreSQL
-                                cur.close()
-                                conn.close()
-                                currenttime=datetime.datetime.now()-timer
-                                print("Stock "+str(u)+" Occurred After "+str(currenttime)+" seconds")
-                                print("----------------------------")
+    # Only selecting stocks we have a value
+                            if value>0:
+    # Pulling Additional Stock Information
+                                try:
+                                    iexinfo=iexstockinfo(stock)
+                                    yrlow=iexinfo['week52Low']
+                                    yrhigh=iexinfo['week52High']
+                                    marketcap=iexinfo['marketCap']
+                                    peratio=iexinfo['peRatio']
+                                    price=iexinfo['latestPrice']
+                                except Exception as e:
+                                    print('------------------------------------')
+                                    print()
+                                    print()
+                                    print('iexinfo failed to pull')
+                                    print()
+                                    print(stock)
+                                    print()
+                                    print(e)
+                                    print()
+                                    print('------------------------------------')
+                                    yrlow=None
+                                    yrhigh=None
+                                    marketcap=None
+                                    peratio=None
+                                    price=0
+                                try:
+                                    epsreference=yahooepspuller(stock)
+                                except:
+                                    epsreference=None
+                                try:
+                                    fiveyrlow=quandl_five_yr_low(stock)
+                                except:
+                                    fiveyrlow=None
+                                try:
+                                    fiveyrlow=quandl_five_yr_low(stock)
+                                except:
+                                    fiveyrlow=None
 
-# Find price target callouts
-                            if grab.find('arget') > 0:
-# determine price from a variety of sources
-# if the expected return is too large, then we will try other stock price sources
-                                predreturn=(float(value)-price)/price
-                                if predreturn>2 or predreturn<-.6:
-                                    price=float(alphavantagepricepull(u))
-                                    predreturn=(float(value)-price)/price
-                                    if predreturn>2 or predreturn<-.6:
-                                        price=float(barchart(u))
-                                        predreturn=(float(value)-price)/price
-                                        if predreturn>1 or predreturn<-.8:
-                                            price=float(quandl_adj_close(u))
-                                            predreturn=(float(value)-price)/price
-                                        else:
-                                            price=0
+    ######Calling prices to ensure they are available
+                                try:
+                                    if price==0:
+                                        price=alphavantagepricepull(stock)
+                                        if price==0:
+                                            price=barchart(stock)
+                                    price=float(price)
+                                except:
+                                    print('---------------------------')
+                                    print()
+                                    print()
+                                    print('Could not determine price')
+                                    print()
+                                    print()
+                                    print(stock)
+                                    print('-----------------------------')
+                                    price=0
+    # Grab last dividend
+                                try:
+                                    divdata=unicornpull(stock)
+                                    dividend=divdata['Div']
+                                    divyield=divdata['Div']/price
+                                except:
+                                    divyield=None
 
-# Now we are pretty confident about the price, assuming it is not absolutely massive or tiny, lets get it into the DB
-                                if price*.1< value and price*10>value:
-#########################################################
-##############  Database Connection   ###################
+    # Finalize on the Annual PE ratio of not available from iex
+                                try:
+                                    ape=peratio
+                                    if peratio==None:
+                                        ape=round(price/float(epsreference),2)
+                                except Exception as e:
+                                    print('-----------------------------------')
+                                    print('failed on annual EPS ')
+                                    print()
+                                    print(e)
+                                    print()
+                                    print(stock)
+                                    print()
+                                    print(peratio)
+                                    print()
+                                    print(grab)
+                                    print()
+                                    print('-----------------------------------')
+                                    ape=0
+
+    # Find EPS callouts
+                                if grab.find('EPS') >0 or grab.find('eps')>0 or grab.find('Earnings')>0 or grab.find('earnings') > 0 and price>0:
+#determine quarterly PE from the announcement
+# sometimes the repoted eps is not able to be converted into a float (due to the fact that not all decimals can be converted into floating point numbers) thus, to avoid the divide by zero error, we try a bunch of tricks
+                                    try:
+                                        qpe=round(price/float(value),2)
+                                    except:
+                                        try:
+                                            qpe=round(price/float(value+.0000001),2)
+                                        except:
+                                            try:
+                                                qpe=round(price/float(value+.001),2)
+                                            except:
+                                                try:
+                                                    qpe=round(price/float(value*1000)/1000,2)
+                                                except:
+                                                    qpe=0
+    #determine EPS growth rate
+    # if variables not availale, so no growth
+                                    if epsreference!=0 or epsreference!=None:
+                                        epsgrowth=(float(value)*4-epsreference)/abs(epsreference)
+                                        targetprice=price+price*epsgrowth/8
+                                    else:
+                                        epsgrowth=0
+                                        targetprice=price
+    # determine target price based on EPS growth ranges
+                                    if epsgrowth>=2:
+                                        targetprice=price*2
+                                    if epsgrowth>=1 and epsgrowth<2:
+                                        targetprice=price*1.2
+                                    if epsgrowth<1 and epsgrowth>=0:
+                                        targetprice=price+(price*epsgrowth/8)
+                                    if epsgrowth>-1 and epsgrowth<0:
+                                        targetprice=price*.8
+                                    if epsgrowth<=-1:
+                                        targetprice=price/2
+
+                                    epsexpreturn=(targetprice-price)/price
+
+    ##Cleaning Grab (note) to remove "" and / as this will break javascript on html load
+                                    grab=grab.replace('"','')
+                                    grab=grab.replace('/','')
+                                    grab=grab.replace('\\','')
+                                    grab=grab.replace('\\\\','')
+
+    #########################################################
+    ##############  Database Connection   ###################
                                     conn = psycopg2.connect("dbname='postgres' user='postgres' password='postgres' host='localhost' port='5432'")
                                     cur = conn.cursor()
-                                    # execute a statement
-                                    cur.execute("INSERT INTO fmi.marketmentions (target, price, returns, ticker, note, date, q_eps, a_eps, report, divyield,bank,yrlow,yrhigh,fiveyrlow) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s,%s,%s,%s)", (value,price,predreturn,u,grab,pub,None,epsreference,'analyst',divyield,bank,yrlow,yrhigh,fiveyrlow))
+        							# execute a statement
+                                    cur.execute("INSERT INTO fmi.marketmentions (target, price, returns, ticker, note, date, q_eps, a_eps, report, q_pe,a_pe, divyield,bank,yrlow,yrhigh,fiveyrlow,earnings_call) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s,%s,%s,%s,%s,%s,%s,%s,%s)", (targetprice,price,epsexpreturn,stock,grab,pub,value,epsreference,'earnings',qpe,ape,divyield,bank,yrlow,yrhigh,fiveyrlow,value))
                                     print("----------------------------")
                                     print("inserted value")
                                     conn.commit()
-                                    # close the communication with the PostgreSQL
+        							# close the communication with the PostgreSQL
                                     cur.close()
                                     conn.close()
                                     currenttime=datetime.datetime.now()-timer
-                                    print("Stock"+str(u)+" Occurred After "+str(currenttime)+" seconds")
+                                    print("Stock "+str(stock)+" Occurred After "+str(currenttime)+" seconds")
+                                    print()
+                                    print(grab)
                                     print("----------------------------")
+
+# Find price target callouts
+                                if grab.find('arget') > 0 and price>0:
+# determine price from a variety of sources
+# if the expected return is too large, then we will try other stock price sources
+                                    predreturn=(float(value)-price)/price
+                                    if predreturn>2 or predreturn<-.6:
+                                        price=float(alphavantagepricepull(stock))
+                                        predreturn=(float(value)-price)/price
+                                        if predreturn>2 or predreturn<-.6:
+                                            price=float(barchart(stock))
+                                            predreturn=(float(value)-price)/price
+                                            if predreturn>1 or predreturn<-.8:
+                                                price=float(quandl_adj_close(stock))
+                                                predreturn=(float(value)-price)/price
+                                            else:
+                                                price=0
+
+# Now we are pretty confident about the price, assuming it is not absolutely massive or tiny, lets get it into the DB
+                                    if price*.1< value and price*10>value:
+#########################################################
+##############  Database Connection   ###################
+                                        conn = psycopg2.connect("dbname='postgres' user='postgres' password='postgres' host='localhost' port='5432'")
+                                        cur = conn.cursor()
+                                        # execute a statement
+                                        cur.execute("INSERT INTO fmi.marketmentions (target, price, returns, ticker, note, date, q_eps, a_eps, report, divyield,bank,yrlow,yrhigh,fiveyrlow) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s,%s,%s,%s)", (value,price,predreturn,stock,grab,pub,None,epsreference,'analyst',divyield,bank,yrlow,yrhigh,fiveyrlow))
+                                        print("----------------------------")
+                                        print("inserted value")
+                                        conn.commit()
+                                        # close the communication with the PostgreSQL
+                                        cur.close()
+                                        conn.close()
+                                        currenttime=datetime.datetime.now()-timer
+                                        print("Stock"+str(stock)+" Occurred After "+str(currenttime)+" seconds")
+                                        print()
+                                        print(grab)
+                                        print("----------------------------")
 
             except Exception as e:
                 print("------------------------------------")
@@ -863,9 +906,9 @@ otherstocks=randomstockpick()
 iexstocks=randomiexstockpick()
 portfoliostocks=portfoliostockpull()
 
-marketmentions(portfoliostocks)
+# marketmentions(portfoliostocks)
 marketmentions(iexstocks)
-marketmentions(otherstocks)
+# marketmentions(otherstocks)
 
 
 print('end')
