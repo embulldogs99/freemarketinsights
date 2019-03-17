@@ -80,7 +80,12 @@ function portfoliochart(){
 
       },
 
-      options:{}
+      options:{
+          title:{
+            display:true,
+            text:'Cumulative Return vs Benchmark'
+          }
+      }
   });
 
     }
