@@ -265,6 +265,9 @@ header{
   margin-right: 5px;
   width:60vw;
 }
+.innerhometable td{
+  border:2px solid lightgrey;
+}
 .hometableticker{
   font-size:25px;
 }
@@ -278,7 +281,7 @@ header{
  text-align:center;
  vertical-align: middle;
    white-space:pre;
-   border-right: 1px solid lightgrey;
+   /* border-right: 1px solid lightgrey; */
 }
 .hometable tr{
 margin-bottom: 5px;
