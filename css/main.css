@@ -90,7 +90,6 @@ body{
   color:rgba(0,0,0,.5)
 }
 .newsdescriptor{
-  margin: 10px 20px 10px 20px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
