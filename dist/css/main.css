@@ -117,6 +117,7 @@ body{
   width:30vw;
   border: 2px solid red;
   height:100%;
+  white-space:pre;
 }
 .goldimage{
   background-image: url("/pics/gold_usd.png");
@@ -272,6 +273,7 @@ header{
 .hometable td{
  text-align:center;
  vertical-align: middle;
+   white-space:pre;
 }
 .hometable tr{
 margin-bottom: 5px;
