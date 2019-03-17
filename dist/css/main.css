@@ -162,11 +162,13 @@ body{
   height: 300px;
   display: flex;
   flex-direction: row;
-  align-items: right;
+  align-items: center;
   text-align: center;
   justify-content: center;
   vertical-align: middle;
   word-spacing: 20px;
+  padding: 30px;
+  padding-top: 100px;
 }
 
 .tools{
