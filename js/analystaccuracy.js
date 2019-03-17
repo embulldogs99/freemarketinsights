@@ -30,14 +30,15 @@ function bankstats(){
       var response=JSON.parse(xhttp.responseText);
       var data=response.data;
       console.log(data);
-      output='<tr><th>Bank</th><th>Prediction</th><th>Avg Actual Return</th><th>Avg Expected Return</th><th>Average Return Delta</th></tr>';
+      output='<tr><th>Bank</th><th>Prediction</th><th>Avg Actual Return</th><th>Avg Expected Return</th><th>Average Return Delta</th><th>Target Prices Analyzed</th></tr>';
       for (i=0;i<data.length;i++){
         output+='<tr>'+
         '<td>'+data[i].bank+'</td>'+
         '<td>'+data[i].prediction+'</td>'+
-        '<td>'+data[i].act_return+'</td>'+
-        '<td>'+data[i].exp_return+'</td>'+
-        '<td>'+data[i].ret_delta+'</td>'+
+        '<td>'+data[i].act_return_x+'</td>'+
+        '<td>'+data[i].exp_return_x+'</td>'+
+        '<td>'+data[i].ret_delta_x+'</td>'+
+        '<td>'+data[i].act_return_y+'</td>'+
         '</tr>';
       }
       document.getElementById('bankstats').innerHTML=output;

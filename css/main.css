@@ -89,6 +89,16 @@ body{
   font-size: 14px;
   color:rgba(0,0,0,.5)
 }
+.newsdescriptor{
+  margin: 10px 20px 10px 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  border-top:2px solid black;
+  border-bottom: 2px solid lightgrey;
+
+}
 .page{
   display: flex;
   flex-direction: row;
