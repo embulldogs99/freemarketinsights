@@ -24,12 +24,8 @@ if (spxtogoldchange==0){spxgoldchangeimage=' class="nochange"';}
 
 var output='';
 output+='<tr>'+
-'<a href="/research/gold"><td class="goldimage"> </td></a>'+
-'<td>$'+newusgold+'</td>'+
-'<td>'+goldchange+'%<div '+goldchangeimage+'></div></td>'+
-'<td>SPX/G</td>'+
-'<td>'+newspxtogold+'</td>'+
-'<td>'+spxtogoldchange+'%<div '+spxgoldchangeimage+'></div></td>'+
+'<a href="/research/gold"><td class="goldimage">'+newusgold+'<br>'+goldchange+'%<br><div '+goldchangeimage+'></div></td></a>'+
+'<td>SPX/G'+newspxtogold+'<br>'+spxtogoldchange+'%<br><div '+spxgoldchangeimage+'></div></td>'+
 '</tr>';
 
     document.getElementById('goldtable').innerHTML=output;
