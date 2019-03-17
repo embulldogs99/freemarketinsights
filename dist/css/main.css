@@ -121,31 +121,37 @@ body{
 }
 .goldimage{
   background-image: url("/pics/gold_usd.png");
-  background-size: contain;
+  background-size:cover;
   background-repeat: no-repeat;
    background-position: center;
 }
 .goldimage:hover{
   background-image:url("/pics/gold_usd_green.png");
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
    background-position: center;
 }
 .green_arrow{
+  width: 25px;
+  height: 25px;
   background-image: url("/pics/green_arrow.png");
-  background-size: contain;
+  background-size: cover;
     background-repeat: no-repeat;
      background-position: center;
 }
 .red_arrow{
+  width: 25px;
+  height: 25px;
   background-image: url("/pics/red_arrow.png");
-  background-size: contain;
+  background-size: cover;
     background-repeat: no-repeat;
      background-position: center;
 }
 .nochange{
+  width: 25px;
+  height: 25px;
   background-image: url("/pics/nochange.png");
-  background-size:  contain;
+  background-size:  cover;
     background-repeat: no-repeat;
      background-position: center;
 }
