@@ -11,10 +11,11 @@ xhttp2.onreadystatechange=function(){
       output2 += "<tr><div class='horizontal'>"+
       "<td><div class='newscount'>0"+(parseFloat(i)+1)+"</div></td>"+
       '<div class="vertical"><td class="hometablestats"><a class="hometablenote" href="http://www.google.com/search?q='+response2[i].note+'"  target="_blank" >'+response2[i].note+'</a>'+'<br>'+
-      'Last Price:'+'$'+response2[i].price+
-      '    Expected Return:'+response2[i].returns+'%'+
-      '    Dividend Yield:'+divyield+
-      '    <a href="http://www.google.com/search?q='+response2[i].ticker+'+stock+price"  target="_blank" >'+response2[i].ticker+'</a></td>'+
+      '<table class="hometable"><tr>'+
+      '<td>Last Price:'+'$'+response2[i].price+
+      '</td><td>Expected Return:'+response2[i].returns+'%'+
+      '</td><td>Dividend Yield:'+divyield+
+      '</td><td><a href="http://www.google.com/search?q='+response2[i].ticker+'+stock+price"  target="_blank" >'+response2[i].ticker+'</a></td></tr></table>'+
         '</tr></div></div>';
     }
 
