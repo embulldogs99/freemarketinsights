@@ -161,27 +161,25 @@ xhttp.onreadystatechange=function(){
   xhttp.send();
 </script>
 
+<div class='vertical'>
+<div class="newsdescriptor">
+  <img class="landingsvg" src="/pics/bull-head.svg"/>
 
-<div><b><u> Market Bulls </b></u></div>
-<div class="hometable">
-<table>
-  <thead>
-    <tr>
-      <th>Target Price</th>
-      <th>Today's Price</th>
-      <th>Expected Return</th>
-      <th>Dividend Yield</th>
-      <th>Ticker</th>
-      <th>News Title</th>
-    </tr>
-  </thead>
-  <tbody id="mbull"></tbody>
-</table>
+
+    <div class="annotationheader">
+    Market Bulls
+    </div>
+</div>
+<br>
+<div class="annotationinfo">
+  Investigate the top 5 largest expected price increases surveyed from analyst price targets
+</div>
 </div>
 
 
-
-
+<div class="hometable">
+<table id='mbull'></table>
+</div>
 
 
 
@@ -193,15 +191,14 @@ xhttp2.onreadystatechange=function(){
     var output2='';
     for (var i=0;i<5;i++){
       if (response2[i].divyield==null){divyield="-";}else{divyield=response[i].divyield;}
-      output2 +=
-        '<tr>'+
-        '<td>$'+response2[i].target+'</td>'+
-        '<td>$'+response2[i].price+'</td>'+
-        '<td>'+response2[i].returns+'%'+'</td>'+
-        '<td>'+divyield+'</td>'+
-        '<td class="hometableticker"><a href="http://www.google.com/search?q='+response2[i].ticker+'+stock+price"  target="_blank" >'+response2[i].ticker+'</a></td>'+
-        '<td class="hometablenote"><a href="http://www.google.com/search?q='+response2[i].note+'"  target="_blank" >'+response2[i].note+'</a></td>'+
-        '</tr>';
+      output2 += "<div class='horizontal'>"+
+      "<div class='newscount'>"+i+"</div>"+
+      '<tr><td class="hometablenote"><a href="http://www.google.com/search?q='+response2[i].note+'"  target="_blank" >'+response2[i].note+'</a></td></tr>'+
+      '<tr><td>Last Price</td>'+'<td>$'+response2[i].price+'</td>'+
+      '<td>Expected Return</td>'+'<td>'+response2[i].returns+'%'+'</td>'+
+      '<td>Dividend Yield</td>'+'<td>'+divyield+'</td>'+
+      '<td><a href="http://www.google.com/search?q='+response2[i].ticker+'+stock+price"  target="_blank" >'+response2[i].ticker+'</a></td>'+
+        '</tr></div>';
     }
 
 
