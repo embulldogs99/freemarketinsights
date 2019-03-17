@@ -14,6 +14,7 @@
 <script src="/js/Chart.js"></script>
   <script src='/js/goldpricez.js'></script>
 
+  <script src='/js/home.js'></script>
 </header>
 
 
@@ -21,13 +22,9 @@
 <body>
 
 
-  <table class="goldtable">
-    <tbody id='goldtable'></tbody>
-  </table>
 
 
-  <!--  splits page into two halves -->
-<div class="horizontal">
+
 
 <div class="homepage">
 <div class="posts">
@@ -37,86 +34,23 @@
 
 
 <!--  start of the first half -->
+
 <div class="vertical">
-
-
-
-
-
   <div><b><u>Index Tracking </b></u></div><br>
 
+  <!--  splits page into two halves -->
+<div class="homepagetop">
 <div class="chartcontainer">
 <canvas id="myChart"></canvas>
-
-
-<script>
-var xhttp3=new XMLHttpRequest();
-xhttp3.onreadystatechange=function(){
-  if (this.readyState ==4 && this.status ==200){
-    var response3=JSON.parse(xhttp3.responseText);
-    var snp=[1];
-    var port=[1];
-    var nas=[1];
-    var oldsnp=0;
-    var labels=["$1"];
-    for (var i=0;i<response3.length;i++){
-      if(i==0){
-        oldsnp=1+response3[i].snpreturn;
-        oldnas=1+response3[i].nasdaqreturn;
-        oldport=1+response3[i].portfolioreturn;
-        snp.push((1+Number(response3[i].snpreturn)).toFixed(3));
-        nas.push((1+Number(response3[i].nasdaqreturn)).toFixed(3));
-        port.push((1+Number(response3[i].portfolioreturn)).toFixed(3));
-        labels.push(response3[i].to_char);
-      }else{
-        snp.push((oldsnp+Number(oldsnp)*response3[i].snpreturn).toFixed(3));
-        nas.push((oldnas+Number(oldnas)*response3[i].nasdaqreturn).toFixed(3));
-        port.push((oldport+Number(oldport)*response3[i].portfolioreturn).toFixed(3));
-        labels.push(response3[i].to_char);
-        oldsnp=Number(oldsnp)+Number(oldsnp)*response3[i].snpreturn;
-        oldnas=Number(oldnas)+Number(oldnas)*response3[i].nasdaqreturn;
-        oldport=Number(oldport)+Number(oldport)*response3[i].portfolioreturn;
-      }
-
-    }
-var ctx = document.getElementById('myChart').getContext('2d');
-    var myLineChart = new Chart(ctx, {
-    type: 'line',
-    data:{
-      labels:labels,
-      datasets:[{
-        label:"SnP 500",
-        backgroundColor: 'rgba(0,0,0,0)',
-        borderColor: 'rgb(255, 99, 132)',
-        data:snp,
-      },{
-        label:"Nasdaq",
-        backgroundColor: 'rgba(0,0,0,0)',
-        borderColor: 'rgb(0, 99, 0)',
-        data:nas,
-      },{
-        label:"FMI Portfolio",
-        backgroundColor: 'rgba(0,0,0,.2)',
-        borderColor: 'rgb(0, 128, 128)',
-        data:port,
-      }]
-
-    },
-
-    options:{}
-});
-
-  }
-};
-xhttp3.open("Get", "/json/portfoliohistory.json",true);
-xhttp3.send();
-
-
-
-</script>
-
-
 </div>
+
+  <table class="goldtable">
+    <tbody id='goldtable'></tbody>
+  </table>
+
+<!-- homepagetop end -->
+</div>
+
 
 
 <br><br>
@@ -184,7 +118,6 @@ xhttp.onreadystatechange=function(){
 </div>
 
 
-<script src='/js/home.js'></script>
 
 
 <div class='vertical'>
@@ -246,8 +179,6 @@ xhttp.onreadystatechange=function(){
 
 
 
-<!-- horizontal div ender -->
-</div>
 
 
 
