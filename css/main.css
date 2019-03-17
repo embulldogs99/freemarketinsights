@@ -283,7 +283,11 @@ header{
 .hometable tr{
 margin-bottom: 5px;
 border-bottom: 1px solid lightgrey;
-
+}
+.hometable tr:hover{
+  font-size: 110%;
+  height: 110%;
+  width: 110%;
 }
 .hometable th{
   font-size: 13px;
@@ -297,6 +301,13 @@ border-bottom: 1px solid lightgrey;
 }
 .hometable a:hover{
   color: blue;
+}
+.hometablestats{
+  justify-content: space-between;
+  text-align: center;
+  font-size: 12px;
+  padding: 5px;
+
 }
 .homepagetop{
   width: 100vw;
