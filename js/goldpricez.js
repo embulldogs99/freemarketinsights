@@ -1,5 +1,5 @@
 
-function run(){
+function golddata(){
 var client=new XMLHttpRequest();
 client.open("Get","/json/goldpricez.json",true);
 client.send();
@@ -31,5 +31,4 @@ output+='<tr>'+
     document.getElementById('goldtable').innerHTML=output;
 };
 }
-
-run();
+golddata();
