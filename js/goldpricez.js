@@ -29,7 +29,7 @@ output+='<tr>'+
 '<td>'+goldchange+'%<div '+goldchangeimage+'></div></td>'+
 '<td>SPX/G</td>'+
 '<td>'+newspxtogold+'</td>'+
-'<td>'+spxtogoldchange+'%<div '+spxgoldchangeimage'></div></td>'+
+'<td>'+spxtogoldchange+'%<div '+spxgoldchangeimage+'></div></td>'+
 '</tr>';
 
     document.getElementById('goldtable').innerHTML=output;
