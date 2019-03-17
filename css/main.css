@@ -156,6 +156,12 @@ body{
   text-align: center;
   margin: 5px;
 }
+.newscount{
+  font-size: 20px;
+  font-weight: 300;
+  font-family: arial;
+  color:rgba(0,0,0,.6);
+}
 .homepagefooter{
   background-image: url("/pics/footer_image.png");
   width: 100vw;

@@ -8,13 +8,13 @@ xhttp2.onreadystatechange=function(){
     var output2='';
     for (var i=0;i<5;i++){
       if (response2[i].divyield==null){divyield="-";}else{divyield=response[i].divyield;}
-      output2 += "<div class='horizontal'>"+
-      "<div class='newscount'>"+i+"</div>"+
-      '<tr><td class="hometablenote"><a href="http://www.google.com/search?q='+response2[i].note+'"  target="_blank" >'+response2[i].note+'</a></td></tr>'+
-      '<tr><td>Last Price</td>'+'<td>$'+response2[i].price+'</td>'+
-      '<td>Expected Return</td>'+'<td>'+response2[i].returns+'%'+'</td>'+
-      '<td>Dividend Yield</td>'+'<td>'+divyield+'</td>'+
-      '<td><a href="http://www.google.com/search?q='+response2[i].ticker+'+stock+price"  target="_blank" >'+response2[i].ticker+'</a></td>'+
+      output2 += "<tr><div class='horizontal'>"+
+      "<td><div class='newscount'>0"+i+1+"</div><td>"+
+      '<td><a class="hometablenote" href="http://www.google.com/search?q='+response2[i].note+'"  target="_blank" >'+response2[i].note+'</a>'+'<br>'
+      'Last Price'+'$'+response2[i].price+''+
+      'Expected Return'++response2[i].returns+'%'+
+      'Dividend Yield'++divyield+
+      '<a href="http://www.google.com/search?q='+response2[i].ticker+'+stock+price"  target="_blank" >'+response2[i].ticker+'</a></td>'+
         '</tr></div>';
     }
 
