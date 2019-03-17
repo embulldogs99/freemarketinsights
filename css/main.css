@@ -281,6 +281,11 @@ header{
  text-align:center;
  vertical-align: middle;
    white-space:pre;
+   display: flex;
+   justify-content: flex-end;
+   align-items:flex-end;
+   
+
    /* border-right: 1px solid lightgrey; */
 }
 .hometable tr{
