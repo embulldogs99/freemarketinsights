@@ -1,7 +1,22 @@
 # Free Market Insights
 
 <b>Our Mission</b><br>
-At FreeMarketInsights, we provide actionable qualitative and quantitative stock fundamentals and stock news data to aid investors in investment decisions and identify potentially hugely profitable investment choices. We focus on US based companies. Additionally, we provide market research using home developed AI that investors can leverage when developing their own investment strategies.
+
+There is an overload of Financial Information on the web. Just a quick search with provide hundreds of thousands of news pieces with the "Next Hottest Stock". This information overload makes it impossible to make informed investment decisions.
+<br>
+<br>
+At FreeMarketInsights, we strive to solve the garbage financial data problem.
+<br>
+<br>
+We intake this market information overload for you and conduct our own analysis that compares stocks across multiple dimensions such as: stock fundamentals, investment bank stock price targets, price trends, and other qualitative data points available on the web.
+<br>
+<br>
+By surveying the market as a whole, we are able to find the real future winners among the noise.
+<br>
+<br>
+In addition to our market analysis, we also keep up to date on prominant academic journals for you to stay current with which indicators are more valuable than others. We provide short breifings of the journals if you are interested in diving into the academic research.
+<br>
+<br>
 
 <b>Takeaways</b><br>
 $10,000 today can be worth ~$200,000 in 30 years if invested properly. Not everyone has $10,000 on hand right now, but with commitment and consistency, we can all save a little bit today, to have a larger sum tomorrow, which will grow to a significant amount in the future.
