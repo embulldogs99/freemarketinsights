@@ -13,6 +13,9 @@ import quandl
 import random
 from alphavantage import alphavantagepricepull
 from iexpull import iexstockinfo
+from sqlalchemy import create_engine
+from pandas import DataFrame
+
 
 start = time.time()
 print("beginning analysis")
@@ -21,40 +24,6 @@ print("beginning analysis")
 
 warnings.filterwarnings('ignore')
 
-
-
-quandl.ApiConfig.api_key = 'omQiMysF2NQ1B-xZEJBk'
-
-def quandl_stocks(symbol, start_date=(2010, 1, 1), end_date=None):
-    query_list = ['WIKI' + '/' + symbol + '.' + str(k) for k in range(11, 12)]
-    start_date = datetime.date(*start_date)
-    if end_date:
-        end_date = datetime.date(*end_date)
-    else:
-        end_date = datetime.date.today()
-    return quandl.get(query_list,
-            returns='pandas',
-            start_date=start_date,
-            end_date=end_date,
-            collapse='daily',
-            order='asc'
-            )
-
-def quandl_adj_close(ticker):
-	if len(ticker)<5:
-		data=pd.DataFrame(quandl_stocks(ticker))
-		#data=data[len(data)-1:]
-		data=data.tail(1)
-		data=str(data.max()).split(' ')[7:8]
-		data=re.split(r'[`\-=;\'\\/<>?]', str(data))
-		data=data[1]
-		try:
-			data=float(data)
-		except:
-			data=int(0)
-		price=int(round(data,0))
-		if price>1:
-			return price
 
 
 ###########################################################################
@@ -78,15 +47,16 @@ def barchart(ticker):
             return 0
 
 
-
-def spyprice(year,month,day):
+def spyprice(year,month):
+    year=str(year)
+    month=str(month)
+    if year.find('.')>0:
+        year=year[:year.find('.')]
+    if month.find('.')>0:
+        month=month[:month.find('.')]
     x=pd.read_csv('../SPY.csv')
-    if len(month)<2:
-        month="0"+month
-    if len(day)<2:
-        day="0"+day
-    date=(str(year)+"-"+str(month)+"-"+str(day))
-    price=x['Adj Close'].loc[x['Date']==date].iloc[0]
+    date=(month+'-'+year)
+    price=x['Adj Close'].loc[x['M_Y_Date']==date].iloc[0]
     if price==None:
         return 0
     else:
@@ -94,8 +64,6 @@ def spyprice(year,month,day):
 
 
 
-from sqlalchemy import create_engine
-from pandas import DataFrame
 pd.set_option('display.max_columns', 500)
 pd.set_option('display.width', 1000)
 
@@ -107,60 +75,41 @@ connection = engine.connect()
 ###########
 #################################Year-Month-Date
 
-# SELECT * FROM (
-#     SELECT DISTINCT p.cod, p.title ... JOIN... WHERE
-#     ) ORDER BY RANDOM() LIMIT 4;
-
-
-query="SELECT * FROM( SELECT DISTINCT target, price, returns, ticker, date, note,a_eps, bank from fmi.marketmentions where date<'"+pulldate+"' and report='analyst' ) t ORDER BY random() limit 500"
+# Raise Query
+query="select DISTINCT ticker,date_part('month',date) as month, date_part('year',date) as year,price,a_eps,returns,bank,note from fmi.marketmentions where to_tsvector(note) @@ to_tsquery('raise') and report='analyst' and date<'"+pulldate+"'"
 resoverall = connection.execute(query)
-#############Grab Data from SQL Alchemy Execution########################
-df=DataFrame(resoverall.fetchall())
-########################Rename DF Columns with Keys##########################
-df.columns=resoverall.keys()
+df1=DataFrame(resoverall.fetchall())
+df1.columns=resoverall.keys()
+df1['sentiment']='positive'
+df1['trigger_word']='raise'
+# Raise Query
+query="select DISTINCT ticker,date_part('month',date) as month, date_part('year',date) as year,price,a_eps,returns,bank,note from fmi.marketmentions where to_tsvector(note) @@ to_tsquery('boost') and report='analyst' and date<'"+pulldate+"'"
+resoverall = connection.execute(query)
+df2=DataFrame(resoverall.fetchall())
+df2.columns=resoverall.keys()
+df2['sentiment']='positive'
+df2['trigger_word']='boost'
+# Raise Query
+query="select DISTINCT ticker,date_part('month',date) as month, date_part('year',date) as year,price,a_eps,returns,bank,note from fmi.marketmentions where to_tsvector(note) @@ to_tsquery('lower') and report='analyst' and date<'"+pulldate+"'"
+resoverall = connection.execute(query)
+df3=DataFrame(resoverall.fetchall())
+df3.columns=resoverall.keys()
+df3['sentiment']='negative'
+df3['trigger_word']='lower'
 
 
-fdf=DataFrame(columns=('ticker','date','target','price','exp_return','current','act_return','index_return','excess_return','prediction','direction_call_count','note','a_eps','bank'))
+frames=[df1,df2,df3]
+sdf=pd.concat(frames)
+
+
+fdf=DataFrame(columns=('ticker','month','year','price','a_eps','exp_return','bank','note','sentiment','trigger_word','current','act_return','index_return','excess_return','prediction','direction_call_count','rowcount'))
+
 
 insertcount=0
-
-
 newindexprice=alphavantagepricepull('SPY')
+for index,row in sdf.iterrows():
 
-for index,row in df.iterrows():
-
-    time.sleep(3)
-
-
-    # Define posting date and days
-    date=str(row['date'])
-    postingdate=datetime.datetime.strptime(date,"%Y-%m-%d")
-    postingyear=postingdate.year
-    postingmonth=postingdate.month
-    postingday=postingdate.day
-
-
-    # determine index return from posting date to today
-    # if price is not available, check next day, or next month
-    try:
-        oldindexprice=spyprice(str(postingyear),str(postingmonth),str(postingday))
-    except:
-        try:
-            oldindexprice=spyprice(str(postingyear),str(postingmonth),str(postingday+1))
-        except:
-            try:
-                oldindexprice=spyprice(str(postingyear),str(postingmonth),str(postingday+2))
-            except:
-                try:
-                    oldindexprice=spyprice(str(postingyear),str(postingmonth),str(postingday+3))
-                except:
-                    try:
-                        oldindexprice=spyprice(str(postingyear),str(postingmonth+1),str(postingday))
-                    except:
-                        try:
-                            oldindexprice=spyprice(str(postingyear),str(postingmonth+1),str(postingday+1))
-                        except:
-                            oldindexprice=newindexprice
+    oldindexprice=spyprice(row['year'],row['month'])
 
     # having problems with the old found SPY price being zero
     if oldindexprice==0:
@@ -169,8 +118,6 @@ for index,row in df.iterrows():
         oldindexprice=1
     indexreturn=(float(newindexprice)-float(oldindexprice))/float(oldindexprice)
 
-
-    bank=row['bank']
 
     try:
         iexinfo=iexstockinfo(row['ticker'])
@@ -207,15 +154,15 @@ for index,row in df.iterrows():
     else:
         prediction='bear'
 
-    if excessreturn>0 and expret>0:
+    dircalcount=0
+    if actret>0 and expret>0:
         dircalcount=1
-    elif excessreturn<0 and expret<0:
+    if actret<0 and expret<0:
         dircalcount=1
-    else:
-        dircalcount=0
 
 
-    fdf=fdf.append(pd.Series([row['ticker'],row['date'],float(row['target']),float(row['price']),expret,curprice,actret,indexreturn,excessreturn,prediction,dircalcount,row['note'],float(row['a_eps']),bank], index=fdf.columns), ignore_index=True)
+
+    fdf=fdf.append(pd.Series([row['ticker'],row['month'],row['year'],float(row['price']),float(row['a_eps']),expret,row['bank'],row['note'],row['sentiment'],row['trigger_word'],curprice,actret,indexreturn,excessreturn,prediction,dircalcount,1], index=fdf.columns), ignore_index=True)
     insertcount=insertcount+1
 
 
@@ -234,20 +181,26 @@ fdf=fdf.loc[fdf['act_return'] != 0]
 # print(df.loc[df['B'].isin(['one','three'])])
 
 # out to csv
-fdf.to_csv('F:/Data/marketmentions_analysis.csv')
+fdf.to_csv('F:/Data/marketmentions_sentimentanalysis.csv')
 
 #out to json
-fdf.to_json('../dist/json/historicalanalysis/historicalanalysis.json', orient='records')
+fdf.to_json('../dist/json/historicalanalysis/historicalsentimentanalysis.json', orient='records')
 
 
-#group by bank and out to file
-bankgroup=fdf[['bank','prediction','act_return','exp_return','ret_delta','direction_call_count']]
-bankcount=bankgroup.groupby(['bank','prediction'], as_index=False).count()
-bankgroupby=bankgroup.groupby(['bank','prediction'], as_index=False).mean()
-mergedbanks=pd.merge(bankgroupby,bankcount,left_on=['bank','prediction'], right_on=['bank','prediction'])
-mergedbanks['accuracy']=mergedbanks['direction_call_count_x']/mergedbanks['direction_call_count_y']
-mergedbanks.to_json('../dist/json/historicalanalysis/bankanalysis.json',orient='table')
-# print(fdf.sort_values(by='exp_return',ascending=False).head(20))
+# Calculate Bank stats by sentiment
+bankgroup=fdf[['bank','prediction','sentiment','trigger_word','act_return','exp_return','ret_delta','direction_call_count','rowcount']]
+bankgroupby=bankgroup[['bank','sentiment','trigger_word','act_return','exp_return','ret_delta']].groupby(['bank','sentiment'], as_index=False).mean()
+bankgroupsum=bankgroup[['bank','sentiment','direction_call_count','rowcount']].groupby(['bank','sentiment'], as_index=False).sum()
+mergedbanks=pd.merge(bankgroupby,bankgroupsum,left_on=['bank','sentiment'], right_on=['bank','sentiment'])
+mergedbanks['accuracy']=mergedbanks['direction_call_count']/mergedbanks['rowcount']
+mergedbanks.to_json('../dist/json/historicalanalysis/sentimentbankanalysis.json',orient='table')
+
+# Calculate average bank performance
+banksummary1=mergedbanks[['bank','act_return','exp_return']].groupby(['bank'], as_index=False).mean()
+banksummary2=mergedbanks[['bank','direction_call_count','rowcount']].groupby(['bank'], as_index=False).sum()
+banksummary=pd.merge(banksummary1,banksummary2,left_on=['bank'],right_on=['bank'])
+banksummary['accuracy']=banksummary['direction_call_count']/banksummary['rowcount']
+banksummary.to_json('../dist/json/historicalanalysis/sentimentbanksummary.json',orient='table')
 
 # calculate some stats to post on the screen about the analysis
 
@@ -305,6 +258,7 @@ analysis['AvgReturnDelta']=fdf['ret_delta'].mean()
 analysis['AvgReturn']=fdf['act_return'].mean()
 analysis['AvgExReturnDelta']=fdf['excess_ret_delta'].mean()
 analysis['AvgExpectedReturn']=fdf['exp_return'].mean()
+analysis['AvgBankAccuracy']=banksummary['accuracy'].mean()
 analysis['PercentCall']=percentcall
 analysis['StockCount']=insertcount
 analysis['DateRun']=str(today)
@@ -313,6 +267,6 @@ analysis['PercentBear']=percentbear
 analysis['PullDate']=str(pulldate)
 analysisarray.append(analysis)
 
-outfile=open('../dist/json/historicalanalysis/historicalanalysisstats.json','w')
+outfile=open('../dist/json/historicalanalysis/historicalsentimentanalysisstats.json','w')
 json.dump(analysisarray,outfile)
 outfile.close()
