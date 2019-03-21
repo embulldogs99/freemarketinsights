@@ -20,9 +20,5 @@ python stockrank.py
 
 python pgdatapull.py
 
-cd ..
-
-gitrun.bat
-
 pause
 
