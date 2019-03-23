@@ -329,7 +329,7 @@ td, th {
   text-align: center;
   text-decoration: none;
   display: none;
-  background: #691cff;
+  background: #4286f4;
   border-radius: 3px;
   -webkit-box-shadow: 0 2px 15px rgba(0, 0, 0, 0.25);
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.25);
@@ -343,9 +343,9 @@ td, th {
 }
 
 .gradient-bg, .page-top-banner .overlay-bg, .banner-section .overlay-bg, .features-wrap .single-feature .overlay-bg {
-  background: -moz-linear-gradient(0deg, #f51dac 0%, #691cff 100%);
-  background: -webkit-linear-gradient(0deg, #f51dac 0%, #691cff 100%);
-  background: -ms-linear-gradient(0deg, #f51dac 0%, #691cff 100%);
+  background: -moz-linear-gradient(0deg, #4286f4 0%, #4286f4 100%);
+  background: -webkit-linear-gradient(0deg, #4286f4 0%, #4286f4 100%);
+  background: -ms-linear-gradient(0deg, #4286f4 0%, #4286f4 100%);
 }
 
 .offwhite-bg {
@@ -355,7 +355,7 @@ td, th {
 .primary-btn {
   text-align: center;
   border-radius: 5px;
-  background: #691cff;
+  background: #4286f4;
   padding: 15px 40px;
   font-weight: 400;
   min-width: 160px;
@@ -1487,7 +1487,7 @@ td, th {
   background-attachment: fixed;
 }
 .banner-section2 .overlay-bg {
-  background: url(../img/banner-overlay1.png);
+  background: url(../img/banner-overlay.png);
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -1508,7 +1508,7 @@ td, th {
 }
 
 .banner-section3 {
-  background: url(../img/footer_image.png);
+  background-color: blue;
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
