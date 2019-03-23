@@ -26,7 +26,7 @@ client.onreadystatechange=function(){
     '<td>$'+(response[i].a_e_p).toFixed(2)+'</td>'+
     '<td>'+(response[i].divyield).toFixed(2)+'%</td>'+
     '<td>$'+response[i].a_eps+'</td>'+
-    '<td>'+(response[i].fiveyrlow_percent).toFixed(2)+'%</td>'+
+    '<td>'+(response[i].fiveyrlow_percent*100).toFixed(2)+'%</td>'+
     '<td>'+response[i].bank+'</td>'+
     '</tr>';
   }
