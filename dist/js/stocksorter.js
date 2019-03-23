@@ -11,8 +11,11 @@ client.onreadystatechange=function(){
   '<th>Last Price</th>'+
   '<th>Target Price</th>'+
   '<th>Stock Score</th>'+
+  '<th>E/P</th>'+
+  '<th>DivYield</th>'+
   '<th>Annual EPS</th>'+
-  '<th>Five Year Low Distance</th>'+
+  '<th>Five Year Low %</th>'+
+  '<th>Bank</th>'+
   '</tr>';
   for (var i=0;i<response.length;i++){
     if (response[i].fiveyrlow_distance!='-'){fyld='-';}
@@ -22,7 +25,11 @@ client.onreadystatechange=function(){
     '<td>$'+response[i].price+'</td>'+
     '<td>$'+response[i].target+'</td>'+
     '<td>'+(response[i].score).toFixed(2)+'</td>'+
+    '<td>$'+(response[i].a_e_p).toFixed(2)+'</td>'+
+    '<td>'+(response[i].divyield).toFixed(2)+'%</td>'+
     '<td>$'+response[i].a_eps+'</td>'+
+    '<td>'+(response[i].fiveyrlow_percent).toFixed(2)+'%</td>'+
+    '<td>'+response[i].bank+'</td>'+
     '<td>'+fyld+'</td>'+
     '</tr>';
   }
