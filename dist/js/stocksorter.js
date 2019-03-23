@@ -18,8 +18,6 @@ client.onreadystatechange=function(){
   '<th>Bank</th>'+
   '</tr>';
   for (var i=0;i<response.length;i++){
-    if (response[i].fiveyrlow_distance!='-'){fyld='-';}
-      else{fyld=(response[i].fiveyrlow_distance*100).toFixed(2)+'%';}
     output+='<tr>'+
     '<td>'+response[i].ticker+'</td>'+
     '<td>$'+response[i].price+'</td>'+
@@ -30,7 +28,6 @@ client.onreadystatechange=function(){
     '<td>$'+response[i].a_eps+'</td>'+
     '<td>'+(response[i].fiveyrlow_percent).toFixed(2)+'%</td>'+
     '<td>'+response[i].bank+'</td>'+
-    '<td>'+fyld+'</td>'+
     '</tr>';
   }
 document.getElementById('stocksort').innerHTML=output;
