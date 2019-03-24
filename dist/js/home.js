@@ -92,10 +92,8 @@ function portfoliochart(){
 
     }
   };
-  xhttp3.open("Get", "/json/portfoliohistory.json",true);
+  xhttp3.open("Get", "json/portfoliohistory.json",true);
   xhttp3.send();
-
-
 }
 
 
