@@ -36,7 +36,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
   <link rel="manifest" href="/favicon/site.webmanifest">
   <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#5bbad5">
-
+	
 </head>
 
 <body>
@@ -179,23 +179,11 @@
     <!-- End about section -->
 
     <!-- Start chart.js section -->
-    <!---<div class="container">
-        <div class="chartcontainer">
-			<p>Chart Js</p>
-            <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
-                <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
-                </div>
-                <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
-                </div>
-            </div>
-            <canvas id="myChart" width="820" height="410" class="chartjs-render-monitor" style="display: block; width: 820px; height: 410px;"></canvas>
-        </div>
-    </div>-->
+    <div class="container">
+	</div>
     <!-- End  chart.js section -->
 
-    <!-- Start feature section -->
+    <!-- Start news section -->
     <section class="feature-section section-gap-full" id="news-section">
         <div class="container">
             <div class="row align-items-center feature-wrap">
@@ -377,8 +365,44 @@
             </div>
         </div>
     </section>
-    <!-- End feature section -->
+    <!-- End news section -->
 
+<!-- Start research section -->
+    <section class="blog-section padding-top-120" id="research-section">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="text-center">Research</h2>
+				<p class="text-center">Keep up to today with our white paper analysis</p>
+				<a href="https://freemarketinsights.com/html/marketmentions" class="primary-btn pull-center">Learn More</a>
+            </div>
+        </div>
+    </section>
+    <!-- End research section -->	
+	
+ <!-- Start tools section -->
+    <section class="service-section section-gap-full">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="text-center">Tools</h2>
+            </div>
+            <div class="row owl-carousel" id="service-carusel">
+                <div class="single-service">
+                    <a href="research/investmentplatforms"><img class="icon" width="200" height="300" src="pics/robinhoodlogo.png"  width="200" height="250"></a>
+                </div>
+                <div class="single-service">
+                 <a href="research/investmentplatforms"><img class="icon" width="200" height="300" src="pics/acorns.jpg"  width="200" height="250"></a>
+                </div>
+                <div class="single-service">
+                   <a href="html/stocksorter"><img src="pics/ai_stock_sorter.jpg"  width="200" height="300"></a>
+                </div>
+				<div class="single-service">
+                  <a href="http://ws-na.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=US&source=ac&ref=qf_sp_asin_til&ad_type=product_link&tracking_id=embulldogs99-20&marketplace=amazon&region=US&placement=B00NB86OYE&asins=B00NB86OYE&linkId=428209263703e9c0969e2310d75fb6f2&show_border=false&link_opens_in_new_window=false&price_color=333333&title_color=0066c0&bg_color=ffffff"><img src="pics/audible.jpg" width="200" height="300"></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End tools section -->	
+	
     <!-- Start footer section -->
     <footer class="footer-section section-gap-half">
         <div class="container">
@@ -419,38 +443,6 @@
         <i class="ti-angle-up"></i>
     </div>
 
-    <script>
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-
-                var response = JSON.parse(xhttp.responseText);
-
-                var output = '';
-                for (var i = 0; i < 5; i++) {
-                    if (response[i].divyield == null) {
-                        divyield = "-";
-                    } else {
-                        divyield = response[i].divyield;
-                    }
-                    output +=
-                        '<tr>' +
-                        '<td>$' + response[i].target + '</td>' +
-                        '<td>$' + response[i].price + '</td>' +
-                        '<td>' + response[i].returns + '%' + '</td>' +
-                        '<td>' + divyield + '</td>' +
-                        '<td class="hometableticker"><a href="http://www.google.com/search?q=' + response[i].ticker + '+stock+price"  target="_blank" >' + response[i].ticker + '</a></td>' +
-                        '<td class="hometablenote"><a href="http://www.google.com/search?q=' + response[i].note + '"  target="_blank" >' + response[i].note + '</a></td>' +
-                        '</tr>';
-                }
-
-                document.getElementById('mbull').innerHTML = output;
-            }
-        };
-        xhttp.open("Get", "json/marketbulls.json", true);
-        xhttp.send();
-    </script>
-
     <!-- JS
 ============================================= -->
     <script src="js/vendor/jquery-2.2.4.min.js"></script>
@@ -464,7 +456,6 @@
     <script src="js/jquery.stellar.min.js"></script>
     <script src="js/jquery.counterup.min.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/Chart.js"></script>
 </body>
 
 </html>
