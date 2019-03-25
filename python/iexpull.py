@@ -69,24 +69,48 @@ def iexearnings(ticker):
 
 def iexfundamentals(ticker):
     data={}
+
     quote=iexstockinfo(ticker)
+    data['price']=quote['latestPrice']
+
+    stats=iexstockstats(ticker)
+    marketcap=stats['marketcap']
+    data['marketcap']=marketcap
+
     cashflow=iexcashflow(ticker)
     balancesheet=iexbalancesheet(ticker)
+    data['roa']=cashflow['netIncome']/balancesheet['totalAssets']
+    data['roe']=cashflow['netIncome']/balancesheet['shareholderEquity']
+    data['debttoequity']=(balancesheet['LongTermDebt']+balancesheet['currentLongTermDebt'])/balancesheet['shareholderEquity']
+    data['debttomarket']=(balancesheet['LongTermDebt']+balancesheet['currentLongTermDebt'])/marketcap
+
+
     earnings=iexearnings(ticker)
     eps=[]
+    epschange=[]
     epssurprise=[]
     epsdate=[]
     for i in len(earnings):
         eps.append(i['actualEPS'])
         epssurprise.append(i['EPSSurpriseDollar'])
         epsdate.append(i['EPSReportDate'])
+        epschange.append(i['yearAgoChangePercent'])
+        if i==0:
+            data['earningsyoygrowth']=i['yearAgoChangePercent']
 
-    stats=iexstockstats(ticker)
+    change=1
+    for z in epschange:
+        change=change+change*z
 
-    data['price']=quote['latestPrice']
-    data['roa']=cashflow['netIncome']/balancesheet['totalAssets']
-    data['earningsYoYgrowth']
-    earningsgrowth=
-    roe=
-    debttoequity=
-    debttomarket=
+    data['avgepsgrowth']=(change-1)/len(epschange)
+
+
+    outfile=open('../dist/json/recentfundamentals.json','w')
+    json.dump(data,outfile)
+    outfile.close()
+
+import pandas as pd
+def iexdataanalysis():
+    startdata=pd.read_json('../dist/json/recentfundamentals.json')
+    df=pd.DataFrame(startdata)
+    print df
