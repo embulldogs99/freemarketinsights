@@ -1,9 +1,0 @@
-<<<<<<< HEAD
-This directory contains certificates and private keys for testing some
-SSL-related functionality in Travis.  Do NOT use these certificates for
-anything other than testing.
-=======
-This directory contains certificates and private keys for testing some
-SSL-related functionality in Travis.  Do NOT use these certificates for
-anything other than testing.
->>>>>>> cbfed986b26b1d577ce60de9423248b7ad5a777c
