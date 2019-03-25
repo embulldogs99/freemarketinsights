@@ -1165,7 +1165,7 @@ td, th {
 }
 
 .breakpoint-on .dope-navbar .dope-menu {
-  background-color: #691cff;
+  background-color: #4286f4;
   position: fixed;
   top: 0;
   left: -310px;
@@ -2357,7 +2357,7 @@ td, th {
   transition: all 0.3s ease 0s;
 }
 .blog-lists-section .social-widget li a:hover {
-  background: #691cff;
+  background: #4286f4;
 }
 .blog-lists-section .archive-widget ul li {
   margin-bottom: 10px;
@@ -3007,8 +3007,8 @@ td, th {
   font-size: 18px;
 }
 .footer-section #social li a:hover {
-  color: #691cff;
-  border-color: #691cff;
+  color: #4286f4;
+  border-color: #4286f4;
 }
 .footer-section .footer-cols h4 {
   color: #fff;
