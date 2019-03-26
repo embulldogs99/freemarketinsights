@@ -247,11 +247,19 @@
     height: 125px;
   }
 }
+
 @media (max-width: 736px) {
   .banner-section2 {
     background-size: cover !important;
   }
 }
+
+@media (max-width: 736px) {
+	.research{
+		padding-left: 30px;
+		padding-right: 30px;
+	}
+
 @media (max-width: 576px) {
   .blog-section .row {
     margin-left: 0px;
