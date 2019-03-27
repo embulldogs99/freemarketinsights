@@ -251,6 +251,13 @@ td, th {
   padding-bottom: 30px;
 }
 
+.research-hover:hover
+{
+	color: #4286f4;
+	font-weight: 700;
+	border-radius:10%;
+}
+
 .text-center {
   text-align: center;
 }
@@ -1708,6 +1715,7 @@ td, th {
 .service-section .single-service p {
   margin-bottom: 0px;
 }
+
 .service-section .single-service:hover {
   -webkit-transform: translateY(-10px);
   -moz-transform: translateY(-10px);
@@ -3039,5 +3047,3 @@ td, th {
 .footer-section .footer-cols ul li a:hover {
   color: #691cff;
 }
-
-
