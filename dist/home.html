@@ -124,7 +124,7 @@
             <div class="row align-items-center fullscreen">
                 <div class="col-lg-6 col-md-7 banner-left">
                     <p>A Rational Approach to an Irrational Market</p>
-                    <a class="video-btn primary-btn" href="#">About</a>
+                    <a class="video-btn primary-btn" href="html/login.html">Members Area</a>
                 </div>
             </div>
         </div>
@@ -132,12 +132,9 @@
     <!-- End banner section -->
 
     <!-- Start about section -->
-    <section class="about-section section-gap-full relative" id="about-section">
+    <section class="about-section section-gap-full relative aboutmargin" id="about-section">
         <div class="container">
             <div class="row align-items-center justify-content-between">
-                <div class="col-lg-6 col-md-12 about-left">
-                    <img class="img-fluid" src="img/" alt="">
-                </div>
                 <div class="col-lg-5 col-md-12 about-right">
                     <h3>About FMI</h3>
                     <h1>Make a Better Future</h1>
@@ -146,6 +143,7 @@
                 </div>
             </div>
         </div>
+
         <div class="floating-shapes">
             <span data-parallax='{"x": 150, "y": -20, "rotateZ":500}'>
                 <img src="img/shape/fl-shape-1.png" alt="">
@@ -180,7 +178,9 @@
 
     <!-- Start performance chart.js section -->
     <div class="container">
-        <canvas id="myChart" width="864" height="432" class="chartjs-render-monitor" style="display: block; width: 864px; height: 432px;"></canvas>
+        <div class="row">
+            <canvas class="chart" id="myChart" width="864" height="632" class="chartjs-render-monitor" style="display: block; width: 864px; height: 632px;"></canvas>
+        </div>
     </div>
     <!-- End  performance chart.js section -->
 
@@ -278,7 +278,7 @@
                                 <img src="img/bear.svg" style="width: 80px; height: 80px">
                                 <h3>Market Bears</h3>
                                 <!-- Market Bears 1 item -->
-                                <a href="http://www.google.com/search?q=FFIV+stock+price" target="_blank">FFIV Info</a>
+                                <a href="http://www.google.com/search?q=FFIV+stock+price" target="_blank">FFIV</a>
                                 <br>
                                 <a class="hometablenote" href="http://www.google.com/search?q=F5 Networks (FFIV) Given New $110.00 Price Target at Deutsche Bank - XNewsPress" target="_blank">F5 Networks (FFIV) Given New $110.00 Price Target at Deutsche Bank - XNewsPress</a>
 
@@ -291,7 +291,7 @@
                                 <br>
 
                                 <!-- Market Bears 2 item -->
-                                <a href="http://www.google.com/search?q=CMG+stock+price" target="_blank">CMG Info</a>
+                                <a href="http://www.google.com/search?q=CMG+stock+price" target="_blank">CMG</a>
                                 <br>
                                 <a href="http://www.google.com/search?q=Chipotle Mexican Grill, Inc. (CMG) Receives $500.87 Average Price Target from Brokerages - Fairfield Current" target="_blank">Chipotle Mexican Grill, Inc. (CMG) Receives $500.87 Average Price Target from Brokerages - Fairfield Current</a>
                                 <br>
@@ -304,7 +304,7 @@
                                 <br>
 
                                 <!-- Market Bears 3 item -->
-                                <a href="http://www.google.com/search?q=PANW+stock+price" target="_blank">PANW Info</a>
+                                <a href="http://www.google.com/search?q=PANW+stock+price" target="_blank">PANW</a>
                                 <br>
                                 <a class="hometablenote" href="http://www.google.com/search?q=Credit Suisse Group Boosts Palo Alto Networks (NYSE:PANW) Price Target to $190.00 - XNewsPress" target="_blank">Credit Suisse Group Boosts Palo Alto Networks (NYSE:PANW) Price Target to $190.00 - XNewsPress</a>
                                 <br>
@@ -317,7 +317,7 @@
                                 <br>
 
                                 <!-- Market Bears 4 item -->
-                                <a href="http://www.google.com/search?q=ELAN+stock+price" target="_blank">ELAN Info</a>
+                                <a href="http://www.google.com/search?q=ELAN+stock+price" target="_blank">ELAN</a>
                                 <br>
                                 <a class="hometablenote" href="http://www.google.com/search?q=Elanco Animal Health (ELAN) Had Its Price Target Cut by 3.45% at UBS to $28" target="_blank">Elanco Animal Health (ELAN) Had Its Price Target Cut by 3.45% at UBS to $28</a>
                                 <br>
@@ -354,7 +354,7 @@
     <!-- End market research section -->
 
     <!-- Start research section -->
-    <section class="service-section section-gap-full">
+    <section class="service-section section-gap-full research">
         <div class="container">
             <div class="row">
                 <div class="section-title">
@@ -365,58 +365,70 @@
 
                 </div>
                 <div class="col-lg-4  col-md-6 pb-30">
-                    <div class="single-service">
-                        <i class="ti-money"></i>
-                        <h4>Earnings</h4>
-                        <p>
-                            <a href="research/eps.html">A remark on Earnings per share</a>
-                        </p>
-                    </div>
+                    <a class="primary-button" href="research/eps.html">
+                        <div class="single-service">
+                            <i class="ti-money"></i>
+                            <h4>Earnings</h4>
+                            <p>
+                                A remark on Earnings per share
+                            </p>
+                        </div>
+                    </a>
                 </div>
                 <div class="col-lg-4  col-md-6 pb-30">
-                    <div class="single-service">
-                        <i class="ti-announcement"></i>
-                        <h4>Marketing</h4>
-                        <p>
-                            <a href="research/roa.html"> How the Market Reacts to Asset Efficiency</a>
-                        </p>
-                    </div>
+                    <a class="primary-button" href="research/roa.html">
+                        <div class="single-service">
+                            <i class="ti-announcement"></i>
+                            <h4>Marketing</h4>
+                            <p>
+                                How the Market Reacts to Asset Efficiency
+                            </p>
+                        </div>
+                    </a>
                 </div>
                 <div class="col-lg-4  col-md-6 pb-30">
-                    <div class="single-service">
-                        <i class="ti-bar-chart"></i>
-                        <h4>Gold</h4>
-                        <p>
-                            <a href="research/gold.html"> Gold As A Store of Value</a>
-                        </p>
-                    </div>
+                    <a class="primary-button" href="research/gold.html">
+                        <div class="single-service">
+                            <i class="ti-bar-chart"></i>
+                            <h4>Gold</h4>
+                            <p>
+                                Gold As A Store of Value
+                            </p>
+                        </div>
+                    </a>
                 </div>
                 <div class="col-lg-4 col-md-6 ">
-                    <div class="single-service">
-                        <i class="ti-time"></i>
-                        <h4>Investment</h4>
-                        <p>
-                            <a href="research/investmentplatforms.html"> What are the best Investment Platforms Available Today?</a>
-                        </p>
-                    </div>
+                    <a class="primary-button" href="research/investmentplatforms.html">
+                        <div class="single-service">
+                            <i class="ti-time"></i>
+                            <h4>Investment</h4>
+                            <p>
+                                What are the best Investment Platforms Available Today?
+                            </p>
+                        </div>
+                    </a>
                 </div>
                 <div class="col-lg-4 col-md-6 ">
-                    <div class="single-service">
-                        <i class="ti-search"></i>
-                        <h4>Catalyst</h4>
-                        <p>
-                            <a href="research/catalyst.html">Finding the Catalyst</a>
-                        </p>
-                    </div>
+                    <a class="primary-button" href="research/catalyst.html">
+                        <div class="single-service">
+                            <i class="ti-search"></i>
+                            <h4>Catalyst</h4>
+                            <p>
+                                Finding the Catalyst
+                            </p>
+                        </div>
+                    </a>
                 </div>
                 <div class="col-lg-4 col-md-6 ">
-                    <div class="single-service">
-                        <i class="ti-pencil-alt"></i>
-                        <h4>Analyst Predictions</h4>
-                        <p>
-                            <a href="research/analystaccuracy.html"> How Accurate Are Analyst Predictions?</a>
-                        </p>
-                    </div>
+                    <a class="primary-button" href="research/analystaccuracy.html">
+                        <div class="single-service">
+                            <i class="ti-pencil-alt"></i>
+                            <h4>Analyst Predictions</h4>
+                            <p>
+                                How Accurate Are Analyst Predictions?
+                            </p>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
