@@ -58,7 +58,7 @@ client.onreadystatechange=function(){
     '<td>'+response[i].ticker+'</td>'+
     '<td>$'+response[i].price+'</td>'+
     '<td>$'+response[i].target+'</td>'+
-    '<td>$'+response[i].score+'</td>'+
+    '<td>'+(response[i].score).toFixed(2)+'</td>'+
     '<td>'+(response[i].debttoequity*100).toFixed(2)+'%</td>'+
     '<td>'+(response[i].divyield*100).toFixed(2)+'%</td>'+
     '<td>'+(response[i].roa*100).toFixed(2)+'%</td>'+
