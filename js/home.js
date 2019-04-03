@@ -8,22 +8,26 @@ xhttp2.onreadystatechange=function(){
     var output2='';
     for (var i=0;i<5;i++){
       if (response2[i].divyield==null){divyield="-";}else{divyield=response[i].divyield;}
-      output2 += "<tr><div class='horizontal'>"+
-      "<td><div class='newscount'>0"+(parseFloat(i)+1)+"</div></td>"+
-      '<div class="vertical"><td class="hometablestats"><a class="hometablenote" href="http://www.google.com/search?q='+response2[i].note+'"  target="_blank" >'+response2[i].note+'</a>'+'<br><br><br>'+
-      '<table class="innerhometable"><tr>'+
-      '<td><a href="http://www.google.com/search?q='+response2[i].ticker+'+stock+price"  target="_blank" >'+response2[i].ticker+' Info</a>'+
-      '</td><td>Last Price:'+'$'+response2[i].price+
-      '</td><td>Expected Return:'+response2[i].returns+'%'+
-      '</td><td>Dividend Yield:'+divyield+
-      '</td></tr></table>'+
-        '</tr></div></div>';
+
+	output2 +=
+		'<div>' +
+		'<div>0'+(parseFloat(i)+1)+'</div>'+
+		'<a href="http://www.google.com/search?q='+response2[i].ticker+'+stock+price"  target="_blank" >'+response2[i].ticker+'</a>'+
+		'<br>'+
+		'<a href="http://www.google.com/search?q='+response2[i].note+'"  target="_blank" >'+response2[i].note+'</a></td>'+
+		'<br>'+
+		'<b class="text-dark">$'+'Last Price:'+response2[i].price+'</b>'+
+		'<b class="text-dark">'+'Expected Return:'+response2[i].returns+'%'+'</b>'+
+		'<b class="text-dark">'+'Dividend Yield:'+divyield+'</b>'+
+		'<br>' +
+		'<br>' +
+		'</div>';
     }
 
     document.getElementById('mbear').innerHTML=output2;
     }
   };
-  xhttp2.open("Get", "/json/marketbears.json",true);
+  xhttp2.open("Get", "json/marketbears.json",true);
   xhttp2.send();
 }
 
@@ -130,7 +134,42 @@ output+='<tr>'+
     document.getElementById('goldtable').innerHTML=output;
 };
 }
-golddata();
 
+function mbull(){
+var xhttp=new XMLHttpRequest();
+xhttp.onreadystatechange=function(){
+  if (this.readyState ==4 && this.status ==200){
+
+    var response=JSON.parse(xhttp.responseText);
+
+    var output='';
+    for (var i=0;i<5;i++){
+      if (response[i].divyield==null){divyield="-";}else{divyield=response[i].divyield;}
+		output +=
+			'<div>' +
+			'<div>0'+(parseFloat(i)+1)+'</div>'+
+			'<a href="http://www.google.com/search?q='+response[i].ticker+'+stock+price"  target="_blank" >'+response[i].ticker+'</a>'+
+			'<br>'+
+			'<a href="http://www.google.com/search?q='+response[i].note+'"  target="_blank" >'+response[i].note+'</a></td>'+
+			'<br>'+
+			'<b class="text-dark">$'+'Target:'+response[i].target+'</b>'+
+			'<b class="text-dark">$'+'Price:'+response[i].price+'</b>'+
+			'<b class="text-dark">'+'Expected Return:'+response[i].returns+'%'+'</b>'+
+			'<b class="text-dark">'+'Dividend Yield:'+divyield+'</b>'+
+			'<br>' +
+			'<br>' +
+			'</div>';
+    }
+
+    document.getElementById('mbull').innerHTML=output;
+    }
+  };
+  xhttp.open("Get", "json/marketbulls.json",true);
+  xhttp.send();
+}
+
+
+mbull();
+golddata();
 portfoliochart();
 mbear();
