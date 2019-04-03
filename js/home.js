@@ -16,7 +16,7 @@ xhttp2.onreadystatechange=function(){
 		'<br>'+
 		'<a href="http://www.google.com/search?q='+response2[i].note+'"  target="_blank" >'+response2[i].note+'</a></td>'+
 		'<br>'+
-		'<b class="text-dark">$'+'Last Price:'+response2[i].price+'</b>'+
+		'<b class="text-dark">'+'Last Price:$'+response2[i].price+'</b>'+
 		'<b class="text-dark">'+'Expected Return:'+response2[i].returns+'%'+'</b>'+
 		'<b class="text-dark">'+'Dividend Yield:'+divyield+'% </b>'+
 		'<br>' +
