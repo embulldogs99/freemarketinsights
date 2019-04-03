@@ -10,7 +10,7 @@ xhttp2.onreadystatechange=function(){
       if (response2[i].divyield==null){divyield="-";}else{divyield=response[i].divyield;}
 
 	output2 +=
-		'<div>' +
+		'<div style="justify-content:space-between;">' +
 		'<div>0'+(parseFloat(i)+1)+'</div>'+
 		'<a href="http://www.google.com/search?q='+response2[i].ticker+'+stock+price"  target="_blank" >'+response2[i].ticker+'</a>'+
 		'<br>'+
@@ -18,7 +18,7 @@ xhttp2.onreadystatechange=function(){
 		'<br>'+
 		'<b class="text-dark">$'+'Last Price:'+response2[i].price+'</b>'+
 		'<b class="text-dark">'+'Expected Return:'+response2[i].returns+'%'+'</b>'+
-		'<b class="text-dark">'+'Dividend Yield:'+divyield+'</b>'+
+		'<b class="text-dark">'+'Dividend Yield:'+divyield+'% </b>'+
 		'<br>' +
 		'<br>' +
 		'</div>';
@@ -146,16 +146,16 @@ xhttp.onreadystatechange=function(){
     for (var i=0;i<5;i++){
       if (response[i].divyield==null){divyield="-";}else{divyield=response[i].divyield;}
 		output +=
-			'<div>' +
+			'<div style="justify-content:space-between;">' +
 			'<div>0'+(parseFloat(i)+1)+'</div>'+
 			'<a href="http://www.google.com/search?q='+response[i].ticker+'+stock+price"  target="_blank" >'+response[i].ticker+'</a>'+
 			'<br>'+
 			'<a href="http://www.google.com/search?q='+response[i].note+'"  target="_blank" >'+response[i].note+'</a></td>'+
 			'<br>'+
-			'<b class="text-dark">$'+'Target:'+response[i].target+'</b>'+
-			'<b class="text-dark">$'+'Price:'+response[i].price+'</b>'+
+			'<b class="text-dark">'+'Target:$'+response[i].target+' </b>'+
+			'<b class="text-dark">'+'Price:$'+response[i].price+' </b>'+
 			'<b class="text-dark">'+'Expected Return:'+response[i].returns+'%'+'</b>'+
-			'<b class="text-dark">'+'Dividend Yield:'+divyield+'</b>'+
+			'<b class="text-dark">'+'Dividend Yield:'+divyield+'% </b>'+
 			'<br>' +
 			'<br>' +
 			'</div>';
