@@ -7,7 +7,7 @@ xhttp2.onreadystatechange=function(){
     var response2=JSON.parse(xhttp2.responseText);
     var output2='';
     for (var i=0;i<5;i++){
-      if (response2[i].divyield==null){divyield="-";}else{divyield=response[i].divyield;}
+      if (response2[i].divyield==null){divyield="-";}else{divyield=response2[i].divyield;}
 
 	output2 +=
 		'<div style="justify-content:space-between;">' +
