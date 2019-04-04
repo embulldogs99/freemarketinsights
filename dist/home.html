@@ -391,30 +391,55 @@
     <!-- Start strategy section -->
     <section class="about-section section-gap-full relative aboutmargin" id="strategy-section">
         <div class="container">
-            <div class="row align-items-center justify-content-between">
-                <div class="col-lg-5 col-md-12 about-right">
-                    <!-- <h3>Our Strategy</h3> -->
-                    <h1>Our Strategy</h1>
-                    <p> At FMI, we emplore low cost technologies combined with academically researched stock filtering strategies to enable people like you to earn the same returns you can get through a financial advisor for a fraction of the cost. We believe there are X easy steps to securing your financial future today.</p>
-                    <br>
-                    <h1>Step 1</h1>
-                    <p>Open a low cost investment account such as Robinhood or Acorns</p>
-                    <br>
-                    <h1>Step 2</h1>
-                    <p>Determine your monthly contribution</p>
-                    <br>
-                    <h1>Step 3</h1>
-                    <p>Determine your investment experience and choose your investment vehicles</p>
-                    <br>
-                    <h1>Step 4</h1>
-                    <p>Dont Quit and Don't Exit!</p>
-                    <br>
-                    <p>If you are new to investing and want to learn more, take a look at the detailed breakdown of each step</p>
-                    <a class="primary-btn" href="#strategy-section">The Strategy
+            <h1 class="text-center">Our Strategy</h1>
+            <a class="primary-btn text-center" href="#strategy-section">The Strategy
                             <span class="ti-arrow-right"></span>
                         </a>
+            <br>
+            <br>
+            <div class="row align-items-center justify-content-between">
+                <div class="col-lg-6 col-md-12 about-right">
+                    <!-- <h3>Our Strategy</h3> -->
+
+                    <p> At FMI, we emplore low cost technologies combined with academically researched stock filtering strategies to enable people like you to earn the same returns you can get through a financial advisor for a fraction of the cost. We believe there are X easy steps to securing your financial future today.</p>
+                    <br>
+
+                </div>
+                <br>
+            </div>
+            <h3>Strategy Steps</h3>
+            <h6>Check Our Strategy Steps</h6>
+            <br>
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <br>
+                    <div class="tab">
+                        <button class="tablinks" onclick="openTabs(event, 'step1')">Step 1</button>
+                        <button class="tablinks" onclick="openTabs(event, 'step2')">Step 2</button>
+                        <button class="tablinks" onclick="openTabs(event, 'step3')">Step 3</button>
+                        <button class="tablinks" onclick="openTabs(event, 'step4')">Step 4</button>
+                    </div>
+
+                    <div id="step1" class="tabcontent">
+                        <h3>Step 1</h3>
+                        <p>Open a low cost investment account such as Robinhood or Acorns.</p>
+                    </div>
+                    <div id="step2" class="tabcontent">
+                        <h3>Step 2</h3>
+                        <p>Determine your monthly contribution.</p>
+                    </div>
+
+                    <div id="step3" class="tabcontent">
+                        <h3>Step 3</h3>
+                        <p>Determine your investment experience and choose your investment vehicles.</p>
+                    </div>
+                    <div id="step4" class="tabcontent">
+                        <h3>Step 4</h3>
+                        <p>Dont Quit and Don't Exit!.</p>
+                    </div>
                 </div>
             </div>
+
         </div>
 
         <div class="floating-shapes">
@@ -607,9 +632,7 @@
                         Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorperi.
                     </p>
                     <p>
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Est voluptatibus, tempora odio dicta
-                        molestiae recusandae delectus perferendis eveniet aspernatur voluptatum earum dolore
-                        necessitatibus odit perspiciatis eos, quidem soluta autem esse.
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Est voluptatibus, tempora odio dicta molestiae recusandae delectus perferendis eveniet aspernatur voluptatum earum dolore necessitatibus odit perspiciatis eos, quidem soluta autem esse.
                     </p>
                 </div>
                 <div class="col-lg-7">
@@ -624,25 +647,19 @@
                             <a href="#">Although moreover mistaken kindness me feelings do be marianne?</a>
                         </dt>
                         <dd>
-                            Far curiosity incommode now led smallness allowance. Favour bed assure son things yet. She
-                            consisted consulted elsewhere happiness disposing household any old the. Widow downs you
-                            new shade drift hopes small. So otherwise commanded sweetness we improving.
+                            Far curiosity incommode now led smallness allowance. Favour bed assure son things yet. She consisted consulted elsewhere happiness disposing household any old the. Widow downs you new shade drift hopes small. So otherwise commanded sweetness we improving.
                         </dd>
                         <dt>
                             <a href="#">By in no ecstatic wondered disposal my speaking?</a>
                         </dt>
                         <dd>
-                            Far curiosity incommode now led smallness allowance. Favour bed assure son things yet. She
-                            consisted consulted elsewhere happiness disposing household any old the. Widow downs you
-                            new shade drift hopes small. So otherwise commanded sweetness we improving.
+                            Far curiosity incommode now led smallness allowance. Favour bed assure son things yet. She consisted consulted elsewhere happiness disposing household any old the. Widow downs you new shade drift hopes small. So otherwise commanded sweetness we improving.
                         </dd>
                         <dt>
                             <a href="#">By in no ecstatic wondered disposal my speaking?</a>
                         </dt>
                         <dd>
-                            Far curiosity incommode now led smallness allowance. Favour bed assure son things yet. She
-                            consisted consulted elsewhere happiness disposing household any old the. Widow downs you
-                            new shade drift hopes small. So otherwise commanded sweetness we improving.
+                            Far curiosity incommode now led smallness allowance. Favour bed assure son things yet. She consisted consulted elsewhere happiness disposing household any old the. Widow downs you new shade drift hopes small. So otherwise commanded sweetness we improving.
                         </dd>
                     </dl>
                 </div>
@@ -710,6 +727,22 @@
 ============================================= -->
     <script src="js/Chart.js"></script>
     <script src="js/home.js"></script>
+
+    <script>
+        function openTabs(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
 </body>
 
 </html>
