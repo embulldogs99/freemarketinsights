@@ -11,14 +11,14 @@ xhttp2.onreadystatechange=function(){
 
 	output2 +=
 		'<div style="justify-content:space-between;">' +
-		'<div>0'+(parseFloat(i)+1)+'</div>'+
+		'<div id="marketcount">0'+(parseFloat(i)+1)+'</div>'+
 		'<a href="http://www.google.com/search?q='+response2[i].ticker+'+stock+price"  target="_blank" >'+response2[i].ticker+'</a>'+
 		'<br>'+
 		'<a href="http://www.google.com/search?q='+response2[i].note+'"  target="_blank" >'+response2[i].note+'</a></td>'+
 		'<br>'+
-		'<b class="text-dark">'+'Last Price:$'+response2[i].price+'</b>'+
-		'<b class="text-dark">'+'Expected Return:'+response2[i].returns+'%'+'</b>'+
-		'<b class="text-dark">'+'Dividend Yield:'+divyield+'% </b>'+
+		'<b class="text-dark" id="boxmargin">'+'Last Price:$'+response2[i].price+'</b>'+
+		'<b class="text-dark" id="boxmargin">'+'Expected Return:'+response2[i].returns+'%'+'</b>'+
+		'<b class="text-dark" id="boxmargin">'+'Dividend Yield:'+divyield+'% </b>'+
 		'<br>' +
 		'<br>' +
 		'</div>';
@@ -147,15 +147,15 @@ xhttp.onreadystatechange=function(){
       if (response[i].divyield==null){divyield="-";}else{divyield=response[i].divyield;}
 		output +=
 			'<div style="justify-content:space-between;">' +
-			'<div>0'+(parseFloat(i)+1)+'</div>'+
+			'<div id="marketcount">0'+(parseFloat(i)+1)+'</div>'+
 			'<a href="http://www.google.com/search?q='+response[i].ticker+'+stock+price"  target="_blank" >'+response[i].ticker+'</a>'+
 			'<br>'+
 			'<a href="http://www.google.com/search?q='+response[i].note+'"  target="_blank" >'+response[i].note+'</a></td>'+
 			'<br>'+
-			'<b class="text-dark">'+'Target:$'+response[i].target+' </b>'+
-			'<b class="text-dark">'+'Price:$'+response[i].price+' </b>'+
-			'<b class="text-dark">'+'Expected Return:'+response[i].returns+'%'+'</b>'+
-			'<b class="text-dark">'+'Dividend Yield:'+divyield+'% </b>'+
+			'<b class="text-dark" id="boxmargin">'+'Target:$'+response[i].target+' </b>'+
+			'<b class="text-dark" id="boxmargin">'+'Price:$'+response[i].price+' </b>'+
+			'<b class="text-dark" id="boxmargin">'+'Expected Return:'+response[i].returns+'%'+'</b>'+
+			'<b class="text-dark" id="boxmargin">'+'Dividend Yield:'+divyield+'% </b>'+
 			'<br>' +
 			'<br>' +
 			'</div>';
