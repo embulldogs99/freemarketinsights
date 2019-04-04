@@ -3047,3 +3047,10 @@ td, th {
 .footer-section .footer-cols ul li a:hover {
   color: #4286f4;
 }
+#boxmargin{
+  margin: 5px;
+}
+
+#marketcount {
+  font-size: 25px;
+}
