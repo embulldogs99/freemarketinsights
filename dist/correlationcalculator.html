@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Enter stocks you want to correlate:</p>
+
+<form id="frm1">
+  Stock1: <input type="text" name="fname"><br>
+  Stock2: <input type="text" name="lname"><br><br>
+  <input type="button" onclick="myFunction()" value="Correlate">
+</form>
+
+<script>
+function myFunction() {
+  client.open("Get","/json/correlations.json",true);
+  client.send();
+  client.onreadystatechange=function(){
+  var response=JSON.parse(client.responseText);
+};
+
+  document.getElementById("frm1").submit();
+
+}
+</script>
+
+</body>
+</html>
