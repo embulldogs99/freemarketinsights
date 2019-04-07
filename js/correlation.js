@@ -19,4 +19,6 @@ function correlation(){
             goldcum.push(obj.data[i][3]);
             spxcum.push(obj.data[i][4]);
 
+        }
+      }
 }
