@@ -1,3 +1,5 @@
+python iexdatapuller.py
+
 python stockpull.py
 
 python mmduprem.py
@@ -25,4 +27,3 @@ cd ..
 gitrun.bat
 
 pause
-

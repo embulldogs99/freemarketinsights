@@ -30,7 +30,7 @@ function bankstats(){
       var response=JSON.parse(xhttp.responseText);
       var data=response.data;
       console.log(data);
-      output='<tr><th>Bank</th><th>Prediction</th><th>Avg Actual Return</th><th>Avg Expected Return</th><th>Average Return Delta</th><th>Target Prices Analyzed</th><th>Accuracy</th></tr>';
+      output='<table class="sortable"><tr><th>Bank</th><th>Prediction</th><th>Avg Actual Return</th><th>Avg Expected Return</th><th>Average Return Delta</th><th>Target Prices Analyzed</th><th>Accuracy</th></tr>';
       for (i=0;i<data.length;i++){
         output+='<tr>'+
         '<td>'+data[i].bank+'</td>'+
@@ -42,6 +42,7 @@ function bankstats(){
         '<td>'+(data[i].accuracy*100).toFixed(2)+'%</td>'+
         '</tr>';
       }
+      output+='</table>'
       document.getElementById('bankstats').innerHTML=output;
     }
   };
