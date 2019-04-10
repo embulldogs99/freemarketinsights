@@ -35,11 +35,11 @@ function bankstats(){
         output+='<tr>'+
         '<td>'+data[i].bank+'</td>'+
         '<td>'+data[i].prediction+'</td>'+
-        '<td>'+data[i].act_return+'</td>'+
-        '<td>'+data[i].exp_return+'</td>'+
-        '<td>'+data[i].ret_delta+'</td>'+
+        '<td>'+(data[i].act_return*100).toFixed(2)+'%</td>'+
+        '<td>'+(data[i].exp_return*100).toFixed(2)+'%</td>'+
+        '<td>'+(data[i].ret_delta*100).toFixed(2)+'%</td>'+
         '<td>'+data[i].rowcount+'</td>'+
-        '<td>'+(data[i].accuracy*100).toFixed(2)+'%</td>'+
+        '<td>'+(data[i].accuracy*100).toFixed(0)+'%</td>'+
         '</tr>';
       }
 
