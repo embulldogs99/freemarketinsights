@@ -153,7 +153,7 @@ CSS
 
 
                       <div class="row contact-form-wrap justify-content-center">
-                        <div id="bankstats">
+                        <div id="bankstats"></div>
 
                       </div>
 
@@ -179,8 +179,7 @@ CSS
           <div class="col-lg-7">
               <ul id="social">
                   <li>
-                      <a target="_blank" href="https://www.facebook.com/fmarketinsights
-">
+                      <a target="_blank" href="https://www.facebook.com/fmarketinsights">
                           <i class="fa fa-facebook"></i>
                       </a>
                   </li>
@@ -221,41 +220,6 @@ CSS
     <script src="js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <script>
-      // cache element to reuse
-      let $res = $('#res');
-      // cache elements and bind input event handlers
-      let $stks = $('#stock1,#stock2')
-
-      $('#submitDemo').on('click', function(e) {
-      e.preventDefault();
-        const req = new XMLHttpRequest();
-        var data = [];
-        req.onreadystatechange = function(event) {
-          // XMLHttpRequest.DONE === 4
-          if (this.readyState === XMLHttpRequest.DONE) {
-            if (this.status === 200) {
-              data = JSON.parse(this.responseText);
-              // iterate over elements to get value and then generate key
-              let key = $stks.map(function() {
-                  // get value
-                  return this.value.trim();
-                })
-                // get result as an array and then join with + symbol
-                .get().join('+');
-              // show result baked on key
-              $res.text(key in data[0] ? data[0][key] : 'Not available!')
-
-            }
-          }
-        };
-
-        req.open('GET', 'json/correlations.json', true);
-        req.send(null);
-      });
-
-
-      </script>
 
 </body>
 
