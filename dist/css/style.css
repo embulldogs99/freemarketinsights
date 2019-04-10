@@ -3091,3 +3091,37 @@ td, th {
   border: 1px solid #ccc;
   border-top: none;
 }
+
+/* Adding Sortable table CSS
+Sortable
+Sortable
+Sortable
+Sortable
+ */
+
+.sortable{
+    /* background-color:#eee; */
+    color:#666666;
+    font-size:1vw;
+    cursor: crosshair;
+    /* border: .5px solid black; */
+    width: 80vw;
+    text-align: center;
+}
+.sortable td{
+  border-right:2px solid rgba(0,0,0,.1);
+}
+.sortable th{
+  background-color:lightgrey;
+  white-space: nowrap;
+  border: 1px solid rgba(0,0,0,.7);
+  padding: 5px;
+      font-weight: 600;
+        border-bottom:2px solid rgba(0,0,0,.7);
+}
+.sortable a{
+  background: lightblue;
+}
+.sortable a:hover{
+  background: orange;
+}
