@@ -11,3 +11,4 @@ excel_data
 dist/index-archive.html
 dist/oldindex.html
 __pycache__
+Analyzer.pbix
