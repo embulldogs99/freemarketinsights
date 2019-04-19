@@ -1,36 +1,3 @@
-
-
-function mbear(){
-var xhttp2=new XMLHttpRequest();
-xhttp2.onreadystatechange=function(){
-  if (this.readyState ==4 && this.status ==200){
-    var response2=JSON.parse(xhttp2.responseText);
-    var output2='';
-    for (var i=0;i<5;i++){
-      if (response2[i].divyield==null){divyield="-";}else{divyield=response2[i].divyield;}
-
-	output2 +=
-		'<div style="justify-content:space-between;">' +
-		'<div id="marketcount">0'+(parseFloat(i)+1)+'</div>'+
-		'<a href="http://www.google.com/search?q='+response2[i].ticker+'+stock+price"  target="_blank" >'+response2[i].ticker+'</a>'+
-		'<br>'+
-		'<a href="http://www.google.com/search?q='+response2[i].note+'"  target="_blank" >'+response2[i].note+'</a></td>'+
-		'<br>'+
-		'<b class="text-dark" id="boxmargin">'+'Last Price:$'+response2[i].price+'</b>'+
-		'<b class="text-dark" id="boxmargin">'+'Expected Return:'+response2[i].returns+'%'+'</b>'+
-		'<b class="text-dark" id="boxmargin">'+'Dividend Yield:'+divyield+'% </b>'+
-		'<br>' +
-		'<br>' +
-		'</div>';
-    }
-
-    document.getElementById('mbear').innerHTML=output2;
-    }
-  };
-  xhttp2.open("Get", "json/marketbears.json",true);
-  xhttp2.send();
-}
-
 function portfoliochart(){
 
   var xhttp3=new XMLHttpRequest();
@@ -135,6 +102,36 @@ output+='<tr>'+
 };
 }
 
+
+function mbear(){
+var xhttp2=new XMLHttpRequest();
+xhttp2.onreadystatechange=function(){
+  if (this.readyState ==4 && this.status ==200){
+    var response2=JSON.parse(xhttp2.responseText);
+    var output2='';
+    for (var i=0;i<5;i++){
+      if (response2[i].divyield==null){divyield="-";}else{divyield=response2[i].divyield;}
+
+	output2 +=
+		'<div style="display:flex;flex-direction:row;">' +
+		'<div style="margin:20px;" id="marketcount">0'+(parseFloat(i)+1)+'</div>'+
+		'<a style="margin-top:20px;margin-right:20px;" href="http://www.google.com/search?q='+response2[i].ticker+'+stock+price"  target="_blank" >'+response2[i].ticker+'</a>'+
+		'<br>'+
+    '<div style="display:flex;flex-direction:column;">'+
+		'<a href="http://www.google.com/search?q='+response2[i].note+'"  target="_blank" >'+response2[i].note+'</a></td>'+
+		'<div style="display:flex;flex-direction:row;"><b class="text-dark" id="boxmargin">'+'Last Price:$'+response2[i].price+'</b>'+
+		'<b class="text-dark" id="boxmargin">'+'Expected Return:'+response2[i].returns+'%'+'</b>'+
+		'<b class="text-dark" id="boxmargin">'+'Dividend Yield:'+divyield+'% </b>'+
+		'</div></div></div><br>';
+    }
+
+    document.getElementById('mbear').innerHTML=output2;
+    }
+  };
+  xhttp2.open("Get", "json/marketbears.json",true);
+  xhttp2.send();
+}
+
 function mbull(){
 var xhttp=new XMLHttpRequest();
 xhttp.onreadystatechange=function(){
@@ -146,19 +143,17 @@ xhttp.onreadystatechange=function(){
     for (var i=0;i<5;i++){
       if (response[i].divyield==null){divyield="-";}else{divyield=response[i].divyield;}
 		output +=
-			'<div style="justify-content:space-between;">' +
-			'<div id="marketcount">0'+(parseFloat(i)+1)+'</div>'+
-			'<a href="http://www.google.com/search?q='+response[i].ticker+'+stock+price"  target="_blank" >'+response[i].ticker+'</a>'+
+			'<div style="display:flex;flex-direction:row;">' +
+			'<div style="margin:20px;" id="marketcount">0'+(parseFloat(i)+1)+'</div>'+
+			'<a style="margin-top:20px;margin-right:20px;" href="http://www.google.com/search?q='+response[i].ticker+'+stock+price"  target="_blank" >'+response[i].ticker+'</a>'+
 			'<br>'+
+      '<div style="display:flex;flex-direction:column;">'+
 			'<a href="http://www.google.com/search?q='+response[i].note+'"  target="_blank" >'+response[i].note+'</a></td>'+
-			'<br>'+
-			'<b class="text-dark" id="boxmargin">'+'Target:$'+response[i].target+' </b>'+
+			'<div style="display:flex;flex-direction:row;"><b class="text-dark" id="boxmargin">'+'Target:$'+response[i].target+' </b>'+
 			'<b class="text-dark" id="boxmargin">'+'Price:$'+response[i].price+' </b>'+
 			'<b class="text-dark" id="boxmargin">'+'Expected Return:'+response[i].returns+'%'+'</b>'+
 			'<b class="text-dark" id="boxmargin">'+'Dividend Yield:'+divyield+'% </b>'+
-			'<br>' +
-			'<br>' +
-			'</div>';
+			'</div></div></div><br>';
     }
 
     document.getElementById('mbull').innerHTML=output;
