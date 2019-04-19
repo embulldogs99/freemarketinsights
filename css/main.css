@@ -284,7 +284,7 @@ header{
    display: flex;
    justify-content: flex-end;
    align-items:flex-end;
-   
+
 
    /* border-right: 1px solid lightgrey; */
 }
@@ -334,7 +334,6 @@ border-bottom: 1px solid lightgrey;
   flex-direction: column;
   align-items: center;
   text-align: center;
-
   border-right: 1px solid grey;
 }
 .ads{
