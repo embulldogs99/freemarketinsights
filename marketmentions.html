@@ -148,85 +148,119 @@
 
 
 
-<div class="vertical">
-
-  <!-- Start performance chart.js section -->
-  <div class="container">
-      <div class="row">
-          <canvas class="chart" id="myChart" class="chartjs-render-monitor"></canvas>
-      </div>
-  </div>
-  <!-- End  performance chart.js section -->
 
 
-<div class="title"> Recent Buys</div>
-<div class="title"> PATK - bought 4/2/19 - buy price $49 - Today's Price $55<br>
-  KNL - bought 4/2/19 - buy price $19 - Today's Price $20<br>
-</div>
-<br>
-<br>
-<br>
-<div class="title">Portfolio Stock Scorer</div>
-<br>
-<br>
-<table class="sortable"><tbody id="stockscore"></tbody></table>
-<br>
-<br>
-
-
-
-
-<br>
-<br>
-<div class="title">Portfolio</div>
-<br>
-<br>
-<table class="portfolio" id="port"></table>
-<br>
-<br>
-</div>
-
-
-
-
-    <!-- JS
-============================================= -->
-
-    <script src="js/vendor/jquery-2.2.4.min.js"></script>
-    <script src="js/vendor/popper.min.js"></script>
-    <script src="js/jquery.easing.1.3.js"></script>
-    <script src="js/vendor/bootstrap.min.js"></script>
-    <script src="js/jquery.parallax-scroll.js"></script>
-    <script src="js/dopeNav.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/waypoints.min.js"></script>
-    <script src="js/jquery.stellar.min.js"></script>
-    <script src="js/jquery.counterup.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/portfolio.js"></script>
-    <script src="js/sorttable.js"></script>
-
-    <!-- dist  JS
-============================================= -->
-    <script src="js/Chart.js"></script>
-    <script src="js/home.js"></script>
 
     <script>
-        function openTabs(evt, tabName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tablinks");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(tabName).style.display = "block";
-            evt.currentTarget.className += " active";
+    var xhttp=new XMLHttpRequest();
+    xhttp.onreadystatechange=function(){
+      if (this.readyState ==4 && this.status ==200){
+
+        var response=JSON.parse(xhttp.responseText);
+
+        var output='';
+        for (var i=0;i<response.length;i++){
+          if (response[i].divyield==null){divyield="-";}else{divyield=response[i].divyield;}
+          if (response[i].a_pe==null){a_pe="-";}else{a_pe=response[i].a_pe;}
+          output +=
+            '<tr>'+
+            '<td>$'+response[i].target+'</td>'+
+            '<td>$'+response[i].price+'</td>'+
+            '<td>'+response[i].returns+'%'+'</td>'+
+            '<td>$'+response[i].a_eps+'</td>'+
+            '<td>'+divyield+'</td>'+
+            '<td><a href="http://www.google.com/search?q='+response[i].ticker+'+stock+price"  target="_blank" >'+response[i].ticker+'</a></td>'+
+            '<td><a href="http://www.google.com/search?q='+response[i].note+'"  target="_blank" >'+response[i].note+'</a></td>'+
+            '<td>'+response[i].to_char+'</td>'+
+            '<td>'+response[i].report+'</td>'+
+            '<td>'+a_pe+'</td>'+
+            '</tr>';
         }
+
+        document.getElementById('marketmentions').innerHTML=output;
+        }
+      };
+      xhttp.open("Get", "json/marketmentions.json",true);
+      xhttp.send();
     </script>
 
+
+
+
+
+<div class="page">
+<div class="posts">
+
+<div class="posttitle">
+  Market Mentions
+</div>
+
+
+<font style="size:20px;font-family:'Calibri';">You Can Sort!<br>Just Click the Table Headers!<br></font>
+
+
+<br>
+  <table class="sortable">
+    <thead>
+      <tr>
+        <th>Target Price</th>
+        <th>Today's Price</th>
+        <th>Exp Return</th>
+        <th>Anul_EPS</th>
+        <th>Dividend Yield</th>
+        <th>Ticker</th>
+        <th>News Title</th>
+        <th>Date</th>
+        <th>Report</th>
+        <th>Annual PE</th>
+      </tr>
+    </thead>
+
+    <tbody id="marketmentions"></tbody>
+
+
+
+  </table>
+
+
+
+      <!-- JS
+  ============================================= -->
+
+      <script src="js/vendor/jquery-2.2.4.min.js"></script>
+      <script src="js/vendor/popper.min.js"></script>
+      <script src="js/jquery.easing.1.3.js"></script>
+      <script src="js/vendor/bootstrap.min.js"></script>
+      <script src="js/jquery.parallax-scroll.js"></script>
+      <script src="js/dopeNav.js"></script>
+      <script src="js/owl.carousel.min.js"></script>
+      <script src="js/waypoints.min.js"></script>
+      <script src="js/jquery.stellar.min.js"></script>
+      <script src="js/jquery.counterup.min.js"></script>
+      <script src="js/main.js"></script>
+      <script src="js/portfolio.js"></script>
+      <script src="js/sorttable.js"></script>
+
+      <!-- dist  JS
+  ============================================= -->
+      <script src="js/Chart.js"></script>
+      <script src="js/home.js"></script>
+
+      <script>
+          function openTabs(evt, tabName) {
+              var i, tabcontent, tablinks;
+              tabcontent = document.getElementsByClassName("tabcontent");
+              for (i = 0; i < tabcontent.length; i++) {
+                  tabcontent[i].style.display = "none";
+              }
+              tablinks = document.getElementsByClassName("tablinks");
+              for (i = 0; i < tablinks.length; i++) {
+                  tablinks[i].className = tablinks[i].className.replace(" active", "");
+              }
+              document.getElementById(tabName).style.display = "block";
+              evt.currentTarget.className += " active";
+          }
+      </script>
 
 
 </body>
