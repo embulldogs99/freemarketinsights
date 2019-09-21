@@ -1,5 +1,7 @@
 cd python
 
+iexdatapuller.py
+
 python mmduprem.py
 
 python portfolioupdate.py
